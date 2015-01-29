@@ -5,6 +5,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+
         <TextView
                 android:layout_height="wrap_content"
                 android:textSize="26sp"
@@ -22,7 +23,6 @@
                 android:text="Text size">
         </TextView>
 </LinearLayout>
-
 
 
 
