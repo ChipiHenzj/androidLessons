@@ -2,67 +2,127 @@ package com.chipihenzj.android.Android_Lessons;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.*;
 
 
-
 /**
- *   Lesson 18.Change in working layoutParams application.
+ *   Lesson 19.Write a simple calculator.
  */
 
-public class AndroidLessonsActivity extends Activity implements SeekBar.OnSeekBarChangeListener{
+public class AndroidLessonsActivity extends Activity implements OnClickListener {
 
-    SeekBar sbWeight;
+    final int MENU_RESET_ID = 1;
+    final int MENU_QUIT_ID = 2;
 
-    Button btn1;
-    Button btn2;
+    EditText etNum1;
+    EditText etNum2;
 
-    LinearLayout.LayoutParams lParams1;
-    LinearLayout.LayoutParams lParams2;
+    Button btnAdd;
+    Button btnSub;
+    Button btnMult;
+    Button btnDiv;
+
+    TextView tvResult;
+
+    String oper = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        sbWeight = (SeekBar)findViewById(R.id.sbWeight);
-        sbWeight.setOnSeekBarChangeListener(this);
+        etNum1 = (EditText) findViewById(R.id.etNum1);
+        etNum2 = (EditText) findViewById(R.id.etNum2);
 
-        btn1 = (Button)findViewById(R.id.btn1);
-        btn2 = (Button)findViewById(R.id.btn2);
+        tvResult = (TextView) findViewById(R.id.tvResult);
 
-        lParams1 =(LinearLayout.LayoutParams)btn1.getLayoutParams();
-        lParams2 = (LinearLayout.LayoutParams)btn2.getLayoutParams();
+        btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(this);
+
+        btnSub = (Button) findViewById(R.id.btnSub);
+        btnSub.setOnClickListener(this);
+
+        btnMult = (Button) findViewById(R.id.btnMult);
+        btnMult.setOnClickListener(this);
+
+        btnDiv = (Button) findViewById(R.id.btnDiv);
+        btnDiv.setOnClickListener(this);
 
     }
 
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    public void onClick(View v) {
 
-        int leftValue = progress;
-        int rightValue = seekBar.getMax() - progress;
+        float num1;
+        float num2;
+        float result = 0;
 
-        lParams1.weight = leftValue;
-        lParams2.weight = rightValue;
+        if (TextUtils.isEmpty(etNum1.getText().toString()) || TextUtils.isEmpty(etNum2.getText().toString())) {
+            return;
+        }
 
-        btn1.setText(String.valueOf(leftValue));
-        btn2.setText(String.valueOf(rightValue));
+        num1 = Float.parseFloat(etNum1.getText().toString());
+        num2 = Float.parseFloat(etNum2.getText().toString());
+
+
+        switch (v.getId()) {
+    case R.id.btnAdd:
+        oper = "+";
+        result = num1 + num2;
+        break;
+    case R.id.btnSub:
+        oper = "-";
+        result = num1 - num2;
+        break;
+    case R.id.btnMult:
+        oper = "*";
+        result = num1 * num2;
+        break;
+    case R.id.btnDiv:
+        oper = "/";
+        result = num1 / num2;
+        break;
+    default:
+        break;
+        }
+
+        tvResult.setText(num1 + " " + oper + " " + num2 + " = " + result);
+
 
     }
 
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        menu.add(0, MENU_RESET_ID, 0, "Reset");
+        menu.add(0, MENU_QUIT_ID, 0, "Quit");
+        return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()) {
+    case MENU_RESET_ID:
+        etNum1.setText("");
+        etNum2.setText("");
+        tvResult.setText("");
+        break;
+
+    case MENU_QUIT_ID:
+        finish();
+        break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
 
 }
 
