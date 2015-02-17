@@ -2,134 +2,79 @@ package com.chipihenzj.android.Android_Lessons;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Menu;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.*;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 
 /**
- *   Lesson 19.Write a simple calculator.
+ *   Lesson 20. Animation.
  */
 
-public class AndroidLessonsActivity extends Activity implements OnClickListener {
+public class AndroidLessonsActivity extends Activity  {
 
-    final int MENU_RESET_ID = 1;
-    final int MENU_QUIT_ID = 2;
+    final int MENU_ALPHA_ID = 1;
+    final int MENU_SCALE_ID = 2;
+    final int MENU_TRANSLATE_ID = 3;
+    final int MENU_ROTATE_ID = 4;
+    final int MENU_COMBO_ID = 5;
 
-    EditText etNum1;
-    EditText etNum2;
-
-    Button btnAdd;
-    Button btnSub;
-    Button btnMult;
-    Button btnDiv;
-
-    TextView tvResult;
-
-    String oper = "";
+    TextView tv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        etNum1 = (EditText) findViewById(R.id.etNum1);
-        etNum2 = (EditText) findViewById(R.id.etNum2);
-
-        tvResult = (TextView) findViewById(R.id.tvResult);
-
-        btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(this);
-
-        btnSub = (Button) findViewById(R.id.btnSub);
-        btnSub.setOnClickListener(this);
-
-        btnMult = (Button) findViewById(R.id.btnMult);
-        btnMult.setOnClickListener(this);
-
-        btnDiv = (Button) findViewById(R.id.btnDiv);
-        btnDiv.setOnClickListener(this);
-
+        tv = (TextView) findViewById(R.id.tv);
+        registerForContextMenu(tv);
     }
 
     @Override
-    public void onClick(View v) {
-
-        float num1;
-        float num2;
-        float result = 0;
-
-        if (TextUtils.isEmpty(etNum1.getText().toString()) || TextUtils.isEmpty(etNum2.getText().toString())) {
-            return;
-        }
-
-        num1 = Float.parseFloat(etNum1.getText().toString());
-        num2 = Float.parseFloat(etNum2.getText().toString());
-
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
 
         switch (v.getId()) {
-    case R.id.btnAdd:
-        oper = "+";
-        result = num1 + num2;
-        break;
-    case R.id.btnSub:
-        oper = "-";
-        result = num1 - num2;
-        break;
-    case R.id.btnMult:
-        oper = "*";
-        result = num1 * num2;
-        break;
-    case R.id.btnDiv:
-        oper = "/";
-        result = num1 / num2;
-        break;
-    default:
+    case R.id.tv:
+        menu.add(0, MENU_ALPHA_ID, 0, "alpha");
+        menu.add(0, MENU_SCALE_ID, 0, "scale");
+        menu.add(0, MENU_TRANSLATE_ID, 0, "translate");
+        menu.add(0, MENU_ROTATE_ID, 0, "rotate");
+        menu.add(0, MENU_COMBO_ID, 0, "combo");
         break;
         }
-
-        tvResult.setText(num1 + " " + oper + " " + num2 + " = " + result);
-
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        menu.add(0, MENU_RESET_ID, 0, "Reset");
-        menu.add(0, MENU_QUIT_ID, 0, "Quit");
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
+        Animation anim = null;
 
         switch (item.getItemId()) {
-    case MENU_RESET_ID:
-        etNum1.setText("");
-        etNum2.setText("");
-        tvResult.setText("");
+    case MENU_ALPHA_ID:
+        anim = AnimationUtils.loadAnimation(this, R.anim.myalpha);
         break;
-
-    case MENU_QUIT_ID:
-        finish();
+    case MENU_SCALE_ID:
+        anim = AnimationUtils.loadAnimation(this, R.anim.myscale);
+        break;
+    case MENU_TRANSLATE_ID:
+        anim = AnimationUtils.loadAnimation(this, R.anim.mytrans);
+        break;
+    case MENU_ROTATE_ID:
+        anim = AnimationUtils.loadAnimation(this, R.anim.myrotate);
+        break;
+    case MENU_COMBO_ID:
+        anim = AnimationUtils.loadAnimation(this, R.anim.mycombo);
         break;
         }
 
-        return super.onOptionsItemSelected(item);
+        tv.startAnimation(anim);
+        return super.onContextItemSelected(item);
     }
-
-
 }
-
-
-
-
-
 
 
 
