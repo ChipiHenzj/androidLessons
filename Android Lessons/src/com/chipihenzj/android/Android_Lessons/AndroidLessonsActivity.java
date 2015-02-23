@@ -1,48 +1,59 @@
 package com.chipihenzj.android.Android_Lessons;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.TextView;
+import android.util.Log;
 
 
 /**
- *   Lesson 21. Creating and calling Activity.
+ *   Lesson 23. Activity Lifecycle. In what states can be Activity.
  */
 
-public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
+public class AndroidLessonsActivity extends Activity  {
 
 
-    Button btnActTwo;
+    final String TAG = "States";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        btnActTwo = (Button)findViewById(R.id.btnActTwo);
-        btnActTwo.setOnClickListener(this);
+        Log.d(TAG,"MainActivity: onCreate()");
     }
 
     @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-    case R.id.btnActTwo:
-        Intent intent = new Intent(this, ActivityTwo.class);
-        startActivity(intent);
-        break;
-    default:
-        break;
-
-        }
-
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "MainActivity: onStart()");
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "MainActivity: onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "MainActivity: onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "MainActivity: onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "MainActivity: onDestroy()");
+    }
+
+
+
 }
 
 
