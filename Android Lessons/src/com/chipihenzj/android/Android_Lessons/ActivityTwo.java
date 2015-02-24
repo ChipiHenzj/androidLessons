@@ -1,33 +1,20 @@
 package com.chipihenzj.android.Android_Lessons;
 
+
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
-
-/**
- *   Lesson 24. Activity Lifecycle, an example of state transition with two Activity
- */
-
-public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
-
+public class ActivityTwo extends Activity {
 
     final String TAG = "States";
-
-    Button btnActTwo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.two);
 
-        btnActTwo = (Button)findViewById(R.id.btnActTwo);
-        btnActTwo.setOnClickListener(this);
-
-        Log.d(TAG,"MainActivity: onCreate()");
+        Log.d(TAG, "MainActivity: onCreate()");
     }
 
     @Override
@@ -67,14 +54,4 @@ public class AndroidLessonsActivity extends Activity implements View.OnClickList
     }
 
 
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, ActivityTwo.class);
-        startActivity(intent);
-
-    }
 }
-
-
-
