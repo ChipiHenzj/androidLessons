@@ -9,7 +9,7 @@ import android.widget.Button;
 
 
 /**
- *   Lesson 24. Activity Lifecycle, an example of state transition with two Activity
+ *   Lesson 25. Task. What is it and how is formed
  */
 
 public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
