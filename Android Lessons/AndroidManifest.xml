@@ -19,11 +19,13 @@
         </activity>
 
 
-        <activity android:name="NameActivity"
+        <activity android:name="ColorActivity"
                   >
         </activity>
 
-
+        <activity android:name="AlignActivity"
+                >
+        </activity>
 
     </application>
 </manifest>
