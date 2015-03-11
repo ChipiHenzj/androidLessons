@@ -60,7 +60,7 @@ public class AndroidLessonsActivity extends Activity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        
+
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
