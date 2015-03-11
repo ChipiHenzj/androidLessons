@@ -5,41 +5,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
- *   Lesson 28. Extras - transfer data using Intent
+ *   Lesson 29.Call Activity and get the result. Method startActivityForResult
  */
 
 public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
 
-    EditText etFName;
-    EditText etLName;
+    TextView tvName;
+    Button btnName;
 
-    Button btnSubmit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        etFName = (EditText)findViewById(R.id.etFName);
-        etLName = (EditText)findViewById(R.id.etLName);
-
-        btnSubmit = (Button)findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(this);
+        tvName = (TextView)findViewById(R.id.tvName);
+        btnName = (Button)findViewById(R.id.btnName);
+        btnName.setOnClickListener(this);
 
     }
 
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, ViewActivity.class);
-        intent.putExtra("fname", etFName.getText().toString());
-        intent.putExtra("lname", etLName.getText().toString());
-        startActivity(intent);
+        Intent intent = new Intent(this, NameActivity.class);
+        startActivityForResult(intent, 1);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        String name = data.getStringExtra("name");
+        tvName.setText("Your name is " + name);
     }
 }
 
