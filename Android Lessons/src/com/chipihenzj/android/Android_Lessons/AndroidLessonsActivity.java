@@ -3,51 +3,46 @@ package com.chipihenzj.android.Android_Lessons;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
- *   Lesson 26. Intent Filter - Practice
+ *   Lesson 28. Extras - transfer data using Intent
  */
 
-public class AndroidLessonsActivity extends Activity implements View.OnClickListener{
+public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
 
-    Button btnTime;
-    Button btnDate;
+    EditText etFName;
+    EditText etLName;
+
+    Button btnSubmit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        btnTime  = (Button)findViewById(R.id.btnTime);
-        btnTime.setOnClickListener(this);
+        etFName = (EditText)findViewById(R.id.etFName);
+        etLName = (EditText)findViewById(R.id.etLName);
 
-        btnDate = (Button)findViewById(R.id.btnDate);
-        btnDate.setOnClickListener(this);
+        btnSubmit = (Button)findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(this);
+
     }
 
 
     @Override
     public void onClick(View v) {
-        Intent intent;
-
-        switch(v.getId()){
-    case R.id.btnTime:
-        intent = new Intent("startandroid.intent.action.showtime");
+        Intent intent = new Intent(this, ViewActivity.class);
+        intent.putExtra("fname", etFName.getText().toString());
+        intent.putExtra("lname", etLName.getText().toString());
         startActivity(intent);
-        break;
-    case R.id.btnDate:
-        intent = new Intent("startandroid.intent.action.showdate");
-        startActivity(intent);
-        break;
-
-        }
 
     }
 }
+
 
 
 

@@ -18,30 +18,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ActivityTime"
-                  android:label="@string/app_name">
-        <intent-filter>
-                <action android:name="startandroid.intent.action.showtime"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+
+        <activity android:name="ViewActivity"
+                  >
         </activity>
 
-        <activity android:name=".ActivityDate"
-                  android:label="Date basic"
-                >
-            <intent-filter>
-                <action android:name="startandroid.intent.action.showdate"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".ActivityDateEx"
-                  android:label="Date extended">
-            <intent-filter>
-                <action android:name="startandroid.intent.action.showdate"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
 
 
     </application>
