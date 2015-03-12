@@ -2,41 +2,35 @@ package com.chipihenzj.android.Android_Lessons;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 /**
- *   Lesson 30.More information about onActivityResult. Why requestCode and resultCode
+ *   Lesson 31.Why have there Intent attribute data. What is Uri. Call the system applications
  */
 
 public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
 
-    TextView tvText;
-    Button btnColor;
-    Button btnAlign;
-
-    final int REQUEST_CODE_COLOR = 1;
-    final int REQUEST_CODE_ALIGN = 2;
+    Button btnWeb;
+    Button btnMap;
+    Button btnCall;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        tvText = (TextView)findViewById(R.id.tvText);
+        btnWeb = (Button)findViewById(R.id.btnWeb);
+        btnWeb.setOnClickListener(this);
 
-        btnColor= (Button)findViewById(R.id.btnColor);
-        btnColor.setOnClickListener(this);
+        btnMap = (Button)findViewById(R.id.btnMap);
+        btnMap.setOnClickListener(this);
 
-        btnAlign = (Button)findViewById(R.id.btnAlign);
-        btnAlign.setOnClickListener(this);
+        btnCall = (Button)findViewById(R.id.btnCall);
+        btnCall.setOnClickListener(this);
 
     }
 
@@ -45,41 +39,27 @@ public class AndroidLessonsActivity extends Activity implements View.OnClickList
     public void onClick(View v) {
         Intent intent;
         switch(v.getId()){
-    case R.id.btnColor:
-        intent = new Intent(this, ColorActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_COLOR);
+    case R.id.btnWeb:
+        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://developer.android.com"));
+        startActivity(intent);
         break;
-    case R.id.btnAlign:
-        intent = new Intent(this, AlignActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_ALIGN);
+    case R.id.btnMap:
+        intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:55.754283,37.62002"));
+        startActivity(intent);
+        break;
+    case R.id.btnCall:
+        intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:12345"));
+        startActivity(intent);
         break;
         }
+
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
-
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-        case REQUEST_CODE_COLOR:
-            int color = data.getIntExtra("color", Color.WHITE);
-            tvText.setTextColor(color);
-            break;
-        case REQUEST_CODE_ALIGN:
-            int align = data.getIntExtra("alignment", Gravity.LEFT);
-            tvText.setGravity(align);
-            break;
-            }
-
-        }
-        else {
-
-            Toast.makeText(this, "Wrong result", Toast.LENGTH_SHORT).show();
-        }
-    }
 }
 
 
