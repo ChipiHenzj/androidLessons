@@ -1,32 +1,83 @@
 package com.chipihenzj.android.Android_Lessons;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 
 /**
- *   Lesson 32.Writing a simple browser
+ *   Lesson 33. Storage. Preferences.
  */
 
-public class AndroidLessonsActivity extends Activity  {
+public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
 
+
+    EditText etText;
+    Button btnSave, btnLoad;
+
+    SharedPreferences sPref;
+
+    final String SAVED_TEXT = "saved_text";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        (findViewById(R.id.btnWeb)).setOnClickListener(new View.OnClickListener() {
+        etText = (EditText) findViewById(R.id.etText);
 
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.yandex.ru")));
-            }
-        });
+        btnSave = (Button) findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(this);
+
+        btnLoad = (Button) findViewById(R.id.btnLoad);
+        btnLoad.setOnClickListener(this);
+
+        loadText();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSave:
+                saveText();
+                break;
+            case R.id.btnLoad:
+                loadText();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void saveText() {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString(SAVED_TEXT, etText.getText().toString());
+        ed.commit();
+
+        Toast.makeText(this, "Text saved", Toast.LENGTH_SHORT).show();
+    }
+
+    void loadText() {
+        sPref = getPreferences(MODE_PRIVATE);
+        String savedText = sPref.getString(SAVED_TEXT, "");
+        etText.setText(savedText);
+
+        Toast.makeText(this, "Text loaded", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        saveText();
+        super.onDestroy();
     }
 }
+
 
 
 
