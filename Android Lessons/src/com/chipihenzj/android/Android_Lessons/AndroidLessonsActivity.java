@@ -9,165 +9,206 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
-
-
-/**
- *   Lesson 34. Storage. SQLite. Lesson 35. SQLite. Update, and delete methods, indicating condition
- */
-
-public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
+public class AndroidLessonsActivity extends Activity implements OnClickListener {
 
     final String LOG_TAG = "myLogs";
 
-    Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
-    EditText etName, etEmail, etID;
+    String name[] = { "Китай", "США", "Бразилия", "Россия", "Япония",
+            "Германия", "Египет", "Италия", "Франция", "Канада" };
+    int people[] = { 1400, 311, 195, 142, 128, 82, 80, 60, 66, 35 };
+    String region[] = { "Азия", "Америка", "Америка", "Европа", "Азия",
+            "Европа", "Африка", "Европа", "Европа", "Америка" };
+
+    Button btnAll, btnFunc, btnPeople, btnSort, btnGroup, btnHaving;
+    EditText etFunc, etPeople, etRegionPeople;
+    RadioGroup rgSort;
 
     DBHelper dbHelper;
+    SQLiteDatabase db;
 
-    @Override
+    /** Called when the activity is first created. */
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(this);
+        btnAll = (Button) findViewById(R.id.btnAll);
+        btnAll.setOnClickListener(this);
 
-        btnRead = (Button) findViewById(R.id.btnRead);
-        btnRead.setOnClickListener(this);
+        btnFunc = (Button) findViewById(R.id.btnFunc);
+        btnFunc.setOnClickListener(this);
 
-        btnClear = (Button) findViewById(R.id.btnClear);
-        btnClear.setOnClickListener(this);
+        btnPeople = (Button) findViewById(R.id.btnPeople);
+        btnPeople.setOnClickListener(this);
 
-        btnUpd = (Button) findViewById(R.id.btnUpd);
-        btnUpd.setOnClickListener(this);
+        btnSort = (Button) findViewById(R.id.btnSort);
+        btnSort.setOnClickListener(this);
 
-        btnDel = (Button) findViewById(R.id.btnDel);
-        btnDel.setOnClickListener(this);
+        btnGroup = (Button) findViewById(R.id.btnGroup);
+        btnGroup.setOnClickListener(this);
 
-        etName = (EditText) findViewById(R.id.etName);
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        etID = (EditText) findViewById(R.id.etID);
+        btnHaving = (Button) findViewById(R.id.btnHaving);
+        btnHaving.setOnClickListener(this);
+
+        etFunc = (EditText) findViewById(R.id.etFunc);
+        etPeople = (EditText) findViewById(R.id.etPeople);
+        etRegionPeople = (EditText) findViewById(R.id.etRegionPeople);
+
+        rgSort = (RadioGroup) findViewById(R.id.rgSort);
 
         dbHelper = new DBHelper(this);
+        // подключаемся к базе
+        db = dbHelper.getWritableDatabase();
+        dbHelper.onCreate(db);
+
+        // проверка существования записей
+        Cursor c = db.query("mytable", null, null, null, null, null, null);
+        if (c.getCount() == 0) {
+            ContentValues cv = new ContentValues();
+            // заполним таблицу
+            for (int i = 0; i < 10; i++) {
+                cv.put("name", name[i]);
+                cv.put("people", people[i]);
+                cv.put("region", region[i]);
+                Log.d(LOG_TAG, "id = " + db.insert("mytable", null, cv));
+            }
+        }
+        c.close();
+        dbHelper.close();
+        // эмулируем нажатие кнопки btnAll
+        onClick(btnAll);
+
     }
 
-    @Override
     public void onClick(View v) {
 
+        // подключаемся к базе
+        db = dbHelper.getWritableDatabase();
 
-        ContentValues cv = new ContentValues();
+        // данные с экрана
+        String sFunc = etFunc.getText().toString();
+        String sPeople = etPeople.getText().toString();
+        String sRegionPeople = etRegionPeople.getText().toString();
 
+        // переменные для query
+        String[] columns = null;
+        String selection = null;
+        String[] selectionArgs = null;
+        String groupBy = null;
+        String having = null;
+        String orderBy = null;
 
-        String name = etName.getText().toString();
-        String email = etEmail.getText().toString();
-        String id = etID.getText().toString();
+        // курсор
+        Cursor c = null;
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+        // определяем нажатую кнопку
         switch (v.getId()) {
-    case R.id.btnAdd:
-        Log.d(LOG_TAG, "--- Insert in mytable: ---");
-
-
-        cv.put("name", name);
-        cv.put("email", email);
-
-
-        long rowID = db.insert("mytable", null, cv);
-        Log.d(LOG_TAG, "row inserted, ID = " + rowID);
-        break;
-
-    case R.id.btnRead:
-        Log.d(LOG_TAG, "--- Rows in mytable: ---");
-
-        Cursor c = db.query("mytable", null, null, null, null, null, null);
-
-
-        if (c.moveToFirst()) {
-
-
-            int idColIndex = c.getColumnIndex("id");
-            int nameColIndex = c.getColumnIndex("name");
-            int emailColIndex = c.getColumnIndex("email");
-
-            do {
-
-                Log.d(LOG_TAG,
-                        "ID = " + c.getInt(idColIndex) +
-                                ", name = " + c.getString(nameColIndex) +
-                                ", email = " + c.getString(emailColIndex));
-
-                    } while (c.moveToNext());
-                } else
-                    Log.d(LOG_TAG, "0 rows");
-                c.close();
+            // Все записи
+            case R.id.btnAll:
+                Log.d(LOG_TAG, "--- Все записи ---");
+                c = db.query("mytable", null, null, null, null, null, null);
                 break;
-            case R.id.btnClear:
-                Log.d(LOG_TAG, "--- Clear mytable: ---");
-
-                int clearCount = db.delete("mytable", null, null);
-                Log.d(LOG_TAG, "deleted rows count = " + clearCount);
+            // Функция
+            case R.id.btnFunc:
+                Log.d(LOG_TAG, "--- Функция " + sFunc + " ---");
+                columns = new String[] { sFunc };
+                c = db.query("mytable", columns, null, null, null, null, null);
                 break;
-            case R.id.btnUpd:
-                if (id.equalsIgnoreCase("")) {
-                    break;
+            // Население больше, чем
+            case R.id.btnPeople:
+                Log.d(LOG_TAG, "--- Население больше " + sPeople + " ---");
+                selection = "people > ?";
+                selectionArgs = new String[] { sPeople };
+                c = db.query("mytable", null, selection, selectionArgs, null, null,
+                        null);
+                break;
+            // Население по региону
+            case R.id.btnGroup:
+                Log.d(LOG_TAG, "--- Население по региону ---");
+                columns = new String[] { "region", "sum(people) as people" };
+                groupBy = "region";
+                c = db.query("mytable", columns, null, null, groupBy, null, null);
+                break;
+            // Население по региону больше чем
+            case R.id.btnHaving:
+                Log.d(LOG_TAG, "--- Регионы с населением больше " + sRegionPeople
+                        + " ---");
+                columns = new String[] { "region", "sum(people) as people" };
+                groupBy = "region";
+                having = "sum(people) > " + sRegionPeople;
+                c = db.query("mytable", columns, null, null, groupBy, having, null);
+                break;
+            // Сортировка
+            case R.id.btnSort:
+                // сортировка по
+                switch (rgSort.getCheckedRadioButtonId()) {
+                    // наименование
+                    case R.id.rName:
+                        Log.d(LOG_TAG, "--- Сортировка по наименованию ---");
+                        orderBy = "name";
+                        break;
+                    // население
+                    case R.id.rPeople:
+                        Log.d(LOG_TAG, "--- Сортировка по населению ---");
+                        orderBy = "people";
+                        break;
+                    // регион
+                    case R.id.rRegion:
+                        Log.d(LOG_TAG, "--- Сортировка по региону ---");
+                        orderBy = "region";
+                        break;
                 }
-                Log.d(LOG_TAG, "--- Update mytabe: ---");
-
-                cv.put("name", name);
-                cv.put("email", email);
-
-                int updCount = db.update("mytable", cv, "id = ?",
-                        new String[] { id });
-                Log.d(LOG_TAG, "updated rows count = " + updCount);
-                break;
-            case R.id.btnDel:
-                if (id.equalsIgnoreCase("")) {
-                    break;
-                }
-                Log.d(LOG_TAG, "--- Delete from mytabe: ---");
-
-                int delCount = db.delete("mytable", "id = " + id, null);
-                Log.d(LOG_TAG, "deleted rows count = " + delCount);
+                c = db.query("mytable", null, null, null, null, null, orderBy);
                 break;
         }
+
+        if (c != null) {
+            if (c.moveToFirst()) {
+                String str;
+                do {
+                    str = "";
+                    for (String cn : c.getColumnNames()) {
+                        str = str.concat(cn + " = "
+                                + c.getString(c.getColumnIndex(cn)) + "; ");
+                    }
+                    Log.d(LOG_TAG, str);
+
+                } while (c.moveToNext());
+            }
+            c.close();
+        } else
+            Log.d(LOG_TAG, "Cursor is null");
 
         dbHelper.close();
     }
 
-
-
     class DBHelper extends SQLiteOpenHelper {
 
         public DBHelper(Context context) {
-
+            // конструктор суперкласса
             super(context, "myDB", null, 1);
         }
 
-
-        @Override
         public void onCreate(SQLiteDatabase db) {
             Log.d(LOG_TAG, "--- onCreate database ---");
-
-
+            // создаем таблицу с полями
+            db.execSQL("DROP TABLE IF EXISTS mytable;");
             db.execSQL("create table mytable ("
-                    + "id integer primary key autoincrement,"
-                    + "name text,"
-                    + "email text" + ");");
+                    + "id integer primary key autoincrement," + "name text,"
+                    + "people integer," + "region text" + ");");
         }
 
-        @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         }
     }
 
 }
-
-
 
 
 
