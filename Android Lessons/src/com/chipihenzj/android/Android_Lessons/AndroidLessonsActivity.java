@@ -1,66 +1,54 @@
 package com.chipihenzj.android.Android_Lessons;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
-/** Lesson 41. Use LayoutInflater to create a list.
+
+/** Lesson 42. List - ListView.
  *
  */
 
 public class AndroidLessonsActivity extends Activity {
 
-    String[] name = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
-            "Костя", "Игорь" };
+    String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
+            "Костя", "Игорь", "Анна", "Денис", "Андрей" };
 
-    String[] position = { "Программер", "Бухгалтер", "Программер",
-            "Программер", "Бухгалтер", "Директор", "Программер", "Охранник" };
-
-    int salary[] = { 13000, 10000, 13000, 13000, 10000, 15000, 13000, 8000 };
-
-    int[] colors = new int[2];
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        colors[0] = Color.parseColor("#559966CC");
-        colors[1] = Color.parseColor("#55336699");
+        // находим список
+        ListView lvMain = (ListView) findViewById(R.id.lvMain);
 
-        LinearLayout linLayout = (LinearLayout)findViewById(R.id.linLayout);
+        // создаем адаптер
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.my_list_item, names);
 
-        LayoutInflater ltInflater = getLayoutInflater();
+        // присваиваем адаптер списку
+        lvMain.setAdapter(adapter);
 
-        for (int i = 0; i < name.length; i++) {
 
-            Log.d("myLogs", "i = " + i);
-
-            View item = ltInflater.inflate(R.layout.item, linLayout, false);
-
-            TextView tvName = (TextView)item.findViewById(R.id.tvName);
-            tvName.setText(name[i]);
-
-            TextView tvPosition = (TextView)item.findViewById(R.id.tvPosition);
-            tvPosition.setText("Должность: " + position[i]);
-
-            TextView tvSalary = (TextView)item.findViewById(R.id.tvSalary);
-            tvSalary.setText("Оклад: " + String.valueOf(salary[i]));
-
-            item.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-            item.setBackgroundColor(colors[i % 2]);
-
-            linLayout.addView(item);
         }
     }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
