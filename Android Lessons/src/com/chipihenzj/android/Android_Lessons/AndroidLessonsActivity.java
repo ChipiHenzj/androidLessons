@@ -3,15 +3,15 @@ package com.chipihenzj.android.Android_Lessons;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 
 
-/** Lesson 43. Single and multiple selection in ListView
+/** Lesson 44. Events in the ListView
  *
  */
 
@@ -20,7 +20,6 @@ public class AndroidLessonsActivity extends Activity implements View.OnClickList
     final String LOG_TAG = "myLogs";
 
     ListView lvMain;
-    String[] names;
 
 
     @Override
@@ -30,39 +29,51 @@ public class AndroidLessonsActivity extends Activity implements View.OnClickList
 
         lvMain = (ListView) findViewById(R.id.lvMain);
 
-        // устанавливаем режим выбора пунктов списка
-        lvMain.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-        // Создаем адаптер, используя массив из файла ресурсов
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.names,
-                android.R.layout.simple_list_item_multiple_choice);
-
+                this, R.array.names, android.R.layout.simple_list_item_1);
         lvMain.setAdapter(adapter);
 
-        Button btnChecked = (Button) findViewById(R.id.btnChecked);
-        btnChecked.setOnClickListener(this);
+        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Log.d(LOG_TAG, "itemClick: position = " + position + ", id = "
+                        + id);
+            }
+        });
 
-        // получаем массив из файла ресурсов
-        names = getResources().getStringArray(R.array.names);
+        lvMain.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = "
+                        + id);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d(LOG_TAG, "itemSelect: nothing");
+            }
+        });
+
+        lvMain.setOnScrollListener(new AbsListView.OnScrollListener() {
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                Log.d(LOG_TAG, "scrollState = " + scrollState);
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                Log.d(LOG_TAG, "scroll: firstVisibleItem = " + firstVisibleItem
+                        + ", visibleItemCount" + visibleItemCount
+                        + ", totalItemCount" + totalItemCount);
+            }
+        });
+
     }
 
-    public void onClick(View arg0) {
 
-        // пишем в лог выделенный элемент
-//        Log.d(LOG_TAG, "checked: " + names[lvMain.getCheckedItemPosition()]);
+    @Override
+    public void onClick(View v) {
 
-
-        Log.d(LOG_TAG, "checked: ");
-        SparseBooleanArray sbArray = lvMain.getCheckedItemPositions();
-        for (int i = 0; i < sbArray.size(); i++) {
-            int key = sbArray.keyAt(i);
-            if (sbArray.get(key))
-                Log.d(LOG_TAG, names[key]);
-        }
     }
 }
-
 
 
 
