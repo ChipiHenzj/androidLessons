@@ -3,114 +3,93 @@ package com.chipihenzj.android.Android_Lessons;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.*;
 
 
-/** Lesson 49. SimpleAdapter. Methods SetViewText and SetViewImage
- *
- */
+
+ /** Lesson 50. SimpleAdapter. Use ViewBinder
+  *
+  */
 
 public class AndroidLessonsActivity extends Activity  {
 
-    // имена атрибутов для Map
-    final String ATTRIBUTE_NAME_TEXT = "text";
-    final String ATTRIBUTE_NAME_VALUE = "value";
-    final String ATTRIBUTE_NAME_IMAGE = "image";
+     // имена атрибутов для Map
+     final String ATTRIBUTE_NAME_TEXT = "text";
+     final String ATTRIBUTE_NAME_PB = "pb";
+     final String ATTRIBUTE_NAME_LL = "ll";
 
-    // картинки для отображения динамики
-    final int positive = android.R.drawable.arrow_up_float;
-    final int negative = android.R.drawable.arrow_down_float;
+     ListView lvSimple;
 
-    ListView lvSimple;
-
-    @Override
+     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // массив данных
-        int[] values = { 8, 4, -3, 2, -5, 0, 3, -6, 1, -1 };
 
-        // упаковываем данные в понятную для адаптера структуру
-        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
-                values.length);
-        Map<String, Object> m;
-        int img = 0;
-        for (int i = 0; i < values.length; i++) {
-            m = new HashMap<String, Object>();
-            m.put(ATTRIBUTE_NAME_TEXT, "Day " + (i + 1));
-            m.put(ATTRIBUTE_NAME_VALUE, values[i]);
-            if (values[i] == 0) img = 0; else
-                img = (values[i] > 0) ? positive : negative;
-            m.put(ATTRIBUTE_NAME_IMAGE, img);
-            data.add(m);
-        }
+         // массив данных
+         int load[] = { 41, 48, 22, 35, 30, 67, 51, 88 };
 
-        // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_VALUE,
-                ATTRIBUTE_NAME_IMAGE };
-        // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { R.id.tvText, R.id.tvValue, R.id.ivImg };
+         // упаковываем данные в понятную для адаптера структуру
+         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
+                 load.length);
+         Map<String, Object> m;
+         for (int i = 0; i < load.length; i++) {
+             m = new HashMap<String, Object>();
+             m.put(ATTRIBUTE_NAME_TEXT, "Day " + (i+1) + ". Load: " + load[i] + "%");
+             m.put(ATTRIBUTE_NAME_PB, load[i]);
+             m.put(ATTRIBUTE_NAME_LL, load[i]);
+             data.add(m);
+         }
 
-        // создаем адаптер
-        MySimpleAdapter sAdapter = new MySimpleAdapter(this, data,
-                R.layout.item, from, to);
+         // массив имен атрибутов, из которых будут читаться данные
+         String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB,
+                 ATTRIBUTE_NAME_LL };
+         // массив ID View-компонентов, в которые будут вставлять данные
+         int[] to = { R.id.tvLoad, R.id.pbLoad, R.id.llLoad };
 
-        // определяем список и присваиваем ему адаптер
-        lvSimple = (ListView) findViewById(R.id.lvSimple);
-        lvSimple.setAdapter(sAdapter);
-    }
+         // создаем адаптер
+         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.item,
+                 from, to);
+         // Указываем адаптеру свой биндер
+         sAdapter.setViewBinder(new MyViewBinder());
 
-    class MySimpleAdapter extends SimpleAdapter {
+         // определяем список и присваиваем ему адаптер
+         lvSimple = (ListView) findViewById(R.id.lvSimple);
+         lvSimple.setAdapter(sAdapter);
+     }
 
-        public MySimpleAdapter(Context context,
-                               List<? extends Map<String, ?>> data, int resource,
-                               String[] from, int[] to) {
-            super(context, data, resource, from, to);
-        }
+    class MyViewBinder implements SimpleAdapter.ViewBinder {
 
-        @Override
-        public void setViewText(TextView v, String text) {
+         int red = getResources().getColor(R.color.Red);
+         int orange = getResources().getColor(R.color.Orange);
+         int green = getResources().getColor(R.color.Green);
 
-            // метод супер-класса, который вставляет текст
-            super.setViewText(v, text);
-
-            // если нужный нам TextView, то разрисовываем
-            if (v.getId() == R.id.tvValue) {
-                int i = Integer.parseInt(text);
-                if (i < 0) v.setTextColor(Color.RED); else
-                if (i > 0) v.setTextColor(Color.GREEN);
-            }
-        }
-
-        @Override
-        public void setViewImage(ImageView v, int value) {
-
-            // метод супер-класса
-            super.setViewImage(v, value);
-
-            // разрисовываем ImageView
-            if (value == negative) v.setBackgroundColor(Color.RED); else
-            if (value == positive) v.setBackgroundColor(Color.GREEN);
-        }
+         @Override
+         public boolean setViewValue(View view, Object data,
+                                     String textRepresentation) {
+             int i = 0;
+             switch (view.getId()) {
+                 // LinearLayout
+                 case R.id.llLoad:
+                     i = ((Integer) data).intValue();
+                     if (i < 40) view.setBackgroundColor(green); else
+                     if (i < 70) view.setBackgroundColor(orange); else
+                         view.setBackgroundColor(red);
+                     return true;
+                 // ProgressBar
+                 case R.id.pbLoad:
+                     i = ((Integer) data).intValue();
+                     ((ProgressBar)view).setProgress(i);
+                     return true;
+             }
+             return false;
+         }
     }
 }
-
-
-
-
-
-
 
 
 
