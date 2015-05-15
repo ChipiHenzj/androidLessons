@@ -1,79 +1,68 @@
 package com.chipihenzj.android.Android_Lessons;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 
 
-/** Lesson 44. Events in the ListView
+/** Lesson 48. Use SimpleAdapter.
  *
  */
 
-public class AndroidLessonsActivity extends Activity implements View.OnClickListener {
+public class AndroidLessonsActivity extends Activity  {
 
-    final String LOG_TAG = "myLogs";
+    // имена атрибутов для Map
+    final String ATTRIBUTE_NAME_TEXT = "text";
+    final String ATTRIBUTE_NAME_CHECKED = "checked";
+    final String ATTRIBUTE_NAME_IMAGE = "image";
 
-    ListView lvMain;
-
+    ListView lvSimple;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        lvMain = (ListView) findViewById(R.id.lvMain);
+        // массивы данных
+        String[] texts = { "sometext 1", "sometext 2", "sometext 3",
+                "sometext 4", "sometext 5" };
+        boolean[] checked = { true, false, false, true, false };
+        int img = R.drawable.ic_launcher;
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.names, android.R.layout.simple_list_item_1);
-        lvMain.setAdapter(adapter);
+        // упаковываем данные в понятную для адаптера структуру
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
+                texts.length);
+        Map<String, Object> m;
+        for (int i = 0; i < texts.length; i++) {
+            m = new HashMap<String, Object>();
+            m.put(ATTRIBUTE_NAME_TEXT, texts[i]);
+            m.put(ATTRIBUTE_NAME_CHECKED, checked[i]);
+            m.put(ATTRIBUTE_NAME_IMAGE, img);
+            data.add(m);
+        }
 
-        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Log.d(LOG_TAG, "itemClick: position = " + position + ", id = "
-                        + id);
-            }
-        });
+        // массив имен атрибутов, из которых будут читаться данные
+        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_CHECKED,
+                ATTRIBUTE_NAME_IMAGE };
+        // массив ID View-компонентов, в которые будут вставлять данные
+        int[] to = { R.id.tvText, R.id.cbChecked, R.id.ivImg };
 
-        lvMain.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = "
-                        + id);
-            }
+        // создаем адаптер
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.item,
+                from, to);
 
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.d(LOG_TAG, "itemSelect: nothing");
-            }
-        });
-
-        lvMain.setOnScrollListener(new AbsListView.OnScrollListener() {
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                Log.d(LOG_TAG, "scrollState = " + scrollState);
-            }
-
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                Log.d(LOG_TAG, "scroll: firstVisibleItem = " + firstVisibleItem
-                        + ", visibleItemCount" + visibleItemCount
-                        + ", totalItemCount" + totalItemCount);
-            }
-        });
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
+        // определяем список и присваиваем ему адаптер
+        lvSimple = (ListView) findViewById(R.id.lvSimple);
+        lvSimple.setAdapter(sAdapter);
     }
 }
+
 
 
 
