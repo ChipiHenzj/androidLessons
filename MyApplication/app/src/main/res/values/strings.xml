@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_lesson12">Lesson12</string>
+
+    <string name="box">Корзина</string>
+    <string name="header_title">Header</string>
+    <string name="footer_title">Footer</string>
+    <string name="button_text">Test</string>
+    <string-array name="names">
+        <item>Maris</item>
+        <item>Agita</item>
+        <item>Janis</item>
+        <item>Liene</item>
+        <item>Zanda</item>
+        <item>Lauris</item>
+        <item>Gatis</item>
+        <item>Kristaps</item>
+        <item>Liga</item>
+        <item>Laura</item>
+        <item>Martins</item>
+        <item>Inga</item>
+        <item>Sandris</item>
+    </string-array>
+</resources>

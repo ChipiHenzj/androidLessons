@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.tetianapriadko.myapplication">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActiv">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Lesson9" />
+        <activity android:name=".Lesson10" />
+        <activity android:name=".Lesson11" />
+        <activity android:name=".Lesson12" />
+        <activity android:name=".Lesson13" />
+        <activity android:name=".Lesson14" />
+        <activity android:name=".Lesson15" />
+        <activity android:name=".Lesson16" />
+        <activity android:name=".Lesson17" />
+        <activity android:name=".Lesson18" />
+        <activity android:name=".Lesson19" />
+        <activity android:name=".Lesson20" />
+        <activity android:name=".Lesson21_1" />
+        <activity android:name=".Lesson21_2" />
+        <activity android:name=".Lesson23" />
+        <activity android:name=".Lesson24_1" />
+        <activity
+            android:name=".Lesson24_2"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
+        <activity android:name=".Lesson26_1" />
+        <activity android:name=".Lesson26_2">
+            <intent-filter>
+                <action android:name="ru.startandroid.intent.action.showtime" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Lesson26_3"
+            android:label="Date basic">
+            <intent-filter>
+                <action android:name="ru.startandroid.intent.action.showdate" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Lesson26_4"
+            android:label="Date extend">
+            <intent-filter>
+                <action android:name="ru.startandroid.intent.action.showdate" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Lesson27_1" />
+        <activity
+            android:name=".Lesson27_2"
+            android:label="Date/tame info">
+            <intent-filter>
+                <action android:name="ru.startandroid.intent.action.showdate" />
+                <action android:name="ru.startandroid.intent.action.showtime" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Lesson28_1" />
+        <activity android:name=".Lesson28_2" />
+        <activity android:name=".Lesson29_1" />
+        <activity android:name=".Lesson29_2" />
+        <activity android:name=".Lesson30_1" />
+        <activity android:name=".Lesson30_2" />
+        <activity android:name=".Lesson30_3" />
+        <activity android:name=".Lesson31" />
+        <activity android:name=".Lesson32_1" />
+        <activity
+            android:name=".Lesson32_2"
+            android:label="MyBrowser">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Lesson33" />
+        <activity android:name=".Lesson40" />
+        <activity android:name=".Lesson41" />
+        <activity android:name=".Lesson42" />
+        <activity android:name=".Lesson43" />
+        <activity android:name=".Lesson44" />
+        <activity android:name=".Lesson45" />
+        <activity android:name=".Lesson46" />
+        <activity android:name=".Lesson48" />
+        <activity android:name=".Lesson49" />
+        <activity android:name=".Lesson50" />
+        <activity android:name=".Lesson51" />
+        <activity android:name=".Lesson54_1" />
+        <activity android:name=".Lesson55"></activity>
+    </application>
+
+</manifest>
