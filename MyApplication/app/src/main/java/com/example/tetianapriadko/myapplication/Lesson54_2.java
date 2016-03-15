@@ -1,5 +1,6 @@
 package com.example.tetianapriadko.myapplication;
 
+//Products
 public class Lesson54_2  {
 
     String name;
@@ -8,7 +9,7 @@ public class Lesson54_2  {
     boolean box;
 
     Lesson54_2(String describe, int price, int image, boolean box) {
-        this.name = describe;
+        name = describe;
         this.price = price;
         this.image = image;
         this.box = box;

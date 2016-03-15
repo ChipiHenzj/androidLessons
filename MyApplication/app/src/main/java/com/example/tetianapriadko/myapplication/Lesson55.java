@@ -42,35 +42,37 @@ public class Lesson55 extends AppCompatActivity {
 
     // формирование списка
     void fillList() {
-        lvMain.setAdapter(adapter);
         lvMain.addHeaderView(header1);
-        lvMain.addHeaderView(header2);
+        lvMain.addHeaderView(header2, "some text for header 2", false);
         lvMain.addFooterView(footer1);
-        lvMain.addFooterView(footer2);
+        lvMain.addFooterView(footer2, "some text for footer 2", false);
+        lvMain.setAdapter(adapter);
     }
 
 
     // нажатие кнопки
     public void onclick(View v) {
-        lvMain.removeHeaderView(header2);
-        lvMain.removeFooterView(footer2);
+//        lvMain.removeHeaderView(header2);
+//        lvMain.removeFooterView(footer2);
 
-//        Object obj;
-//
-//        HeaderViewListAdapter hvlAdapter = (HeaderViewListAdapter) lvMain.getAdapter();
-//
-//        obj = hvlAdapter.getItem(1);
-//        Log.d(LOG_TAG, "hvlAdapter.getItem(1) = " + obj.toString());
-//
-//        obj = hvlAdapter.getItem(4);
-//        Log.d(LOG_TAG, "hvlAdapter.getItem(4) = " + obj.toString());
-//        ArrayAdapter<String> alAdapter = (ArrayAdapter<String>) hvlAdapter.getWrappedAdapter();
-//
-//        obj = alAdapter.getItem(1);
-//        Log.d(LOG_TAG, "alAdapter.getItem(1) = " + obj.toString());
-//
-//        obj = alAdapter.getItem(4);
-//        Log.d(LOG_TAG, "alAdapter.getItem(4) = " + obj.toString());
+        Object obj;
+
+        HeaderViewListAdapter hvlAdapter = (HeaderViewListAdapter) lvMain.getAdapter();
+
+        obj = hvlAdapter.getItem(1);
+        Log.d(LOG_TAG, "hvlAdapter.getItem(1) = " + obj.toString());
+
+        obj = hvlAdapter.getItem(4);
+        Log.d(LOG_TAG, "hvlAdapter.getItem(4) = " + obj.toString());
+
+
+        ArrayAdapter<String> alAdapter = (ArrayAdapter<String>) hvlAdapter.getWrappedAdapter();
+
+        obj = alAdapter.getItem(1);
+        Log.d(LOG_TAG, "alAdapter.getItem(1) = " + obj.toString());
+
+        obj = alAdapter.getItem(4);
+        Log.d(LOG_TAG, "alAdapter.getItem(4) = " + obj.toString());
 
     }
 

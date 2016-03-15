@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="title_activity_lesson12">Lesson12</string>
 
-    <string name="box">Корзина</string>
+    <string name="box">Box</string>
+
     <string name="header_title">Header</string>
     <string name="footer_title">Footer</string>
     <string name="button_text">Test</string>
+
     <string-array name="names">
         <item>Maris</item>
         <item>Agita</item>
@@ -21,4 +22,22 @@
         <item>Inga</item>
         <item>Sandris</item>
     </string-array>
+
+    <string name="exit">Exit</string>
+    <string name="save_data">Save data?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="saved">Saved</string>
+
+    <string name="items">Items</string>
+    <string name="adapter">Adapter</string>
+    <string name="cursor">Cursor</string>
+
+
+    <string name="dialog">Dialog</string>
+
+    <string name="simpl">Simple</string>
+    <string name="horiz">Horizontal</string>
+
 </resources>

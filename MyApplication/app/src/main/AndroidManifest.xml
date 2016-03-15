@@ -106,7 +106,17 @@
         <activity android:name=".Lesson50" />
         <activity android:name=".Lesson51" />
         <activity android:name=".Lesson54_1" />
-        <activity android:name=".Lesson55"></activity>
+        <activity android:name=".Lesson55" />
+        <activity android:name=".Lesson56" />
+        <activity android:name=".Lesson57" />
+        <activity android:name=".Lesson58" />
+        <activity android:name=".Lesson59" />
+        <activity android:name=".Lesson60" />
+        <activity android:name=".Lesson61" />
+        <activity android:name=".Lesson62_1" />
+        <activity android:name=".Lesson34" />
+        <activity android:name=".Lesson66" />
+        <activity android:name=".Lesson67"></activity>
     </application>
 
 </manifest>

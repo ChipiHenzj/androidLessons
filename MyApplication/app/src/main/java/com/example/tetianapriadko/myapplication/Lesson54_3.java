@@ -13,11 +13,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+//Adapter
 public class Lesson54_3 extends BaseAdapter {
 
     Context ctx;
     LayoutInflater lInflater;
-    ArrayList<Lesson54_2> objects;
+    ArrayList<Lesson54_2> objects;//Products
 
     public Lesson54_3(Context context, ArrayList<Lesson54_2> products) {
         ctx = context;
@@ -26,59 +27,54 @@ public class Lesson54_3 extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    // кол-во элементов
     @Override
     public int getCount() {
         return objects.size();
     }
-    // элемент по позиции
+
     @Override
     public Object getItem(int position) {
         return objects.get(position);
     }
-    // id по позиции
+
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-
-    // пункт списка
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // используем созданные, но не используемые view
-        View view = convertView;
-        if (view == null) {
-            view = lInflater.inflate(R.layout.activity_lesson54_2, parent, false);
+        if (convertView == null) {
+            convertView = lInflater.inflate(R.layout.activity_lesson54_2, parent, false);
         }
 
         Lesson54_2 p = getProduct(position);
 
         // заполняем View в пункте списка данными из товаров: наименование, цена
         // и картинка
-        ((TextView) view.findViewById(R.id.tvDescr)).setText(p.name);
-        ((TextView) view.findViewById(R.id.tvPrice)).setText(p.price + "");
-        ((ImageView) view.findViewById(R.id.ivImage)).setImageResource(p.image);
+        ((TextView) convertView.findViewById(R.id.tvDescr)).setText(p.name);
+        ((TextView) convertView.findViewById(R.id.tvPrice)).setText(p.price + "");
+        ((ImageView) convertView.findViewById(R.id.ivImage)).setImageResource(p.image);
 
-        CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
+        CheckBox cbBuy = (CheckBox) convertView.findViewById(R.id.cbBox);
+        cbBuy.setOnCheckedChangeListener(null);
+        cbBuy.setChecked(p.box);
 
         // присваиваем чекбоксу обработчик
-        cbBuy.setOnCheckedChangeListener(myCheckChangList);
-
-        // пишем позицию
-        cbBuy.setTag(position);
-
-        // заполняем данными из товаров: в корзине или нет
-        cbBuy.setChecked(p.box);
-        return view;
+        cbBuy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                objects.get(position).box = isChecked;
+            }
+        });
+        return convertView;
     }
-
 
     // товар по позиции
     public Lesson54_2 getProduct(int position) {
         return ((Lesson54_2) getItem(position));
     }
-
 
     // содержимое корзины
     public ArrayList<Lesson54_2> getBox() {
@@ -90,16 +86,4 @@ public class Lesson54_3 extends BaseAdapter {
         }
         return box;
     }
-
-    // обработчик для чекбоксов
-    CompoundButton.OnCheckedChangeListener myCheckChangList = new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView,
-                                     boolean isChecked) {
-            // меняем данные товара (в корзине или нет)
-            getProduct((Integer) buttonView.getTag()).box = isChecked;
-        }
-    };
-
-
-
 }
