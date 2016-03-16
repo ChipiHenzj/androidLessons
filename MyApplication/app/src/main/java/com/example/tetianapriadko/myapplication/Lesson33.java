@@ -12,6 +12,7 @@ public class Lesson33 extends AppCompatActivity implements View.OnClickListener 
 
     EditText etText;
     Button btnSave, btnLoad;
+
     SharedPreferences sPref;
 
     final String SAVED_TEXT = "saved_text";

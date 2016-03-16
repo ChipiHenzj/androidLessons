@@ -1,13 +1,14 @@
 package com.example.tetianapriadko.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
-public class Lesson34 extends AppCompatActivity {
+public class Lesson72_2 extends PreferenceActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lesson34);
+        addPreferencesFromResource(R.xml.pref72);
     }
+
 }

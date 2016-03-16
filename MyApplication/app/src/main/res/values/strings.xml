@@ -34,10 +34,31 @@
     <string name="adapter">Adapter</string>
     <string name="cursor">Cursor</string>
 
-
     <string name="dialog">Dialog</string>
 
     <string name="simpl">Simple</string>
     <string name="horiz">Horizontal</string>
+
+    <string-array name="entries">
+        <item>one</item>
+        <item>two</item>
+        <item>three</item>
+    </string-array>
+    <string-array name="entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string name="write_file">Write File</string>
+    <string name="read_file">Read File</string>
+
+    <string name="text_tab1">This is first tab</string>
+    <string name="text_tab2">This is second tab</string>
+    <string name="text_tab3">This is third tab</string>
+    <string name="text_tab_header">Tab header</string>
+
+    <string name="text_activity1">This is first Activity</string>
+    <string name="text_activity2">This is second Activity</string>
 
 </resources>

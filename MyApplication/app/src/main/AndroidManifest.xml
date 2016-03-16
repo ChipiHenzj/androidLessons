@@ -3,6 +3,7 @@
     package="com.example.tetianapriadko.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -114,9 +115,26 @@
         <activity android:name=".Lesson60" />
         <activity android:name=".Lesson61" />
         <activity android:name=".Lesson62_1" />
-        <activity android:name=".Lesson34" />
         <activity android:name=".Lesson66" />
-        <activity android:name=".Lesson67"></activity>
+        <activity android:name=".Lesson67" />
+        <activity android:name=".Lesson68" />
+        <activity android:name=".Lesson69_1" />
+        <activity android:name=".Lesson69_3" />
+        <activity android:name=".Lesson70" />
+        <activity android:name=".Lesson71_1" />
+        <activity android:name=".Lesson71_2" />
+        <activity android:name=".Lesson72_1" />
+        <activity android:name=".Lesson72_2" />
+        <activity android:name=".Lesson73_1" />
+        <activity android:name=".Lesson73_2" />
+        <activity android:name=".Lesson74_1" />
+        <activity android:name=".Lesson74_2" />
+        <activity android:name=".Lesson75" />
+        <activity android:name=".Lesson76" />
+        <activity android:name=".Lesson77_1" />
+        <activity android:name=".Lesson77_2" />
+        <activity android:name=".Lesson77_3" />
+        <activity android:name=".Lesson79"></activity>
     </application>
 
 </manifest>

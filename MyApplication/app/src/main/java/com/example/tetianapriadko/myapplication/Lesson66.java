@@ -35,21 +35,19 @@ public class Lesson66 extends AppCompatActivity {
             adb.setPositiveButton("OK", null);
             dialog = adb.create();
 
-            // обработчик отображения
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 public void onShow(DialogInterface dialog) {
                     Log.d(LOG_TAG, "Show");
                 }
             });
 
-            // обработчик отмены
+
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 public void onCancel(DialogInterface dialog) {
                     Log.d(LOG_TAG, "Cancel");
                 }
             });
 
-            // обработчик закрытия
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 public void onDismiss(DialogInterface dialog) {
                     Log.d(LOG_TAG, "Dismiss");
