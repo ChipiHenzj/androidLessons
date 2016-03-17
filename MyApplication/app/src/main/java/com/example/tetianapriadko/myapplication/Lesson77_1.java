@@ -19,11 +19,12 @@ public class Lesson77_1 extends TabActivity {
         // метод setup вызывать не нужно
         TabHost.TabSpec tabSpec;
         tabSpec = tabHost.newTabSpec("tag1");
-        tabSpec.setIndicator("Вкладка 1");
+        tabSpec.setIndicator("Tab 1");
         tabSpec.setContent(new Intent(this, Lesson77_2.class));
         tabHost.addTab(tabSpec);
+
         tabSpec = tabHost.newTabSpec("tag2");
-        tabSpec.setIndicator("Вкладка 2");
+        tabSpec.setIndicator("Tab 2");
         tabSpec.setContent(new Intent(this, Lesson77_3.class));
         tabHost.addTab(tabSpec);
     }

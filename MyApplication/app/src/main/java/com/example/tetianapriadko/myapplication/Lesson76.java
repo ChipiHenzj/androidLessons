@@ -1,10 +1,14 @@
 package com.example.tetianapriadko.myapplication;
 
 
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Lesson76 extends AppCompatActivity {
@@ -40,11 +44,10 @@ public class Lesson76 extends AppCompatActivity {
         tabSpec.setIndicator("Tab 2", getResources().getDrawable(R.drawable.tab_icon_selector));
         tabSpec.setContent(R.id.tvTab2);
         tabHost.addTab(tabSpec);
-        tabSpec = tabHost.newTabSpec("tag3");
 
+        tabSpec = tabHost.newTabSpec("tag3");
         // создаем View из layout-файла
         View v = getLayoutInflater().inflate(R.layout.activity_lesson76_2, null);
-
         // и устанавливаем его, как заголовок
         tabSpec.setIndicator(v);
         tabSpec.setContent(R.id.tvTab3);

@@ -22,7 +22,8 @@ public class MainActiv extends AppCompatActivity {
                       "Lesson 60", "Lesson 61", "Lesson 62", "Lesson 66", "Lesson 67",
                       "Lesson 68", "Lesson 69", "Lesson 70", "Lesson 71", "Lesson 72",
                       "Lesson 73", "Lesson 74", "Lesson 75", "Lesson 76", "Lesson 77",
-                      "Lesson 78", "Lesson 79"};
+                      "Lesson 78", "Lesson 80", "Lesson 81", "Lesson 82", "Lesson 86",
+                      "Lesson 87",  "Lesson 91"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,17 +262,34 @@ public class MainActiv extends AppCompatActivity {
                         Intent lesson77 = new Intent(MainActiv.this, Lesson77_1.class);
                         startActivity(lesson77);
                         break;
-//                    case 55:
-//                        Intent lesson78 = new Intent(MainActiv.this, Lesson78.class);
-//                        startActivity(lesson78);
-//                        break;
-                    case 56:
-                        Intent lesson79 = new Intent(MainActiv.this, Lesson79.class);
-                        startActivity(lesson79);
+                    case 55:
+                        Intent lesson78 = new Intent(MainActiv.this, Lesson78.class);
+                        startActivity(lesson78);
                         break;
-
-
-
+                    case 56:
+                        Intent lesson80 = new Intent(MainActiv.this, Lesson80.class);
+                        startActivity(lesson80);
+                        break;
+                    case 57:
+                        Intent lesson81 = new Intent(MainActiv.this, Lesson81.class);
+                        startActivity(lesson81);
+                        break;
+                    case 58:
+                        Intent lesson82 = new Intent(MainActiv.this, Lesson82.class);
+                        startActivity(lesson82);
+                        break;
+                    case 59:
+                        Intent lesson86 = new Intent(MainActiv.this, Lesson86.class);
+                        startActivity(lesson86);
+                        break;
+                    case 60:
+                        Intent lesson87 = new Intent(MainActiv.this, Lesson87.class);
+                        startActivity(lesson87);
+                        break;
+                    case 61:
+                        Intent lesson91 = new Intent(MainActiv.this, Lesson91.class);
+                        startActivity(lesson91);
+                        break;
                 }
 
             }

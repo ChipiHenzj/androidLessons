@@ -134,7 +134,13 @@
         <activity android:name=".Lesson77_1" />
         <activity android:name=".Lesson77_2" />
         <activity android:name=".Lesson77_3" />
-        <activity android:name=".Lesson79"></activity>
+        <activity android:name=".Lesson78" />
+        <activity android:name=".Lesson80" />
+        <activity android:name=".Lesson81" />
+        <activity android:name=".Lesson82" />
+        <activity android:name=".Lesson86" />
+        <activity android:name=".Lesson87" />
+        <activity android:name=".Lesson91"></activity>
     </application>
 
 </manifest>

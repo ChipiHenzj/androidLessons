@@ -61,4 +61,12 @@
     <string name="text_activity1">This is first Activity</string>
     <string name="text_activity2">This is second Activity</string>
 
+    <string name="text_tab">This is create with LayoutInflater </string>
+
+    <string name="start">Start</string>
+    <string name="test">Test</string>
+
+    <string name="connect">Connect</string>
+
+
 </resources>
