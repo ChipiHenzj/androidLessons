@@ -68,5 +68,7 @@
 
     <string name="connect">Connect</string>
 
+    <string name="service">Start service</string>
+    <string name="stop">Stop service</string>
 
 </resources>
