@@ -71,4 +71,21 @@
     <string name="service">Start service</string>
     <string name="stop">Stop service</string>
 
+    <string name="frag1_text">Fragment 1</string>
+    <string name="frag2_text">Fragment 2</string>
+
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
+    <string name="replace">Replace</string>
+    <string name="stack">add to Back Stack</string>
+
+    <string name="log">Log</string>
+    <string name="find">Find</string>
+
+    <string name="dialog_1">Dialog 1</string>
+    <string name="dialog_2">Dialog 2</string>
+    <string name="message_text">Text of your message</string>
+    <string name="maybe">Maybe</string>
+
+
 </resources>
