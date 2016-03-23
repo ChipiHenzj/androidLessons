@@ -21,15 +21,15 @@ public class Lesson106 extends AppCompatActivity implements Lesson106_2.onSomeEv
         ft.commit();
     }
 
-//    public void onClick(View v) {
-//        Fragment frag1 = getSupportFragmentManager().findFragmentById(R.id.fragment1);
-//        ((TextView) frag1.getView().findViewById(R.id.textView))
-//                .setText("Access to Fragment 1 from Activity");
-//
-//        Fragment frag2 = getSupportFragmentManager().findFragmentById(R.id.CONTAINER_VIEW_ID);
-//        ((TextView) frag2.getView().findViewById(R.id.textView))
-//                .setText("Access to Fragment 2 from Activity");
-//    }
+    public void onClick(View v) {
+        Fragment frag1 = getSupportFragmentManager().findFragmentById(R.id.fragment1);
+        ((TextView) frag1.getView().findViewById(R.id.textView))
+                .setText("Access to Fragment 1 from Activity");
+
+        Fragment frag2 = getSupportFragmentManager().findFragmentById(R.id.CONTAINER_VIEW_ID);
+        ((TextView) frag2.getView().findViewById(R.id.textView))
+                .setText("Access to Fragment 2 from Activity");
+    }
 
 
     @Override

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class Lesson110_1  extends DialogFragment implements View.OnClickListener {
 
@@ -17,7 +18,7 @@ public class Lesson110_1  extends DialogFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getDialog().setTitle("Title!");
+         getDialog().setTitle("Title");
 
         View v = inflater.inflate(R.layout.activity_lesson110_1, null);
         v.findViewById(R.id.btnYes).setOnClickListener(this);

@@ -11,7 +11,7 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"></uses-feature>
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -21,10 +21,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBhD7dFEnq7AtcNmqMcGZ3VO0jM8mnRWNs"></meta-data>
+            android:value="AIzaSyBhD7dFEnq7AtcNmqMcGZ3VO0jM8mnRWNs" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"></meta-data>
+            android:value="@integer/google_play_services_version" />
 
         <service android:name=".Lesson92_2" />
         <service android:name=".Lesson93_2" />
@@ -176,7 +176,8 @@
         <activity android:name=".Lesson110" />
         <activity android:name=".Lesson125" />
         <activity android:name=".Lesson125_1" />
-        <activity android:name=".Lesson139"></activity>
+        <activity android:name=".Lesson139" />
+        <activity android:name=".Lesson140"></activity>
     </application>
 
 </manifest>

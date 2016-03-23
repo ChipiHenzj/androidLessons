@@ -336,10 +336,10 @@ public class MainActiv extends AppCompatActivity {
                         Intent lesson139 = new Intent(MainActiv.this, Lesson139.class);
                         startActivity(lesson139);
                         break;
-//                    case 73:
-//                        Intent lesson140 = new Intent(MainActiv.this, Lesson140.class);
-//                        startActivity(lesson140);
-//                        break;
+                    case 73:
+                        Intent lesson140 = new Intent(MainActiv.this, Lesson140.class);
+                        startActivity(lesson140);
+                        break;
                 }
 
             }

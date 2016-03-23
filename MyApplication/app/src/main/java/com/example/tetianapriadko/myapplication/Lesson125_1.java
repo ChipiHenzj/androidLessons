@@ -2,7 +2,6 @@ package com.example.tetianapriadko.myapplication;
 
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ public class Lesson125_1 extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     static final String SAVE_PAGE_NUMBER = "save_page_number";
-
-
 
     int pageNumber;
     int backColor;

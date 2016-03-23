@@ -16,12 +16,15 @@ public class Lesson110_2 extends DialogFragment implements OnClickListener  {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity())
-                .setTitle("Title!").setPositiveButton(R.string.yes, this)
+                .setTitle("Title")
+                .setPositiveButton(R.string.yes, this)
                 .setNegativeButton(R.string.no, this)
                 .setNeutralButton(R.string.maybe, this)
                 .setMessage(R.string.message_text);
-
+        setCancelable(false);
         return adb.create();
+
+
     }
 
     public void onClick(DialogInterface dialog, int which) {
@@ -41,13 +44,13 @@ public class Lesson110_2 extends DialogFragment implements OnClickListener  {
             Log.d(LOG_TAG, "Dialog 2: " + getResources().getString(i));
     }
 
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        Log.d(LOG_TAG, "Dialog 2: onDismiss");
-    }
-
-    public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        Log.d(LOG_TAG, "Dialog 2: onCancel");
-    }
+//    public void onDismiss(DialogInterface dialog) {
+//        super.onDismiss(dialog);
+//        Log.d(LOG_TAG, "Dialog 2: onDismiss");
+//    }
+//
+//    public void onCancel(DialogInterface dialog) {
+//        super.onCancel(dialog);
+//        Log.d(LOG_TAG, "Dialog 2: onCancel");
+//    }
 }

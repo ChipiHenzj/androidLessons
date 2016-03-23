@@ -28,7 +28,9 @@ public class Lesson139 extends FragmentActivity{
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         map = mapFragment.getMap();
+
         if (map == null) {
             finish();
             return;
@@ -65,26 +67,27 @@ public class Lesson139 extends FragmentActivity{
 
 
     public void onClickTest(View view) {
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
 
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(-27, 133))
-                .zoom(5)
-                .bearing(45)
-                .tilt(20)
+                .target(new LatLng(56.9471,24.1158))
+                .zoom(10)
+                .bearing(0)
+                .tilt(0)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         map.animateCamera(cameraUpdate);
 
 
 //        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(
-//                -27, 133));
+//                56.9471,24.1158));
 //        map.animateCamera(cameraUpdate);
 
 
 //        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
-//                new LatLngBounds(new LatLng(-39, 112), new LatLng(-11, 154)),
+//                new LatLngBounds(new LatLng( 56.9471,24.1158), new LatLng( 56.9471,24.1158)),
 //                100);
 //        map.animateCamera(cameraUpdate);
 
