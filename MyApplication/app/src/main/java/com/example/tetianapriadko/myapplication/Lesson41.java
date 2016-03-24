@@ -18,7 +18,7 @@ public class Lesson41 extends AppCompatActivity {
     String[] position = { "Associate Manager", "Senior Analyst", "Analyst",
             "Analyst", "Senior Analyst", "Team Lead", "Analyst", "HR" };
 
-    int salary[] = { 13000, 10000, 13000, 13000, 10000, 15000, 13000, 8000 };
+    int salary[] = { 2300, 1500, 1300, 1300, 1500, 2000, 1300, 1200 };
 
     int[] colors = new int[2];
 
@@ -26,7 +26,6 @@ public class Lesson41 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson41);
-
 
         colors[0] = Color.parseColor("#559966CC");
         colors[1] = Color.parseColor("#55336699");

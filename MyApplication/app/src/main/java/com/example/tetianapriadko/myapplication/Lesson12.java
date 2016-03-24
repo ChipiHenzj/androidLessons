@@ -40,12 +40,12 @@ public class Lesson12 extends AppCompatActivity implements View.OnClickListener{
             case R.id.btnOk:
                 Log.d(TAG, "Press button ОК");
                 tvOut.setText("Press button Ok");
-                Toast.makeText(this, "Press button ОК", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Press button ОК", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnCancel:
                 Log.d(TAG, "Press button Cancel");
                 tvOut.setText("Press button Cancel");
-                Toast.makeText(this, "Press button Cancel", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Press button Cancel", Toast.LENGTH_SHORT).show();
                 break;
         }
 

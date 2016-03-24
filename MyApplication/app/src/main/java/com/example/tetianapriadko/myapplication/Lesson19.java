@@ -103,10 +103,6 @@ public class Lesson19 extends AppCompatActivity  implements View.OnClickListener
                 break;
         }
 
-
-            tvResult.setText(num1 + " " + symbol + " " + num2 + " = " + result);
-
-
     }
 
     @Override

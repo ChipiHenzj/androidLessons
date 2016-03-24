@@ -18,8 +18,11 @@ public class Lesson42 extends AppCompatActivity {
         
         ListView lvMain = (ListView) findViewById(R.id.lvMain);
 
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                R.layout.activity_lesson42_1, names);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_lesson42_1, names);
+                android.R.layout.simple_list_item_1, names);
 
         lvMain.setAdapter(adapter);
     }

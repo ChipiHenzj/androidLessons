@@ -57,11 +57,11 @@
         <activity
             android:name=".Lesson24_2"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
+
         <activity android:name=".Lesson26_1" />
         <activity android:name=".Lesson26_2">
             <intent-filter>
                 <action android:name="ru.startandroid.intent.action.showtime" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

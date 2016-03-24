@@ -78,10 +78,16 @@ public class Lesson50 extends AppCompatActivity {
 
                 // LinearLayout
                 case R.id.llLoad:
+
                     i = ((Integer) data).intValue();
-                    if (i < 40) view.setBackgroundColor(green); else
-                    if (i < 70) view.setBackgroundColor(orange); else
+
+                    if (i < 40) {
+                        view.setBackgroundColor(green);
+                    } else if (i < 70) {
+                        view.setBackgroundColor(orange);
+                    } else {
                         view.setBackgroundColor(red);
+                    }
                     return true;
 
                 // ProgressBar
