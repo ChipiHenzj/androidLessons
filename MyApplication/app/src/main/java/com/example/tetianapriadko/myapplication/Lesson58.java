@@ -28,6 +28,7 @@ public class Lesson58 extends AppCompatActivity {
     public void onclick(View view) {
         showDialog(DIALOG_TIME);
     }
+
     protected Dialog onCreateDialog(int id) {
         if (id == DIALOG_TIME) {
             TimePickerDialog tpd = new TimePickerDialog(this, myCallBack, myHour, myMinute, true);
@@ -35,6 +36,7 @@ public class Lesson58 extends AppCompatActivity {
         }
         return super.onCreateDialog(id);
     }
+
     TimePickerDialog.OnTimeSetListener myCallBack = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             myHour = hourOfDay;

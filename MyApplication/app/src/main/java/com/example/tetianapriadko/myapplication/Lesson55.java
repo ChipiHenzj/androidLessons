@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Lesson55 extends AppCompatActivity {
 
@@ -60,23 +61,19 @@ public class Lesson55 extends AppCompatActivity {
         HeaderViewListAdapter hvlAdapter = (HeaderViewListAdapter) lvMain.getAdapter();
 
         obj = hvlAdapter.getItem(1);
-        Log.d(LOG_TAG, "hvlAdapter.getItem(1) = " + obj.toString());
+        Toast.makeText(this, "hvlAdapter.getItem(1) = " + obj.toString(), Toast.LENGTH_LONG).show();
 
         obj = hvlAdapter.getItem(4);
-        Log.d(LOG_TAG, "hvlAdapter.getItem(4) = " + obj.toString());
-
+        Toast.makeText(this, "hvlAdapter.getItem(4) = " + obj.toString(), Toast.LENGTH_LONG).show();
 
         ArrayAdapter<String> alAdapter = (ArrayAdapter<String>) hvlAdapter.getWrappedAdapter();
 
         obj = alAdapter.getItem(1);
-        Log.d(LOG_TAG, "alAdapter.getItem(1) = " + obj.toString());
+        Toast.makeText(this, "alAdapter.getItem(1) = " + obj.toString(), Toast.LENGTH_LONG).show();
 
         obj = alAdapter.getItem(4);
-        Log.d(LOG_TAG, "alAdapter.getItem(4) = " + obj.toString());
-
+        Toast.makeText(this, "alAdapter.getItem(4) = " + obj.toString(), Toast.LENGTH_LONG).show();
     }
-
-
 
     // создание Header
     View createHeader(String text) {
@@ -84,7 +81,6 @@ public class Lesson55 extends AppCompatActivity {
         ((TextView)v.findViewById(R.id.tvText)).setText(text);
         return v;
     }
-
 
     // создание Footer
     View createFooter(String text) {

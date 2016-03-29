@@ -61,14 +61,5 @@ public class Lesson40 extends AppCompatActivity {
         Log.d(LOG_TAG, "Text of view2: " + ((TextView) view2).getText());
 
 
-
-
-
-
-
-
-
-
-
     }
 }

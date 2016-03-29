@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,8 +28,11 @@ public class Lesson61 extends AppCompatActivity {
     public void onclick(View v) {
         showDialog(DIALOG);
     }
+
     protected Dialog onCreateDialog(int id) {
         Log.d(LOG_TAG, "onCreateDialog");
+        Toast.makeText(this, "onCreateDialog", Toast.LENGTH_SHORT).show();
+
         if (id == DIALOG) {
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             adb.setTitle("Present time");
@@ -37,13 +41,17 @@ public class Lesson61 extends AppCompatActivity {
         }
         return super.onCreateDialog(id);
     }
+
     protected void onPrepareDialog(int id, Dialog dialog) {
         super.onPrepareDialog(id, dialog);
         Log.d(LOG_TAG, "onPrepareDialog");
+        Toast.makeText(this, "onPrepareDialog", Toast.LENGTH_SHORT).show();
+
         if (id == DIALOG) {
             ((AlertDialog)dialog).setMessage(sdf.format(new Date(System.currentTimeMillis())));
         }
     }
+
 }
 
 

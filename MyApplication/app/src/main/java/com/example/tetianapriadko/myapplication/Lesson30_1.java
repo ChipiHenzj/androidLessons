@@ -51,6 +51,7 @@ public class Lesson30_1 extends AppCompatActivity implements View.OnClickListene
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         Log.d("myLogs", "requestCode = " + requestCode + ", resultCode = " + resultCode);
 
         if (resultCode == RESULT_OK) {
@@ -64,7 +65,6 @@ public class Lesson30_1 extends AppCompatActivity implements View.OnClickListene
                     tvText.setGravity(align);
                     break;
             }
-
         } else {
             Toast.makeText(this, "Wrong result", Toast.LENGTH_SHORT).show();
         }

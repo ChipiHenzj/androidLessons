@@ -68,6 +68,7 @@ public class Lesson54_3 extends BaseAdapter {
                 objects.get(position).box = isChecked;
             }
         });
+
         return convertView;
     }
 
@@ -86,4 +87,13 @@ public class Lesson54_3 extends BaseAdapter {
         }
         return box;
     }
+
+    // обработчик для чекбоксов
+    CompoundButton.OnCheckedChangeListener myCheckChangList = new CompoundButton.OnCheckedChangeListener() {
+        public void onCheckedChanged(CompoundButton buttonView,
+                                     boolean isChecked) {
+            // меняем данные товара (в корзине или нет)
+            getProduct((Integer) buttonView.getTag()).box = isChecked;
+        }
+    };
 }

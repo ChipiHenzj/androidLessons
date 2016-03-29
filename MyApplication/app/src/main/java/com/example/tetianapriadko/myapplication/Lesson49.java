@@ -40,9 +40,7 @@ public class Lesson49 extends AppCompatActivity {
                 values.length);
 
         Map<String, Object> m;
-
         int img = 0;
-
         for (int i = 0; i < values.length; i++) {
             m = new HashMap<String, Object>();
 
@@ -105,8 +103,11 @@ public class Lesson49 extends AppCompatActivity {
             super.setViewImage(v, value);
 
         // разрисовываем ImageView
-            if (value == negative) v.setBackgroundColor(Color.RED); else
-            if (value == positive) v.setBackgroundColor(Color.GREEN);
+            if (value == negative) {
+                v.setBackgroundColor(Color.RED);
+            } else if (value == positive) {
+                v.setBackgroundColor(Color.GREEN);
+            }
         }
     }
 

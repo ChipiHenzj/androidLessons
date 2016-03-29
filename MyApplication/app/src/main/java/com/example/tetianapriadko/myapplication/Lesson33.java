@@ -36,7 +36,7 @@ public class Lesson33 extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     protected void onDestroy(){
-        saveText();;
+        saveText();
         super.onDestroy(); 
     }
 
@@ -61,6 +61,7 @@ public class Lesson33 extends AppCompatActivity implements View.OnClickListener 
         ed.commit();
         Toast.makeText(this, "Text saved", Toast.LENGTH_SHORT).show();
     }
+
     void loadText() {
         sPref = getPreferences(MODE_PRIVATE);
         String savedText = sPref.getString(SAVED_TEXT, "");

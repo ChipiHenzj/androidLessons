@@ -58,9 +58,9 @@ public class Lesson44 extends AppCompatActivity {
 
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-//                Log.d(LOG_TAG, "scroll: firstVisibleItem = " + firstVisibleItem
-//                        + ", visibleItemCount" + visibleItemCount
-//                        + ", totalItemCount" + totalItemCount);
+                Log.d(LOG_TAG, "scroll: firstVisibleItem = " + firstVisibleItem
+                        + ", visibleItemCount" + visibleItemCount
+                        + ", totalItemCount" + totalItemCount);
             }
         });
 

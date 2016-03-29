@@ -91,6 +91,7 @@ public class Lesson19 extends AppCompatActivity  implements View.OnClickListener
                 if(num2 == 0){
                     Toast.makeText(this, "Cannot divide on zero", Toast.LENGTH_SHORT).show();
                     etNum2.setText("");
+                    tvResult.setText("");
                     return;
                 } else {
                     result = num1 / num2;

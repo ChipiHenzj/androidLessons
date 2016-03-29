@@ -4,7 +4,9 @@ package com.example.tetianapriadko.myapplication;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.Toast;
 
+//MyObject
 public class Lesson69_2 implements Parcelable {
 
     final static String LOG_TAG = "myLogs";
@@ -24,10 +26,10 @@ public class Lesson69_2 implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int flags) {
+    public void writeToParcel(Parcel out, int flags) {
         Log.d(LOG_TAG, "writeToParcel");
-        parcel.writeString(s);
-        parcel.writeInt(i);
+        out.writeString(s);
+        out.writeInt(i);
     }
 
     public static final Parcelable.Creator<Lesson69_2>
@@ -44,10 +46,11 @@ public class Lesson69_2 implements Parcelable {
         }
     };
 
-    // конструктор, считывающий данные из Parcel
-    private Lesson69_2(Parcel parcel) {
+//     конструктор, считывающий данные из Parcel ?
+    private Lesson69_2(Parcel in) {
         Log.d(LOG_TAG, "MyObject(Parcel parcel)");
-        s = parcel.readString();
-        i = parcel.readInt();
+
+        s = in.readString();
+        i = in.readInt();
     }
 }

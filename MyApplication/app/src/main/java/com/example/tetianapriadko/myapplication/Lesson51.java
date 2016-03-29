@@ -32,16 +32,11 @@ public class Lesson51 extends AppCompatActivity {
         setContentView(R.layout.activity_lesson51_1);
 
         data = new ArrayList<Map<String, Object>>();
-
         Map<String, Object> m;
-
         for (int i = 0; i < 5; i++) {
-
             m = new HashMap<String, Object>();
-
             m.put(ATTRIBUTE_NAME_TEXT, "sometext" + i);
             m.put(ATTRIBUTE_NAME_IMAGE, R.mipmap.ic_launcher);
-
             data.add(m);
         }
 
@@ -86,7 +81,8 @@ public class Lesson51 extends AppCompatActivity {
         if (item.getItemId() == CM_DELETE_ID) {
 
             // получаем инфу о пункте списка
-            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            AdapterView.AdapterContextMenuInfo acmi =
+                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
             // удаляем Map из коллекции, используя позицию пункта в списке
             data.remove(acmi.position);

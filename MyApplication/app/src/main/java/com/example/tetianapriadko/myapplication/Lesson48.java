@@ -46,10 +46,10 @@ public class Lesson48 extends AppCompatActivity {
 
         // массив имен атрибутов, из которых будут читаться данные
         String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_CHECKED,
-                ATTRIBUTE_NAME_IMAGE, ATTRIBUTE_NAME_TEXT };
+                ATTRIBUTE_NAME_IMAGE};
 
         // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { R.id.tvText, R.id.cbChecked, R.id.ivImg, R.id.cbChecked };
+        int[] to = { R.id.tvText, R.id.cbChecked, R.id.ivImg};
 
         // создаем адаптер
         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.activity_lesson48_2,

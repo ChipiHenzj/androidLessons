@@ -31,17 +31,12 @@ public class Lesson50 extends AppCompatActivity {
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
                 load.length);
-
         Map<String, Object> m;
-
         for (int i = 0; i < load.length; i++) {
-
             m = new HashMap<String, Object>();
-
             m.put(ATTRIBUTE_NAME_TEXT, "Day " + (i+1) + ". Load: " + load[i] + "%");
             m.put(ATTRIBUTE_NAME_PB, load[i]);
             m.put(ATTRIBUTE_NAME_LL, load[i]);
-
             data.add(m);
         }
 
