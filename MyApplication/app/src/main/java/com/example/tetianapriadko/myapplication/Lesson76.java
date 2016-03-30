@@ -2,6 +2,7 @@ package com.example.tetianapriadko.myapplication;
 
 
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Lesson76 extends AppCompatActivity {
+public class Lesson76 extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

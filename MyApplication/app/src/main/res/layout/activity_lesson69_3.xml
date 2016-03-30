@@ -10,8 +10,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.tetianapriadko.myapplication.Lesson69_3">
 
+
     <TextView
         android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="second">
+    </TextView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="second">
+    </TextView>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="second">
+    </TextView>
+
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="second">

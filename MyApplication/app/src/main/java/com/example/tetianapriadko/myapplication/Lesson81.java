@@ -19,6 +19,7 @@ public class Lesson81 extends AppCompatActivity {
     final int STATUS_CONNECTED = 2;
 
     Handler h;
+
     TextView tvStatus;
     ProgressBar pbConnect;
     Button btnConnect;

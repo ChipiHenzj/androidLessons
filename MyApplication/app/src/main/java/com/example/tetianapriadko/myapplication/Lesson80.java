@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,8 +27,6 @@ public class Lesson80 extends AppCompatActivity {
         tvInfo = (TextView)findViewById(R.id.tvInfo);
         btnStart = (Button)findViewById(R.id.btnStart);
 
-        btnStart = (Button) findViewById(R.id.btnStart);
-
         h = new Handler() {
             public void handleMessage(android.os.Message msg) {
 
@@ -43,7 +42,6 @@ public class Lesson80 extends AppCompatActivity {
             case R.id.btnStart:
 
                 btnStart.setEnabled(false);
-
                 Thread t = new Thread(new Runnable() {
                     public void run() {
                         for (int i = 1; i <= 10; i++) {
@@ -58,7 +56,8 @@ public class Lesson80 extends AppCompatActivity {
                 break;
 
             case R.id.btnTest:
-                Log.d(LOG_TAG, "test");
+                Log.d(LOG_TAG, "Test");
+                Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
                 break;
 
             default:

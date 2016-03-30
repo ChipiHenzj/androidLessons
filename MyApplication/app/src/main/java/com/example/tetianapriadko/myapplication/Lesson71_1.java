@@ -40,8 +40,8 @@ public class Lesson71_1 extends AppCompatActivity {
         super.onResume();
     }
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem mi = menu.add(0, 1, 0, "Preferences");
-        mi.setIntent(new Intent(this, Lesson71_2.class));
+        MenuItem menuNotif = menu.add(0, 1, 0, "Preferences");
+        menuNotif.setIntent(new Intent(this, Lesson71_2.class));
         return super.onCreateOptionsMenu(menu);
     }
 }

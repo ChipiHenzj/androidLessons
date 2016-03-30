@@ -15,23 +15,22 @@ public class Lesson70 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson70);
-
-        Log.d(LOG_TAG, "onCreate");
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy");
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
     protected void onPause() {
         super.onPause();
-        Log.d(LOG_TAG, "onPause");
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
     }
 
     protected void onRestart() {
         super.onRestart();
-        Log.d(LOG_TAG, "onRestart");
+        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -39,12 +38,12 @@ public class Lesson70 extends AppCompatActivity {
 
         cnt = savedInstanceState.getInt("count");
 
-        Log.d(LOG_TAG, "onRestoreInstanceState");
+        Toast.makeText(this, "onRestoreInstanceState", Toast.LENGTH_SHORT).show();
     }
 
     protected void onResume() {
         super.onResume();
-        Log.d(LOG_TAG, "onResume ");
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
     }
 
     protected void onSaveInstanceState(Bundle outState) {
@@ -52,17 +51,17 @@ public class Lesson70 extends AppCompatActivity {
 
         outState.putInt("count", cnt);
 
-        Log.d(LOG_TAG, "onSaveInstanceState");
+        Toast.makeText(this, "onSaveInstanceState", Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {
         super.onStart();
-        Log.d(LOG_TAG, "onStart");
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
     }
 
     protected void onStop() {
         super.onStop();
-        Log.d(LOG_TAG, "onStop");
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
     }
 
     public void onclick(View v) {
