@@ -158,6 +158,7 @@
         <activity android:name=".Lesson80" />
         <activity android:name=".Lesson81" />
         <activity android:name=".Lesson82" />
+        <activity android:name=".Lesson82_test" />
         <activity android:name=".Lesson86" />
         <activity android:name=".Lesson87" />
         <activity android:name=".Lesson92_1" />

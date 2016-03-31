@@ -50,10 +50,11 @@ public class Lesson99_2 extends Service {
                 .setContentText("Notification's text")
                 .setContentIntent(pIntent)
                 .setContentInfo("Info")
-                .build();
-        
-        nm.notify(1, notif.getNotification());
 
+                .build();
+
+        nm.notify(1, notif.getNotification());
+        startForeground (1, notif.getNotification());
     }
     public IBinder onBind(Intent arg0) {
         return null;

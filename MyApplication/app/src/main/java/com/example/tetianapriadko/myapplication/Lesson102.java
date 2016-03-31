@@ -36,7 +36,8 @@ public class Lesson102 extends AppCompatActivity implements View.OnTouchListener
 
             case MotionEvent.ACTION_DOWN: // нажатие
                 sDown = "Down: " + x + "," + y;
-                sMove = ""; sUp = "";
+                sMove = "";
+                sUp = "";
                 break;
 
             case MotionEvent.ACTION_MOVE: // движение

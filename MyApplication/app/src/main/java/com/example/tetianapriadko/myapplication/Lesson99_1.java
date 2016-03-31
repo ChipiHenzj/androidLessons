@@ -22,8 +22,9 @@ public class Lesson99_1 extends AppCompatActivity {
 
         String fileName = intent.getStringExtra(FILE_NAME);
 
-        if (!TextUtils.isEmpty(fileName))
+        if (!TextUtils.isEmpty(fileName)) {
             tv.setText(fileName);
+        }
     }
 
     public void onClickStart(View v) {

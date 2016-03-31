@@ -17,10 +17,12 @@ public class Lesson92_2 extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
+        Toast.makeText(this, "onStartCommand", Toast.LENGTH_SHORT).show();
         someTask();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -28,6 +30,7 @@ public class Lesson92_2 extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(LOG_TAG, "onDestroy");
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
     void someTask() {
@@ -37,14 +40,13 @@ public class Lesson92_2 extends Service {
 
                 for (int i = 1; i<=5; i++) {
                     Log.d(LOG_TAG, "i = " + i);
-
                     try {
                         TimeUnit.SECONDS.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-//                stopSelf();
+                stopSelf();
             }
         }).start();
     }
@@ -53,8 +55,10 @@ public class Lesson92_2 extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(LOG_TAG, "onBind");
+        Toast.makeText(this, "onBind", Toast.LENGTH_SHORT).show();
         return null;
     }
+
 
 
 }
