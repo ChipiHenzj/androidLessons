@@ -2,6 +2,7 @@ package com.example.tetianapriadko.myapplication;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.Button;
 
 public class Lesson106_2 extends Fragment {
 
+    Context context;
+
     public interface onSomeEventListener {
         public void someEvent(String s);
     }
@@ -19,14 +22,15 @@ public class Lesson106_2 extends Fragment {
     onSomeEventListener someEventListener;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            someEventListener = (onSomeEventListener) activity;
+            someEventListener = (onSomeEventListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
+            throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
         }
     }
+
 
 
     final String LOG_TAG = "myLogs";

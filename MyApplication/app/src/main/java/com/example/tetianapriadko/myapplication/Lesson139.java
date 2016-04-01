@@ -74,13 +74,13 @@ public class Lesson139 extends FragmentActivity{
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(56.9471,24.1158))
                 .zoom(10)
-                .bearing(0)
+                .bearing(3)
                 .tilt(0)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         map.animateCamera(cameraUpdate);
 
-
+//
 //        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(
 //                56.9471,24.1158));
 //        map.animateCamera(cameraUpdate);

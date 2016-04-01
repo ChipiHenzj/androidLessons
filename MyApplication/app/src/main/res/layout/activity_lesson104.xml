@@ -15,13 +15,15 @@
         android:name="com.example.tetianapriadko.myapplication.Lesson104_1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        tools:layout="@layout/activity_lesson104_1">
     </fragment>
     <fragment
         android:name="com.example.tetianapriadko.myapplication.Lesson104_2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        tools:layout="@layout/activity_lesson104_2">
     </fragment>
 
 </LinearLayout>

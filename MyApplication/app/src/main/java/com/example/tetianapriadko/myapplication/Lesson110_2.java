@@ -44,13 +44,13 @@ public class Lesson110_2 extends DialogFragment implements OnClickListener  {
             Log.d(LOG_TAG, "Dialog 2: " + getResources().getString(i));
     }
 
-//    public void onDismiss(DialogInterface dialog) {
-//        super.onDismiss(dialog);
-//        Log.d(LOG_TAG, "Dialog 2: onDismiss");
-//    }
-//
-//    public void onCancel(DialogInterface dialog) {
-//        super.onCancel(dialog);
-//        Log.d(LOG_TAG, "Dialog 2: onCancel");
-//    }
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Log.d(LOG_TAG, "Dialog 2: onDismiss");
+    }
+
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        Log.d(LOG_TAG, "Dialog 2: onCancel");
+    }
 }
