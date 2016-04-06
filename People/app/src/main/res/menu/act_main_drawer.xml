@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_student"
+            android:icon="@drawable/ic_person_outline_24dp"
+            android:title="List of Students" />
+        <item
+            android:id="@+id/nav_teacher"
+            android:icon="@drawable/ic_person_24dp"
+            android:title="List of Teachers" />
+        <item
+            android:id="@+id/nav_all"
+            android:icon="@drawable/ic_people_24dp"
+            android:title="All Lists" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_place_24dp"
+            android:title="All on Map" />
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@drawable/ic_control_point_24dp"
+            android:title="Add" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
