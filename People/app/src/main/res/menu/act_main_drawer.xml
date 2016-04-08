@@ -18,10 +18,6 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_place_24dp"
             android:title="All on Map" />
-        <item
-            android:id="@+id/nav_add"
-            android:icon="@drawable/ic_control_point_24dp"
-            android:title="Add" />
 
     </group>
 

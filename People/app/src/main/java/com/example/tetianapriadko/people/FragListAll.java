@@ -2,6 +2,8 @@ package com.example.tetianapriadko.people;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -11,14 +13,23 @@ import android.view.ViewGroup;
 
 public class FragListAll extends Fragment{
 
-    private static final String TITLE = "All Lists";
+    private static final String TITLE = "List All";
+
+    View rootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.frag_list_all, container, false);
+        rootView= inflater.inflate(R.layout.frag_list_all, container, false);
+        return rootView;
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle(TITLE);
@@ -35,11 +46,17 @@ public class FragListAll extends Fragment{
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        return view;
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+            }
+        });
+
     }
 
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//    }
+
 }

@@ -7,12 +7,6 @@
         android:title="@string/act_settings"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/navigate"
-        android:orderInCategory="200"
-        android:icon="@drawable/ic_add_24dp"
-        android:title="@string/add"
-        app:showAsAction="ifRoom"/>
 </menu>
 
 
