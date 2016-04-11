@@ -20,12 +20,11 @@ public class FragTeacher extends Fragment {
 
     private View rootView;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        rootView =  inflater.inflate(R.layout.frag_teacher, container, false);
+        rootView = inflater.inflate(R.layout.frag_teacher, container, false);
         return rootView;
     }
 

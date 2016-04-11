@@ -6,12 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.tetianapriadko.people.R;
 import com.example.tetianapriadko.people.structure.Student;
 
 import java.util.List;
 
-public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHolder>{
+public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHolder> {
 
 
     private List<Student> students;
@@ -46,7 +47,7 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
         return students != null && !students.isEmpty() ? students.size() : 0;
     }
 
-    public void setData(List<Student> students){
+    public void setData(List<Student> students) {
         this.students = students;
     }
 
@@ -61,8 +62,8 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
 
         ViewHolder(View itemView) {
             super(itemView);
-            studentName = ((TextView) itemView.findViewById(R.id.textView_name));
-            studentSurname = ((TextView) itemView.findViewById(R.id.textView_surname));
+            studentName = ((TextView) itemView.findViewById(R.id.textView_st_name));
+            studentSurname = ((TextView) itemView.findViewById(R.id.textView_st_surname));
         }
     }
 

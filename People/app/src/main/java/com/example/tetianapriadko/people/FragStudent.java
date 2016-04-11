@@ -1,10 +1,10 @@
 package com.example.tetianapriadko.people;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -19,12 +19,11 @@ public class FragStudent extends Fragment {
 
     private View rootView;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        rootView =  inflater.inflate(R.layout.frag_student, container, false);
+        rootView = inflater.inflate(R.layout.frag_student, container, false);
         return rootView;
     }
 
@@ -35,10 +34,9 @@ public class FragStudent extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         Bundle bundle = this.getArguments();
-        String one = bundle.getString("studentName");
-        String two = bundle.getString("studentSurname");
-
-        toolbar.setTitle(one + " " + two);
+        String name = bundle.getString("studentName");
+        String surname = bundle.getString("studentSurname");
+        toolbar.setTitle(name + " " + surname);
 
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
 

@@ -30,7 +30,7 @@ public class FragAddStudent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        rootView =  inflater.inflate(R.layout.frag_add_student, container, false);
+        rootView = inflater.inflate(R.layout.frag_add_student, container, false);
         return rootView;
     }
 

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragMap extends Fragment{
+public class FragMap extends Fragment {
 
     private static final String TITLE = "All on Map";
 
@@ -20,7 +20,7 @@ public class FragMap extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        rootView =  inflater.inflate(R.layout.frag_map, container, false);
+        rootView = inflater.inflate(R.layout.frag_map, container, false);
         return rootView;
     }
 

@@ -1,28 +1,48 @@
 package com.example.tetianapriadko.people;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-public class FragListAll extends Fragment{
+import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
+import com.example.tetianapriadko.people.adapter.AdapterAll;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddSelect;
+import com.example.tetianapriadko.people.structure.Student;
+import com.example.tetianapriadko.people.structure.Teacher;
+
+public class FragListAll extends Fragment implements AdapterAll.OnItemClickListener {
 
     private static final String TITLE = "List All";
 
     View rootView;
+    //    Bundle bundle;
+//    FragTeacher fragTeacher;
+//    FragStudent fragStudent;
+    private AdapterAll adapterAll;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        rootView= inflater.inflate(R.layout.frag_list_all, container, false);
+        rootView = inflater.inflate(R.layout.frag_list_all, container, false);
         return rootView;
 
     }
@@ -50,13 +70,112 @@ public class FragListAll extends Fragment{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                DlgFragAddSelect dlgFragAddSelect = new DlgFragAddSelect();
+                dlgFragAddSelect.setTargetFragment(FragListAll.this, 1);
+                dlgFragAddSelect.show(getFragmentManager(), dlgFragAddSelect.getDialogTag());
             }
         });
 
+        initRecyclerView();
     }
 
+    private void initRecyclerView() {
+        adapterAll = new AdapterAll(null);
+        adapterAll.setItemClickListener(this);
 
+        RecyclerView recyclerViewAll = ((RecyclerView) rootView.findViewById(R.id.recView_all_list));
+        LinearLayoutManager linearLayoutManager
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewAll.setLayoutManager(linearLayoutManager);
+        recyclerViewAll.setHasFixedSize(true);
+        recyclerViewAll.setAdapter(adapterAll);
+        getStudentList();
+    }
+
+    private void getStudentList() {
+        QueryOptions queryOptions = new QueryOptions();
+        BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
+        query.setPageSize(100);
+        Backendless.Data.of(Student.class).find(query, new AsyncCallback<BackendlessCollection<Student>>() {
+            @Override
+            public void handleResponse(BackendlessCollection<Student> response) {
+                Toast.makeText(getActivity(), "Loaded " + response.getCurrentPage().size(),
+                        Toast.LENGTH_SHORT).show();
+                adapterAll.setData(response.getCurrentPage());
+                adapterAll.notifyDataSetChanged();
+                getTeacherList();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                getTeacherList();
+            }
+        });
+    }
+
+    private void getTeacherList() {
+        QueryOptions queryOptions = new QueryOptions();
+        BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
+        query.setPageSize(100);
+        Backendless.Data.of(Teacher.class).find(query, new AsyncCallback<BackendlessCollection<Teacher>>() {
+            @Override
+            public void handleResponse(BackendlessCollection<Teacher> response) {
+                Toast.makeText(getActivity(), "Loaded " + response.getCurrentPage().size(), Toast.LENGTH_SHORT).show();
+                adapterAll.setData(response.getCurrentPage());
+                adapterAll.notifyDataSetChanged();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void itemClicked(View view, int position) {
+
+        Bundle bundle = new Bundle();
+        if (adapterAll.getAllList().get(position) instanceof Student) {
+            bundle.putString("studentName", ((Student) adapterAll.getAllList().get(position)).getName());
+            bundle.putString("studentSurname", ((Student) adapterAll.getAllList().get(position)).getSurname());
+            FragStudent fragStudent = new FragStudent();
+            fragStudent.setArguments(bundle);
+            replaceFragmentBackStack(fragStudent);
+
+        } else if (adapterAll.getAllList().get(position) instanceof Teacher) {
+            bundle.putString("teacherName", ((Teacher) adapterAll.getAllList().get(position)).getName());
+            bundle.putString("teacherSurname", ((Teacher) adapterAll.getAllList().get(position)).getSurname());
+            FragTeacher fragTeacher = new FragTeacher();
+            fragTeacher.setArguments(bundle);
+            replaceFragmentBackStack(fragTeacher);
+        }
+
+    }
+
+    protected void replaceFragmentBackStack(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.frag_container, fragment)
+                .addToBackStack("frag")
+                .commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("Human");
+                if (result.equals("Student")) {
+                    replaceFragmentBackStack(new FragAddStudent());
+                } else {
+                    replaceFragmentBackStack(new FragAddTeacher());
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
+

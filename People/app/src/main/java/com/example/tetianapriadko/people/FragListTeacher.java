@@ -22,12 +22,10 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
-import com.example.tetianapriadko.people.adapter.AdapterStudents;
 import com.example.tetianapriadko.people.adapter.AdapterTeachers;
-import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
-public class FragListTeacher extends Fragment{
+public class FragListTeacher extends Fragment {
 
     private static final String TITLE = "List of Teachers";
 
@@ -40,7 +38,7 @@ public class FragListTeacher extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        rootView =  inflater.inflate(R.layout.frag_list_teacher, container, false);
+        rootView = inflater.inflate(R.layout.frag_list_teacher, container, false);
         return rootView;
     }
 
@@ -71,7 +69,7 @@ public class FragListTeacher extends Fragment{
 
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         LinearLayoutManager studentLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         adapterTeachers = new AdapterTeachers(null);
@@ -88,19 +86,19 @@ public class FragListTeacher extends Fragment{
         query.setPageSize(100);
         Backendless.Data.of(Teacher.class).find(query,
                 new AsyncCallback<BackendlessCollection<Teacher>>() {
-            @Override
-            public void handleResponse(BackendlessCollection<Teacher> response) {
-                Toast.makeText(getActivity(), "Loaded " + response.getCurrentPage().size(),
-                        Toast.LENGTH_SHORT).show();
-                adapterTeachers.setData(response.getCurrentPage());
-                adapterTeachers.notifyDataSetChanged();
-            }
+                    @Override
+                    public void handleResponse(BackendlessCollection<Teacher> response) {
+                        Toast.makeText(getActivity(), "Loaded " + response.getCurrentPage().size(),
+                                Toast.LENGTH_SHORT).show();
+                        adapterTeachers.setData(response.getCurrentPage());
+                        adapterTeachers.notifyDataSetChanged();
+                    }
 
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override

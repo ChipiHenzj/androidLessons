@@ -37,7 +37,7 @@ public class FragListStudent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        rootView =  inflater.inflate(R.layout.frag_list_student, container, false);
+        rootView = inflater.inflate(R.layout.frag_list_student, container, false);
         return rootView;
     }
 
@@ -65,7 +65,7 @@ public class FragListStudent extends Fragment {
         getStudentList();
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         LinearLayoutManager studentLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         adapterStudents = new AdapterStudents(null);

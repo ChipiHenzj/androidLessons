@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.tetianapriadko.people.R;
 import com.example.tetianapriadko.people.structure.Teacher;
 
@@ -46,7 +47,7 @@ public class AdapterTeachers extends RecyclerView.Adapter<AdapterTeachers.ViewHo
         return teachers != null && !teachers.isEmpty() ? teachers.size() : 0;
     }
 
-    public void setData(List<Teacher> teachers){
+    public void setData(List<Teacher> teachers) {
         this.teachers = teachers;
     }
 

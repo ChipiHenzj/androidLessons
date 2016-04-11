@@ -5,7 +5,7 @@ import android.app.Application;
 import com.backendless.Backendless;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 
-public class App extends Application{
+public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

@@ -32,5 +32,9 @@
 
     <string name="registration_success_message">Thank you for registering with the %1$s. Click the button below to proceed to the login.</string>
     <string name="delete">Delete</string>
+    <string name="message_text">Add:</string>
+    <string name="cancel">Cancel</string>
+    <string name="teacher">Teacher</string>
+    <string name="student">Student</string>
 
 </resources>
