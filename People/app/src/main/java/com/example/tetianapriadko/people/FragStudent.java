@@ -1,5 +1,7 @@
 package com.example.tetianapriadko.people;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +16,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
+import com.example.tetianapriadko.people.structure.Student;
 
 public class FragStudent extends Fragment {
 
@@ -62,8 +72,33 @@ public class FragStudent extends Fragment {
             }
         });
 
+        getStudentFromBE(bundle.getString("studentId"));
     }
 
+    private void getStudentFromBE(String objectID) {
+        Backendless.Persistence.of(Student.class).findById(objectID, new AsyncCallback<Student>() {
+            @Override
+            public void handleResponse(Student response) {
+                ((TextView) rootView.findViewById(R.id.fromBE_student_name))
+                        .setText(response.getName());
+                ((TextView) rootView.findViewById(R.id.fromBE_student_surname))
+                        .setText(response.getName());
+                ((TextView) rootView.findViewById(R.id.fromBE_student_phone))
+                        .setText(response.getName());
+                ((TextView) rootView.findViewById(R.id.fromBE_student_email))
+                        .setText(response.getName());
+                ((TextView) rootView.findViewById(R.id.fromBE_student_speciality))
+                        .setText(response.getName());
+                ((TextView) rootView.findViewById(R.id.fromBE_student_place))
+                        .setText(response.getName());
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                // an error has occurred, the error code can be retrieved with fault.getCode()
+            }
+        });
+    }
 
     protected void replaceFragmentBackStack(Fragment fragment) {
         getFragmentManager()
@@ -84,9 +119,33 @@ public class FragStudent extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_delete) {
-
+            DlgFragDeleteStudent studentDelete = new DlgFragDeleteStudent();
+            studentDelete.setTargetFragment(FragStudent.this, 1);
+            studentDelete.show(getFragmentManager(), studentDelete.getDialogTag());
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case MainActivity.RESULT_OK:
+                switch (requestCode) {
+                    case 1:
+
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                switch (requestCode) {
+                    case 1:
+                        break;
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
 }

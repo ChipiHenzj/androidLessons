@@ -51,6 +51,7 @@
                     android:hint="Name"
                     android:maxLines="1"
                     android:singleLine="true"/>
+                <requestFocus></requestFocus>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

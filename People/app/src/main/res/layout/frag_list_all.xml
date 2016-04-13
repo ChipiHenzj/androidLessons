@@ -35,6 +35,4 @@
         app:layout_anchorGravity="bottom|end"
         app:layout_behavior="com.example.tetianapriadko.people.ScrollAwareBehavior"/>
 
-    <!--android:layout_gravity="bottom|end"-->
-
 </android.support.design.widget.CoordinatorLayout>

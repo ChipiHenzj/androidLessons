@@ -1,12 +1,15 @@
 package com.example.tetianapriadko.people;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +21,9 @@ import android.widget.Toast;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddStudentDone;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddTeacherDone;
+import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
 public class FragAddTeacher extends Fragment {
@@ -25,6 +31,12 @@ public class FragAddTeacher extends Fragment {
     private static final String TITLE = "Add Teacher";
 
     private View rootView;
+    private EditText name;
+    private EditText surname;
+    private EditText email;
+    private EditText phone;
+    private EditText speciality;
+    private EditText place;
 
     @Nullable
     @Override
@@ -54,6 +66,17 @@ public class FragAddTeacher extends Fragment {
                 R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        initEditText();
+    }
+
+    private void initEditText() {
+        name = ((EditText) rootView.findViewById(R.id.edit_name));
+        surname = ((EditText) rootView.findViewById(R.id.edit_surname));
+        email = ((EditText) rootView.findViewById(R.id.edit_email));
+        phone = ((EditText) rootView.findViewById(R.id.edit_phone));
+        speciality = ((EditText) rootView.findViewById(R.id.edit_speciality));
+        place = ((EditText) rootView.findViewById(R.id.edit_place));
     }
 
     @Override
@@ -64,33 +87,79 @@ public class FragAddTeacher extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_done) {
-            Teacher teacher = new Teacher();
-            teacher.setName(((EditText) rootView.findViewById(R.id.edit_name)).getText().toString());
-            teacher.setSurname(((EditText) rootView.findViewById(R.id.edit_surname)).getText().toString());
-            teacher.setEmail(((EditText) rootView.findViewById(R.id.edit_email)).getText().toString());
-            teacher.setPhoneNumber(((EditText) rootView.findViewById(R.id.edit_phone)).getText().toString());
-            teacher.setSpeciality(((EditText) rootView.findViewById(R.id.edit_speciality)).getText().toString());
-            teacher.setPlaceofWork(((EditText) rootView.findViewById(R.id.edit_place)).getText().toString());
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                if (TextUtils.isEmpty(name.getText().toString()) ||
+                        TextUtils.isEmpty(surname.getText().toString()) ||
+                        TextUtils.isEmpty(email.getText().toString()) ||
+                        TextUtils.isEmpty(phone.getText().toString()) ||
+                        TextUtils.isEmpty(speciality.getText().toString()) ||
+                        TextUtils.isEmpty(place.getText().toString())) {
+                    name.setError("Empty name");
+                    surname.setError("Empty name");
+                    email.setError("Empty name");
+                    phone.setError("Empty name");
+                    speciality.setError("Empty name");
+                    place.setError("Empty name");
+                } else {
+                    name.setError(null);
+                    surname.setError(null);
+                    email.setError(null);
+                    phone.setError(null);
+                    speciality.setError(null);
+                    place.setError(null);
 
-            teacher.saveAsync(new AsyncCallback<Teacher>() {
-                @Override
-                public void handleResponse(Teacher response) {
-                    Toast.makeText(getActivity(), "Teacher added", Toast.LENGTH_SHORT).show();
-//                    getFragmentManager().popBackStack();
-                    replaceFragmentBackStack(new FragListTeacher());
+                    DlgFragAddTeacherDone teacherDone = new DlgFragAddTeacherDone();
+                    teacherDone.setTargetFragment(FragAddTeacher.this, 1);
+                    teacherDone.show(getFragmentManager(), teacherDone.getDialogTag());
                 }
-
-                @Override
-                public void handleFault(BackendlessFault fault) {
-                    Toast.makeText(getActivity(), "Teacher failed", Toast.LENGTH_SHORT).show();
-                }
-            });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case MainActivity.RESULT_OK:
+                switch (requestCode) {
+                    case 1:
+                        Teacher teacher = new Teacher();
+                        teacher.setName((name.getText().toString()));
+                        teacher.setSurname((surname.getText().toString()));
+                        teacher.setEmail((email.getText().toString()));
+                        teacher.setPhoneNumber((phone.getText().toString()));
+                        teacher.setSpeciality((speciality.getText().toString()));
+                        teacher.setPlaceofWork((place.getText().toString()));
+
+                        teacher.saveAsync(new AsyncCallback<Teacher>() {
+                            @Override
+                            public void handleResponse(Teacher response) {
+                                Toast.makeText(getActivity(), "Teacher added", Toast.LENGTH_SHORT).show();
+                                //                    getFragmentManager().popBackStack();
+                                replaceFragmentBackStack(new FragListStudent());
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+                                Toast.makeText(getActivity(), "Teacher failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                switch (requestCode) {
+                    case 1:
+                        break;
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
 
     protected void replaceFragmentBackStack(Fragment fragment) {
         getFragmentManager()

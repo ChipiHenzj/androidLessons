@@ -17,22 +17,3 @@
             android:id="@+id/radioBtn_student" />
     </RadioGroup>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<Button-->
-            <!--android:id="@+id/btnCancel"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:text="@string/cancel">-->
-        <!--</Button>-->
-        <!--<Button-->
-            <!--android:id="@+id/btnAdd"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:text="@string/add">-->
-        <!--</Button>-->
-
-    <!--</LinearLayout>-->

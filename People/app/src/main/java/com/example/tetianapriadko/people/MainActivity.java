@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragExit;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,10 +40,30 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                finish();
+                DlgFragExit dlgFragExit = new DlgFragExit();
+                dlgFragExit.setTargetActivity(this, 2);
+                dlgFragExit.show(getSupportFragmentManager(), dlgFragExit.getDialogTag());
+//                finish();
             } else {
                 super.onBackPressed();
             }
+        }
+    }
+
+    public void customActivityResult(int requestCode, int resultCode){
+        switch (requestCode){
+            case 2:
+                switch (resultCode){
+                    case RESULT_OK:
+                        finish();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+
         }
     }
 

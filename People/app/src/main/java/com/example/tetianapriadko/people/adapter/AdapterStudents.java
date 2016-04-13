@@ -17,6 +17,7 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
 
     private List<Student> students;
     private OnItemClickListener itemClickListener;
+    private OnItemLongClickListener itemLongClickListener;
 
     public AdapterStudents(List<Student> students) {
         this.students = students;
@@ -40,6 +41,15 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
                         holder.getAdapterPosition(), students.get(position));
             }
         });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                itemLongClickListener.itemLongClicked(holder.studentName,
+                        holder.getAdapterPosition(), students.get(position));
+                return false;
+            }
+        });
     }
 
     @Override
@@ -51,8 +61,16 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
         this.students = students;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
+    }
+
+    public void setItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
+        this.itemLongClickListener = itemLongClickListener;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,5 +87,9 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
 
     public interface OnItemClickListener {
         void itemClicked(View view, int position, Student student);
+    }
+
+    public interface OnItemLongClickListener {
+        void itemLongClicked(View view, int position, Student student);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.tetianapriadko.people;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,8 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterTeachers;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
+import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
 public class FragListTeacher extends Fragment {
@@ -74,6 +78,7 @@ public class FragListTeacher extends Fragment {
                 LinearLayoutManager.VERTICAL, false);
         adapterTeachers = new AdapterTeachers(null);
         adapterTeachers.setItemClickListener(teacherListener);
+        adapterTeachers.setItemLongClickListener(teacherLongListener);
         recViewTeacherList = ((RecyclerView) rootView.findViewById(R.id.recView_teacher_list));
         recViewTeacherList.setLayoutManager(studentLayoutManager);
         recViewTeacherList.setHasFixedSize(true);
@@ -88,8 +93,6 @@ public class FragListTeacher extends Fragment {
                 new AsyncCallback<BackendlessCollection<Teacher>>() {
                     @Override
                     public void handleResponse(BackendlessCollection<Teacher> response) {
-                        Toast.makeText(getActivity(), "Loaded " + response.getCurrentPage().size(),
-                                Toast.LENGTH_SHORT).show();
                         adapterTeachers.setData(response.getCurrentPage());
                         adapterTeachers.notifyDataSetChanged();
                     }
@@ -125,17 +128,53 @@ public class FragListTeacher extends Fragment {
                 .commit();
     }
 
-    private AdapterTeachers.OnItemClickListener teacherListener = new AdapterTeachers.OnItemClickListener() {
+    private AdapterTeachers.OnItemClickListener teacherListener =
+            new AdapterTeachers.OnItemClickListener() {
         @Override
         public void itemClicked(View view, int position, Teacher teacher) {
             Bundle bundle = new Bundle();
             bundle.putString("teacherName", teacher.getName());
             bundle.putString("teacherSurname", teacher.getSurname());
+            bundle.putString("teacherId", teacher.getObjectId());
             FragTeacher fragTeacher = new FragTeacher();
             fragTeacher.setArguments(bundle);
             replaceFragmentBackStack(fragTeacher);
-
-            Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
         }
     };
+
+    private AdapterTeachers.OnItemLongClickListener teacherLongListener =
+            new AdapterTeachers.OnItemLongClickListener() {
+                @Override
+                public void itemLongClicked(View view, int position, Teacher teacher) {
+                    DlgFragDeleteTeacher teacherDelete = new DlgFragDeleteTeacher();
+                    teacherDelete.setTargetFragment(FragListTeacher.this, 1);
+                    teacherDelete.show(getFragmentManager(), teacherDelete.getDialogTag());
+                }
+
+    };
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case MainActivity.RESULT_OK:
+                switch (requestCode) {
+                    case 1:
+                        Toast.makeText(getActivity(), "Result OK", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                switch (requestCode) {
+                    case 1:
+                        Toast.makeText(getActivity(), "Result Cancel", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
+
 }

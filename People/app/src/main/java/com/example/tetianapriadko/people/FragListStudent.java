@@ -1,5 +1,7 @@
 package com.example.tetianapriadko.people;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterStudents;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.structure.Student;
 
 public class FragListStudent extends Fragment {
@@ -70,6 +73,7 @@ public class FragListStudent extends Fragment {
                 LinearLayoutManager.VERTICAL, false);
         adapterStudents = new AdapterStudents(null);
         adapterStudents.setItemClickListener(studentListener);
+        adapterStudents.setItemLongClickListener(studentLongListener);
         recViewStudentList = ((RecyclerView) rootView.findViewById(R.id.recView_student_list));
         recViewStudentList.setLayoutManager(studentLayoutManager);
         recViewStudentList.setHasFixedSize(true);
@@ -83,7 +87,6 @@ public class FragListStudent extends Fragment {
         Backendless.Data.of(Student.class).find(query, new AsyncCallback<BackendlessCollection<Student>>() {
             @Override
             public void handleResponse(BackendlessCollection<Student> response) {
-                Toast.makeText(getActivity(), "Loaded " + response.getCurrentPage().size(), Toast.LENGTH_SHORT).show();
                 adapterStudents.setData(response.getCurrentPage());
                 adapterStudents.notifyDataSetChanged();
             }
@@ -125,12 +128,60 @@ public class FragListStudent extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("studentName", student.getName());
             bundle.putString("studentSurname", student.getSurname());
+            bundle.putString("studentId", student.getObjectId());
             FragStudent fragStudent = new FragStudent();
             fragStudent.setArguments(bundle);
             replaceFragmentBackStack(fragStudent);
-
-            Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
         }
     };
+
+    private AdapterStudents.OnItemLongClickListener studentLongListener
+            = new AdapterStudents.OnItemLongClickListener() {
+        @Override
+        public void itemLongClicked(View view, int position, Student student) {
+            DlgFragDeleteStudent studentDelete = new DlgFragDeleteStudent();
+            Bundle bundle = new Bundle();
+            bundle.putInt("positionStudent", position);
+            studentDelete.setArguments(bundle);
+            studentDelete.setTargetFragment(FragListStudent.this, 1);
+            studentDelete.show(getFragmentManager(), studentDelete.getDialogTag());
+        }
+    };
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case MainActivity.RESULT_OK:
+                switch (requestCode) {
+                    case 1:
+                        Student student
+                                = adapterStudents.getStudents().get(data.getIntExtra("positionStudent", -1));
+                        student.removeAsync(new AsyncCallback<Long>() {
+                            @Override
+                            public void handleResponse(Long response) {
+                                getStudentList();
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+
+                            }
+                        });
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                switch (requestCode) {
+                    case 1:
+                        Toast.makeText(getActivity(), "Result Cancel", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
 
 }

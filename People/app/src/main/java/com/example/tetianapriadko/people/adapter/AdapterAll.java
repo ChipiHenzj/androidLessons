@@ -18,6 +18,7 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
 
     private List<Object> allList;
     private OnItemClickListener itemClickListener;
+    private OnItemLongClickListener itemLongClickListener;
 
     public AdapterAll(List<Object> allList) {
         this.allList = allList;
@@ -60,6 +61,16 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
                     itemClickListener.itemClicked(holder.studentName, holder.getAdapterPosition());
                 }
             });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    itemLongClickListener.itemLongClicked(holder.studentName,
+                            holder.getAdapterPosition());
+                    return false;
+                }
+            });
+
         } else if (allList.get(position) instanceof Teacher) {
             holder.teacherName.setText(((Teacher) allList.get(position)).getName());
             holder.teacherSurname.setText(((Teacher) allList.get(position)).getSurname());
@@ -69,6 +80,16 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
                     itemClickListener.itemClicked(holder.teacherName, holder.getAdapterPosition());
                 }
             });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    itemLongClickListener.itemLongClicked(holder.teacherName,
+                            holder.getAdapterPosition());
+                    return false;
+                }
+            });
+
         }
     }
 
@@ -94,6 +115,10 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
         this.itemClickListener = itemClickListener;
     }
 
+    public void setItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
+        this.itemLongClickListener = itemLongClickListener;
+    }
+
     protected class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentName;
         public TextView studentSurname;
@@ -112,5 +137,9 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
 
     public interface OnItemClickListener {
         void itemClicked(View view, int position);
+    }
+
+    public interface OnItemLongClickListener {
+        void itemLongClicked(View view, int position);
     }
 }
