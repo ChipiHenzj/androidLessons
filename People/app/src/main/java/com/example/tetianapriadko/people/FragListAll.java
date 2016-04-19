@@ -24,7 +24,7 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterAll;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddSelect;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
 import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
@@ -137,6 +137,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
         if (adapterAll.getAllList().get(position) instanceof Student) {
             bundle.putString("studentName", ((Student) adapterAll.getAllList().get(position)).getName());
             bundle.putString("studentSurname", ((Student) adapterAll.getAllList().get(position)).getSurname());
+            bundle.putString("studentId", ((Student) adapterAll.getAllList().get(position)).getObjectId());
             FragStudent fragStudent = new FragStudent();
             fragStudent.setArguments(bundle);
             replaceFragmentBackStack(fragStudent);
@@ -144,6 +145,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
         } else if (adapterAll.getAllList().get(position) instanceof Teacher) {
             bundle.putString("teacherName", ((Teacher) adapterAll.getAllList().get(position)).getName());
             bundle.putString("teacherSurname", ((Teacher) adapterAll.getAllList().get(position)).getSurname());
+            bundle.putString("teacherId", ((Teacher) adapterAll.getAllList().get(position)).getObjectId());
             FragTeacher fragTeacher = new FragTeacher();
             fragTeacher.setArguments(bundle);
             replaceFragmentBackStack(fragTeacher);
@@ -191,7 +193,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
     @Override
     public void itemLongClicked(View view, int position) {
         if (adapterAll.getAllList().get(position) instanceof Student) {
-            DlgFragDeleteStudent studentDelete = new DlgFragDeleteStudent();
+            DlgFragDeleteStudList studentDelete = new DlgFragDeleteStudList();
             studentDelete.setTargetFragment(FragListAll.this, 2);
             studentDelete.show(getFragmentManager(), studentDelete.getDialogTag());
 

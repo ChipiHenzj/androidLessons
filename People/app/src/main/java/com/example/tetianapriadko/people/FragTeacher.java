@@ -29,6 +29,7 @@ import com.example.tetianapriadko.people.structure.Teacher;
 public class FragTeacher extends Fragment {
 
     private View rootView;
+    private String selectedTeacherId;
 
     @Nullable
     @Override
@@ -67,7 +68,11 @@ public class FragTeacher extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle teacherIdBundle = new Bundle();
+                teacherIdBundle.putString("teacherObjectId", selectedTeacherId);
+                FragEditTeacher editTeacher = new FragEditTeacher();
+                editTeacher.setArguments(teacherIdBundle);
+                replaceFragmentBackStack(editTeacher);
             }
         });
 
@@ -79,18 +84,19 @@ public class FragTeacher extends Fragment {
         Backendless.Persistence.of(Teacher.class).findById(objectID, new AsyncCallback<Teacher>() {
             @Override
             public void handleResponse(Teacher response) {
+                selectedTeacherId = response.getObjectId();
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_name))
                         .setText(response.getName());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_surname))
-                        .setText(response.getName());
-                ((TextView) rootView.findViewById(R.id.fromBE_teacher_phone))
-                        .setText(response.getName());
+                        .setText(response.getSurname());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_email))
-                        .setText(response.getName());
+                        .setText(response.getEmail());
+                ((TextView) rootView.findViewById(R.id.fromBE_teacher_phone))
+                        .setText(response.getPhoneNumber());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_speciality))
-                        .setText(response.getName());
+                        .setText(response.getSpeciality());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_place))
-                        .setText(response.getName());
+                        .setText(response.getPlaceofWork());
             }
 
             @Override

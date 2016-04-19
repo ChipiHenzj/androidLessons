@@ -20,11 +20,9 @@ public class DlgFragDeleteStudent extends DlgFragAbstractOkCancel {
     @Override
     protected void performOK(DialogInterface dialog, int id) {
         if (getTargetFragment() != null) {
-            Intent intent = new Intent();
-            intent.putExtra("positionStudent", getArguments().getInt("positionStudent"));
             getTargetFragment().onActivityResult(getTargetRequestCode(),
                     Activity.RESULT_OK,
-                    intent);
+                    null);
             dismiss();
         } else {
             dismiss();

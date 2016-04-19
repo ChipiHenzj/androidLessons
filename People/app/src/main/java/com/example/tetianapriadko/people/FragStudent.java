@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -17,17 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.structure.Student;
 
 public class FragStudent extends Fragment {
 
     private View rootView;
+    private String selectedStudentId;
+    private Student selectedStudent;
 
     @Nullable
     @Override
@@ -66,7 +67,11 @@ public class FragStudent extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle studentIdBundle = new Bundle();
+                studentIdBundle.putString("studentObjectId", selectedStudentId);
+                FragEditStudent editStudent = new FragEditStudent();
+                editStudent.setArguments(studentIdBundle);
+                replaceFragmentBackStack(editStudent);
             }
         });
 
@@ -77,18 +82,20 @@ public class FragStudent extends Fragment {
         Backendless.Persistence.of(Student.class).findById(objectID, new AsyncCallback<Student>() {
             @Override
             public void handleResponse(Student response) {
+                selectedStudentId = response.getObjectId();
+                selectedStudent = response;
                 ((TextView) rootView.findViewById(R.id.fromBE_student_name))
                         .setText(response.getName());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_surname))
-                        .setText(response.getName());
-                ((TextView) rootView.findViewById(R.id.fromBE_student_phone))
-                        .setText(response.getName());
+                        .setText(response.getSurname());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_email))
-                        .setText(response.getName());
+                        .setText(response.getEmail());
+                ((TextView) rootView.findViewById(R.id.fromBE_student_phone))
+                        .setText(response.getPhoneNumber());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_speciality))
-                        .setText(response.getName());
+                        .setText(response.getSpeciality());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_place))
-                        .setText(response.getName());
+                        .setText(response.getPlaceOfStudy());
             }
 
             @Override
@@ -124,14 +131,23 @@ public class FragStudent extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        selectedStudent.removeAsync(new AsyncCallback<Long>() {
+                            @Override
+                            public void handleResponse(Long response) {
+                                replaceFragmentBackStack(new FragListStudent());
+                            }
 
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+
+                            }
+                        });
                         break;
                 }
                 break;

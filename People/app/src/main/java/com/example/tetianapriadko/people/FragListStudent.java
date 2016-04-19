@@ -25,7 +25,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterStudents;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
 import com.example.tetianapriadko.people.structure.Student;
 
 public class FragListStudent extends Fragment {
@@ -139,7 +139,7 @@ public class FragListStudent extends Fragment {
             = new AdapterStudents.OnItemLongClickListener() {
         @Override
         public void itemLongClicked(View view, int position, Student student) {
-            DlgFragDeleteStudent studentDelete = new DlgFragDeleteStudent();
+            DlgFragDeleteStudList studentDelete = new DlgFragDeleteStudList();
             Bundle bundle = new Bundle();
             bundle.putInt("positionStudent", position);
             studentDelete.setArguments(bundle);
