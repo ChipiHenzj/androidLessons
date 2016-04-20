@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -32,6 +33,7 @@ public class FragListStudent extends Fragment {
 
     private static final String TITLE = "List of Students";
 
+    private FrameLayout layoutProgress;
     private View rootView;
     private AdapterStudents adapterStudents;
     private RecyclerView recViewStudentList;
@@ -63,6 +65,9 @@ public class FragListStudent extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
+        layoutProgress.setVisibility(View.GONE);
+
         initRecyclerView();
 
         getStudentList();
@@ -81,12 +86,14 @@ public class FragListStudent extends Fragment {
     }
 
     private void getStudentList() {
+        layoutProgress.setVisibility(View.VISIBLE);
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
         Backendless.Data.of(Student.class).find(query, new AsyncCallback<BackendlessCollection<Student>>() {
             @Override
             public void handleResponse(BackendlessCollection<Student> response) {
+                layoutProgress.setVisibility(View.GONE);
                 adapterStudents.setData(response.getCurrentPage());
                 adapterStudents.notifyDataSetChanged();
             }
@@ -155,11 +162,13 @@ public class FragListStudent extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        layoutProgress.setVisibility(View.VISIBLE);
                         Student student
                                 = adapterStudents.getStudents().get(data.getIntExtra("positionStudent", -1));
                         student.removeAsync(new AsyncCallback<Long>() {
                             @Override
                             public void handleResponse(Long response) {
+                                layoutProgress.setVisibility(View.GONE);
                                 getStudentList();
                             }
 

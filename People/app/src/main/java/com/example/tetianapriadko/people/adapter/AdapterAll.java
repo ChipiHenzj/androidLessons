@@ -107,6 +107,11 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
         }
     }
 
+    public void clearAll(){
+        allList.clear();
+        notifyDataSetChanged();
+    }
+
     public List<Object> getAllList() {
         return allList;
     }

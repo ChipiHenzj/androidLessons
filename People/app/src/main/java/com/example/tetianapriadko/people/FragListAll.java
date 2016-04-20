@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -24,14 +25,15 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterAll;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddSelect;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteFromAll;
 import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
 public class FragListAll extends Fragment implements AdapterAll.OnItemClickListener, AdapterAll.OnItemLongClickListener {
 
     private static final String TITLE = "List of All";
+
+    private FrameLayout layoutProgress;
 
     View rootView;
     private AdapterAll adapterAll;
@@ -75,7 +77,11 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
             }
         });
 
+        layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
+        layoutProgress.setVisibility(View.GONE);
+
         initRecyclerView();
+
     }
 
     private void initRecyclerView() {
@@ -93,12 +99,14 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
     }
 
     private void getStudentList() {
+        layoutProgress.setVisibility(View.VISIBLE);
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
         Backendless.Data.of(Student.class).find(query, new AsyncCallback<BackendlessCollection<Student>>() {
             @Override
             public void handleResponse(BackendlessCollection<Student> response) {
+                layoutProgress.setVisibility(View.GONE);
                 adapterAll.setData(response.getCurrentPage());
                 adapterAll.notifyDataSetChanged();
                 getTeacherList();
@@ -113,12 +121,14 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
     }
 
     private void getTeacherList() {
+        layoutProgress.setVisibility(View.VISIBLE);
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
         Backendless.Data.of(Teacher.class).find(query, new AsyncCallback<BackendlessCollection<Teacher>>() {
             @Override
             public void handleResponse(BackendlessCollection<Teacher> response) {
+                layoutProgress.setVisibility(View.GONE);
                 adapterAll.setData(response.getCurrentPage());
                 adapterAll.notifyDataSetChanged();
             }
@@ -175,16 +185,47 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
                     }
                 }
                 break;
-//            case 2:
-//                if (resultCode == Activity.RESULT_OK) {
-//                    String result = data.getStringExtra("Human");
-//                    if (result.equals("Student")) {
-////                        replaceFragmentBackStack(new FragAddStudent());
-//                    } else {
-////                        replaceFragmentBackStack(new FragAddTeacher());
-//                    }
-//                }
-//                break;
+            case 2:
+                if (resultCode == Activity.RESULT_OK) {
+                    layoutProgress.setVisibility(View.VISIBLE);
+                    if(adapterAll.getAllList().get(data.getIntExtra("position",0)) instanceof Student){
+                        Student student
+                                = (Student) adapterAll.getAllList().get(data.getIntExtra("position", -1));
+                        student.removeAsync(new AsyncCallback<Long>() {
+                            @Override
+                            public void handleResponse(Long response) {
+                                layoutProgress.setVisibility(View.GONE);
+                                adapterAll.clearAll();
+                                getStudentList();
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+
+                            }
+                        });
+                    } else if (adapterAll.getAllList().get(data.getIntExtra("position", 0)) instanceof Teacher){
+                        Teacher teacher
+                                = (Teacher) adapterAll.getAllList().get(data.getIntExtra("position", -1));
+                        teacher.removeAsync(new AsyncCallback<Long>() {
+                            @Override
+                            public void handleResponse(Long response) {
+                                layoutProgress.setVisibility(View.GONE);
+                                adapterAll.clearAll();
+                                getStudentList();
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+
+                            }
+                        });
+                    }
+
+
+
+                }
+                break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -192,16 +233,22 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
 
     @Override
     public void itemLongClicked(View view, int position) {
-        if (adapterAll.getAllList().get(position) instanceof Student) {
-            DlgFragDeleteStudList studentDelete = new DlgFragDeleteStudList();
-            studentDelete.setTargetFragment(FragListAll.this, 2);
-            studentDelete.show(getFragmentManager(), studentDelete.getDialogTag());
-
-        } else if (adapterAll.getAllList().get(position) instanceof Teacher) {
-            DlgFragDeleteTeacher teacherDelete = new DlgFragDeleteTeacher();
-            teacherDelete.setTargetFragment(FragListAll.this, 2);
-            teacherDelete.show(getFragmentManager(), teacherDelete.getDialogTag());
-        }
+//        if (adapterAll.getAllList().get(position) instanceof Student) {
+            DlgFragDeleteFromAll fragDeleteFromAll = new DlgFragDeleteFromAll();
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", position);
+            fragDeleteFromAll.setArguments(bundle);
+            fragDeleteFromAll.setTargetFragment(FragListAll.this, 2);
+            fragDeleteFromAll.show(getFragmentManager(), fragDeleteFromAll.getDialogTag());
+//
+//        } else if (adapterAll.getAllList().get(position) instanceof Teacher) {
+//            DlgFragDeleteFromAll teacherDeleteList = new DlgFragDeleteFromAll();
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("position", position);
+//            teacherDeleteList.setArguments(bundle);
+//            teacherDeleteList.setTargetFragment(FragListAll.this, 2);
+//            teacherDeleteList.show(getFragmentManager(), teacherDeleteList.getDialogTag());
+//        }
     }
 
 

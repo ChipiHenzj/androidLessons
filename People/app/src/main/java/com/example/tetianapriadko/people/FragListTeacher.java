@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -25,6 +26,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterTeachers;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeachList;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
 import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
@@ -33,6 +35,7 @@ public class FragListTeacher extends Fragment {
 
     private static final String TITLE = "List of Teachers";
 
+    private FrameLayout layoutProgress;
     private View rootView;
     private RecyclerView recViewTeacherList;
     AdapterTeachers adapterTeachers;
@@ -67,6 +70,9 @@ public class FragListTeacher extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
+        layoutProgress.setVisibility(View.GONE);
+
         initRecyclerView();
 
         getTeacherList();
@@ -86,6 +92,7 @@ public class FragListTeacher extends Fragment {
     }
 
     private void getTeacherList() {
+        layoutProgress.setVisibility(View.VISIBLE);
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
@@ -93,6 +100,7 @@ public class FragListTeacher extends Fragment {
                 new AsyncCallback<BackendlessCollection<Teacher>>() {
                     @Override
                     public void handleResponse(BackendlessCollection<Teacher> response) {
+                        layoutProgress.setVisibility(View.GONE);
                         adapterTeachers.setData(response.getCurrentPage());
                         adapterTeachers.notifyDataSetChanged();
                     }
@@ -146,9 +154,12 @@ public class FragListTeacher extends Fragment {
             new AdapterTeachers.OnItemLongClickListener() {
                 @Override
                 public void itemLongClicked(View view, int position, Teacher teacher) {
-                    DlgFragDeleteTeacher teacherDelete = new DlgFragDeleteTeacher();
-                    teacherDelete.setTargetFragment(FragListTeacher.this, 1);
-                    teacherDelete.show(getFragmentManager(), teacherDelete.getDialogTag());
+                    DlgFragDeleteTeachList teacherDeleteList = new DlgFragDeleteTeachList();
+                    Bundle bundlePosition = new Bundle();
+                    bundlePosition.putInt("positionTeacher", position);
+                    teacherDeleteList.setArguments(bundlePosition);
+                    teacherDeleteList.setTargetFragment(FragListTeacher.this, 1);
+                    teacherDeleteList.show(getFragmentManager(), teacherDeleteList.getDialogTag());
                 }
 
     };
@@ -160,14 +171,28 @@ public class FragListTeacher extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
-                        Toast.makeText(getActivity(), "Result OK", Toast.LENGTH_SHORT).show();
+                        layoutProgress.setVisibility(View.VISIBLE);
+                        Teacher teacher
+                                = adapterTeachers.getTeachers().get(data.getIntExtra("positionTeacher", -1));
+                        teacher.removeAsync(new AsyncCallback<Long>() {
+                            @Override
+                            public void handleResponse(Long response) {
+                                layoutProgress.setVisibility(View.GONE);
+                                getTeacherList();
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+
+                            }
+                        });
                         break;
                 }
                 break;
             case Activity.RESULT_CANCELED:
                 switch (requestCode) {
                     case 1:
-                        Toast.makeText(getActivity(), "Result Cancel", Toast.LENGTH_SHORT).show();
+
                         break;
                 }
                 break;

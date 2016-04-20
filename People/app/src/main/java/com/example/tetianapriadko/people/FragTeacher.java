@@ -30,6 +30,7 @@ public class FragTeacher extends Fragment {
 
     private View rootView;
     private String selectedTeacherId;
+    private Teacher selectedTeacher;
 
     @Nullable
     @Override
@@ -85,6 +86,7 @@ public class FragTeacher extends Fragment {
             @Override
             public void handleResponse(Teacher response) {
                 selectedTeacherId = response.getObjectId();
+                selectedTeacher = response;
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_name))
                         .setText(response.getName());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_surname))
@@ -131,6 +133,38 @@ public class FragTeacher extends Fragment {
             teacherDelete.show(getFragmentManager(), teacherDelete.getDialogTag());
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case MainActivity.RESULT_OK:
+                switch (requestCode) {
+                    case 1:
+                        selectedTeacher.removeAsync(new AsyncCallback<Long>() {
+                            @Override
+                            public void handleResponse(Long response) {
+                                replaceFragmentBackStack(new FragListTeacher());
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault fault) {
+
+                            }
+                        });
+                        break;
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                switch (requestCode) {
+                    case 1:
+                        break;
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
 }

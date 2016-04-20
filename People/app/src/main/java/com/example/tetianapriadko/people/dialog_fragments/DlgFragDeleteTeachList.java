@@ -1,12 +1,12 @@
 package com.example.tetianapriadko.people.dialog_fragments;
 
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 
-
-public class DlgFragDeleteTeacher extends DlgFragAbstractOkCancel {
+public class DlgFragDeleteTeachList extends DlgFragAbstractOkCancel{
     @Override
     protected String getOKText() {
         return "Yes, delete it";
@@ -20,13 +20,16 @@ public class DlgFragDeleteTeacher extends DlgFragAbstractOkCancel {
     @Override
     protected void performOK(DialogInterface dialog, int id) {
         if (getTargetFragment() != null) {
+            Intent intent = new Intent();
+            intent.putExtra("positionTeacher", getArguments().getInt("positionTeacher"));
             getTargetFragment().onActivityResult(getTargetRequestCode(),
                     Activity.RESULT_OK,
-                    null);
+                    intent);
             dismiss();
         } else {
             dismiss();
         }
+
     }
 
     @Override
@@ -39,7 +42,6 @@ public class DlgFragDeleteTeacher extends DlgFragAbstractOkCancel {
         } else {
             dismiss();
         }
-
     }
 
     @Override

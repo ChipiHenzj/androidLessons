@@ -69,6 +69,10 @@ public class AdapterTeachers extends RecyclerView.Adapter<AdapterTeachers.ViewHo
         this.itemLongClickListener = itemLongClickListener;
     }
 
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
     protected class ViewHolder extends RecyclerView.ViewHolder {
         public TextView teacherName;
         public TextView teacherSurname;
