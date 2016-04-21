@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.backendless.async.callback.AsyncCallback;
@@ -35,6 +36,7 @@ public class FragAddStudent extends Fragment {
     private EditText phone;
     private EditText speciality;
     private EditText place;
+    private FrameLayout layoutProgress;
 
     @Nullable
     @Override
@@ -64,6 +66,9 @@ public class FragAddStudent extends Fragment {
                 R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
+        layoutProgress.setVisibility(View.GONE);
 
         initEditText();
     }
@@ -123,6 +128,7 @@ public class FragAddStudent extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        layoutProgress.setVisibility(View.VISIBLE);
                         Student student = new Student();
                         student.setName((name.getText().toString()));
                         student.setSurname((surname.getText().toString()));
@@ -134,6 +140,7 @@ public class FragAddStudent extends Fragment {
                         student.saveAsync(new AsyncCallback<Student>() {
                             @Override
                             public void handleResponse(Student response) {
+                                layoutProgress.setVisibility(View.GONE);
                                 Toast.makeText(getActivity(), "Student added", Toast.LENGTH_SHORT).show();
             //                    getFragmentManager().popBackStack();
                                 replaceFragmentBackStack(new FragListStudent());
@@ -141,7 +148,8 @@ public class FragAddStudent extends Fragment {
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-                                Toast.makeText(getActivity(), "Student failed", Toast.LENGTH_SHORT).show();
+                                layoutProgress.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;

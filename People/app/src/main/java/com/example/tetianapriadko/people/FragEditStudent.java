@@ -151,6 +151,7 @@ public class FragEditStudent extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        layoutProgress.setVisibility(View.VISIBLE);
                         if (selectedStudent != null){
                             selectedStudent.setName((name.getText().toString()));
                             selectedStudent.setSurname((surname.getText().toString()));
@@ -161,6 +162,7 @@ public class FragEditStudent extends Fragment {
                             selectedStudent.saveAsync(new AsyncCallback<Student>() {
                                 @Override
                                 public void handleResponse(Student response) {
+                                    layoutProgress.setVisibility(View.GONE);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("studentName", selectedStudent.getName());
                                     bundle.putString("studentSurname", selectedStudent.getSurname());
@@ -172,6 +174,7 @@ public class FragEditStudent extends Fragment {
 
                                 @Override
                                 public void handleFault(BackendlessFault fault) {
+                                    layoutProgress.setVisibility(View.GONE);
                                     Toast.makeText(getActivity(), "Student failed", Toast.LENGTH_SHORT).show();
                                 }
                             });

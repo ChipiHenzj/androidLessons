@@ -32,10 +32,8 @@ import com.example.tetianapriadko.people.structure.Teacher;
 public class FragListAll extends Fragment implements AdapterAll.OnItemClickListener, AdapterAll.OnItemLongClickListener {
 
     private static final String TITLE = "List of All";
-
     private FrameLayout layoutProgress;
-
-    View rootView;
+    private View rootView;
     private AdapterAll adapterAll;
 
     @Nullable

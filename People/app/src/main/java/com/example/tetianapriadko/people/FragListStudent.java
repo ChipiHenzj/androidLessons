@@ -174,7 +174,7 @@ public class FragListStudent extends Fragment {
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-
+                                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;

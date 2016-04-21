@@ -32,8 +32,10 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
         holder.studentName.setText(students.get(position).getName());
         holder.studentSurname.setText(students.get(position).getSurname());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +78,6 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
     protected class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentName;
         public TextView studentSurname;
-
-
         ViewHolder(View itemView) {
             super(itemView);
             studentName = ((TextView) itemView.findViewById(R.id.textView_st_name));

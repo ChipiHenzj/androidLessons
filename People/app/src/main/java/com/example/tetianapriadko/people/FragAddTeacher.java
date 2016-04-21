@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.backendless.async.callback.AsyncCallback;
@@ -37,6 +38,7 @@ public class FragAddTeacher extends Fragment {
     private EditText phone;
     private EditText speciality;
     private EditText place;
+    private FrameLayout layoutProgress;
 
     @Nullable
     @Override
@@ -67,6 +69,8 @@ public class FragAddTeacher extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
+        layoutProgress.setVisibility(View.GONE);
         initEditText();
     }
 
@@ -125,6 +129,7 @@ public class FragAddTeacher extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        layoutProgress.setVisibility(View.VISIBLE);
                         Teacher teacher = new Teacher();
                         teacher.setName((name.getText().toString()));
                         teacher.setSurname((surname.getText().toString()));
@@ -136,13 +141,15 @@ public class FragAddTeacher extends Fragment {
                         teacher.saveAsync(new AsyncCallback<Teacher>() {
                             @Override
                             public void handleResponse(Teacher response) {
+                                layoutProgress.setVisibility(View.GONE);
                                 Toast.makeText(getActivity(), "Teacher added", Toast.LENGTH_SHORT).show();
                                 //                    getFragmentManager().popBackStack();
-                                replaceFragmentBackStack(new FragListStudent());
+                                replaceFragmentBackStack(new FragListTeacher());
                             }
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
+                                layoutProgress.setVisibility(View.GONE);
                                 Toast.makeText(getActivity(), "Teacher failed", Toast.LENGTH_SHORT).show();
                             }
                         });

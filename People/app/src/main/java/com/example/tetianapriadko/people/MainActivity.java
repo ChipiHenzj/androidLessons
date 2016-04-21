@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         BackendlessUser user = Backendless.UserService.CurrentUser();
+
         ((TextView) navigationView.getHeaderView(0)
                 .findViewById(R.id.email)).setText(user.getEmail());
     }
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     protected void addFragmentBackStack(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//              .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .add(R.id.frag_container, fragment)
                 .addToBackStack("frag")
                 .commit();

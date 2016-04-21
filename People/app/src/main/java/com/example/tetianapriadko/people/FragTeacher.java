@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -31,6 +32,7 @@ public class FragTeacher extends Fragment {
     private View rootView;
     private String selectedTeacherId;
     private Teacher selectedTeacher;
+    private FrameLayout layoutProgress;
 
     @Nullable
     @Override
@@ -65,6 +67,10 @@ public class FragTeacher extends Fragment {
         toggle.syncState();
 
 
+        layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
+        layoutProgress.setVisibility(View.GONE);
+
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +88,13 @@ public class FragTeacher extends Fragment {
     }
 
     private void getTeacherFromBE(String objectID) {
+        layoutProgress.setVisibility(View.VISIBLE);
         Backendless.Persistence.of(Teacher.class).findById(objectID, new AsyncCallback<Teacher>() {
             @Override
             public void handleResponse(Teacher response) {
                 selectedTeacherId = response.getObjectId();
                 selectedTeacher = response;
+                layoutProgress.setVisibility(View.GONE);
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_name))
                         .setText(response.getName());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_surname))
@@ -103,6 +111,7 @@ public class FragTeacher extends Fragment {
 
             @Override
             public void handleFault(BackendlessFault fault) {
+                layoutProgress.setVisibility(View.GONE);
                 // an error has occurred, the error code can be retrieved with fault.getCode()
             }
         });
@@ -141,15 +150,17 @@ public class FragTeacher extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        layoutProgress.setVisibility(View.VISIBLE);
                         selectedTeacher.removeAsync(new AsyncCallback<Long>() {
                             @Override
                             public void handleResponse(Long response) {
+                                layoutProgress.setVisibility(View.GONE);
                                 replaceFragmentBackStack(new FragListTeacher());
                             }
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-
+                                layoutProgress.setVisibility(View.GONE);
                             }
                         });
                         break;

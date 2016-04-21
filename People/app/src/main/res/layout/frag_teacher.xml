@@ -344,4 +344,17 @@
         android:src="@drawable/ic_edit_24dp"
         app:layout_behavior="com.example.tetianapriadko.people.ScrollAwareBehavior" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layout_progress"
+        android:background="#78ffffff">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>

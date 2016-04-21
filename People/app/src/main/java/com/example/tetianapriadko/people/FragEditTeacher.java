@@ -94,10 +94,11 @@ public class FragEditTeacher extends Fragment {
     }
 
     private void getTeacherFromBE(String objectID) {
-        layoutProgress.setVisibility(View.GONE);
+        layoutProgress.setVisibility(View.VISIBLE);
         Backendless.Persistence.of(Teacher.class).findById(objectID, new AsyncCallback<Teacher>() {
             @Override
             public void handleResponse(Teacher response) {
+                layoutProgress.setVisibility(View.GONE);
                 selectedTeacher = response;
                 name.setText(response.getName());
                 surname.setText(response.getSurname());
@@ -141,6 +142,7 @@ public class FragEditTeacher extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
+                        layoutProgress.setVisibility(View.VISIBLE);
                         if (selectedTeacher != null){
                             selectedTeacher.setName((name.getText().toString()));
                             selectedTeacher.setSurname((surname.getText().toString()));
@@ -152,6 +154,7 @@ public class FragEditTeacher extends Fragment {
                             selectedTeacher.saveAsync(new AsyncCallback<Teacher>() {
                                 @Override
                                 public void handleResponse(Teacher response) {
+                                    layoutProgress.setVisibility(View.GONE);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("teacherName", selectedTeacher.getName());
                                     bundle.putString("teacherSurname", selectedTeacher.getSurname());
@@ -162,7 +165,8 @@ public class FragEditTeacher extends Fragment {
                                 }
                                 @Override
                                 public void handleFault(BackendlessFault fault) {
-                                    Toast.makeText(getActivity(), "Teacher failed", Toast.LENGTH_SHORT).show();
+                                    layoutProgress.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
