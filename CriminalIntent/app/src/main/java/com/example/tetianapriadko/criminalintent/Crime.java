@@ -1,20 +1,16 @@
 package com.example.tetianapriadko.criminalintent;
 
-import java.util.Date;
 import java.util.UUID;
-
+import java.util.Date;
 
 public class Crime {
-
 
     private UUID mId;
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
 
-
     public Crime() {
-        // Generate unique identifier
         mId = UUID.randomUUID();
         mDate = new Date();
     }
@@ -45,5 +41,10 @@ public class Crime {
 
     public void setSolved(boolean mSolved) {
         this.mSolved = mSolved;
+    }
+
+    @Override
+    public String toString() {
+        return mTitle;
     }
 }

@@ -40,10 +40,8 @@ public class CrimeFragment extends Fragment {
             }
             public void beforeTextChanged(
                     CharSequence c, int start, int count, int after) {
-                    // This space intentionally left blank
             }
             public void afterTextChanged(Editable c) {
-            // This one too
             }
         });
 
