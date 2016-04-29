@@ -31,6 +31,7 @@ public class CrimePagerActivity extends FragmentActivity {
             public int getCount() {
                 return mCrimes.size();
             }
+
             @Override
             public Fragment getItem(int pos) {
                 Crime crime = mCrimes.get(pos);

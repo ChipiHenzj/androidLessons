@@ -17,14 +17,12 @@ import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends DialogFragment {
 
-    public static final String EXTRA_DATE =
-            "com.bignerdranch.android.criminalintent.date";
     private Date mDate;
 
     @Override
     public Dialog onCreateDialog(Bundle SaveInstanceState){
 
-        mDate = (Date)getArguments().getSerializable(EXTRA_DATE);
+        mDate = (Date)getArguments().getSerializable(CrimeFragment.EXTRA_DATE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(mDate);
         int year = calendar.get(Calendar.YEAR);
@@ -39,7 +37,6 @@ public class DatePickerFragment extends DialogFragment {
         datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
             public void onDateChanged(DatePicker view, int year, int month, int day) {
                 mDate = new GregorianCalendar(year, month, day).getTime();
-                getArguments().putSerializable(EXTRA_DATE, mDate);
             }
         });
 
@@ -50,28 +47,21 @@ public class DatePickerFragment extends DialogFragment {
                         android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                sendResult(Activity.RESULT_OK);
+                                sendResult();
                             }
                         })
                 .create();
     }
 
-    public static DatePickerFragment newInstance(Date date) {
-        Bundle args = new Bundle();
-        args.putSerializable(EXTRA_DATE, date);
-        DatePickerFragment fragment = new DatePickerFragment();
-        fragment.setArguments(args);
-        return fragment;
-
-    }
-
-    private void sendResult(int resultCode) {
-        if (getTargetFragment() == null)
+    private void sendResult() {
+        if (getTargetFragment() == null){
             return;
-        Intent i = new Intent();
-        i.putExtra(EXTRA_DATE, mDate);
-        getTargetFragment()
-                .onActivityResult(getTargetRequestCode(), resultCode, i);
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra(CrimeFragment.EXTRA_DATE, mDate);
+            getTargetFragment()
+                    .onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+        }
     }
 
 }
