@@ -20,8 +20,11 @@ import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
 
-    public static final String EXTRA_DATE =
-            "com.bignerdranch.android.criminalintent.date";
+    public static final String EXTRA_DATE = "criminalintent.date";
+    public static final String EXTRA_CRIME_ID = "criminalintent.crime_id";
+
+    public static final String DIALOG_DATE = "date";
+    public static final int REQUEST_DATE = 0;
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -29,11 +32,6 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
-    public static final String EXTRA_CRIME_ID =
-            "com.bignerdranch.android.criminalintent.crime_id";
-
-    private static final String DIALOG_DATE = "date";
-    private static final int REQUEST_DATE = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,10 +69,11 @@ public class CrimeFragment extends Fragment {
 
                 Bundle args = new Bundle();
                 args.putSerializable(EXTRA_DATE, mCrime.getDate());
-                DatePickerFragment datePickerFragment = new DatePickerFragment();
-                datePickerFragment.setArguments(args);
-                datePickerFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                datePickerFragment.show(fm, DIALOG_DATE);
+                SelectDialog selectDialog = new SelectDialog();
+                selectDialog.setArguments(args);
+                selectDialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                selectDialog.show(fm, DIALOG_DATE);
+
             }
         });
 
@@ -90,24 +89,17 @@ public class CrimeFragment extends Fragment {
         return rootView;
     }
 
-    public static CrimeFragment newInstance(UUID crimeId) {
-        Bundle args = new Bundle();
-        args.putSerializable(EXTRA_CRIME_ID, crimeId);
-        CrimeFragment fragment = new CrimeFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK){
             return;
         } else {
-            if (requestCode == REQUEST_DATE) {
-                Date date = (Date)data
-                        .getSerializableExtra(EXTRA_DATE);
-                mCrime.setDate(date);
-                mDateButton.setText(mCrime.getDate().toString());
+            switch (requestCode){
+                case REQUEST_DATE:
+                    Date date = (Date)data.getSerializableExtra(EXTRA_DATE);
+                    mCrime.setDate(date);
+                    mDateButton.setText(mCrime.getDate().toString());
+                    break;
             }
         }
     }
