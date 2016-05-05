@@ -38,13 +38,19 @@ public class SelectDialog extends DialogFragment {
                         android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                Bundle bundle = new Bundle();
                                 if (date.isChecked()){
                                     DatePickerFragment datePickerFragment = new DatePickerFragment();
-                                    Bundle bundle = new Bundle();
                                     bundle.putSerializable(CrimeFragment.EXTRA_DATE, mDate);
                                     datePickerFragment.setArguments(bundle);
                                     datePickerFragment.setTargetFragment(getTargetFragment(), getTargetRequestCode());
                                     datePickerFragment.show(getFragmentManager(), "");
+                                } else if (time.isChecked()){
+                                    TimePickerFragment timePickerFragment = new TimePickerFragment();
+                                    bundle.putSerializable(CrimeFragment.EXTRA_DATE, mDate);
+                                    timePickerFragment.setArguments(bundle);
+                                    timePickerFragment.setTargetFragment(getTargetFragment(), getTargetRequestCode());
+                                    timePickerFragment.show(getFragmentManager(), "");
                                 }
                             }
                         })
@@ -53,16 +59,11 @@ public class SelectDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                            dismiss();
                             }
                         }
                 )
                 .create();
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

@@ -8,4 +8,5 @@
     <string name="crimes_title">Crimes</string>
     <string name="date_picker_title">Date of crime:</string>
     <string name="choose_title">Choose change:</string>
+    <string name="time_picker_title">Select:</string>
 </resources>

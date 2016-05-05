@@ -100,6 +100,7 @@ public class CrimeFragment extends Fragment {
                     mCrime.setDate(date);
                     mDateButton.setText(mCrime.getDate().toString());
                     break;
+
             }
         }
     }
