@@ -15,20 +15,16 @@ public class AudioPlayer {
         }
     }
     public void play(Context c) {
+        stop();
 
-            stop();
+        mPlayer = MediaPlayer.create(c, R.raw.one_small_step);
 
-            mPlayer = MediaPlayer.create(c, R.raw.one_small_step);
-
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    stop();
-                }
-            });
-
-            mPlayer.start();
-
-
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                stop();
+            }
+        });
+        mPlayer.start();
     }
 
     public void pause (){
