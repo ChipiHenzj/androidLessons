@@ -19,7 +19,7 @@ public class HelloMoonFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
