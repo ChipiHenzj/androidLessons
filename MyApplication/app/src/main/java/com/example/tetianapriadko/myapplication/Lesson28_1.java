@@ -13,7 +13,6 @@ public class Lesson28_1 extends AppCompatActivity implements View.OnClickListene
     EditText etLName;
     Button btnSubmit;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
