@@ -57,11 +57,11 @@
         <activity
             android:name=".Lesson24_2"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
-
         <activity android:name=".Lesson26_1" />
         <activity android:name=".Lesson26_2">
             <intent-filter>
                 <action android:name="ru.startandroid.intent.action.showtime" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -115,6 +115,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Lesson33" />
+        <activity android:name=".Lesson34_35"></activity>
         <activity android:name=".Lesson40" />
         <activity android:name=".Lesson41" />
         <activity android:name=".Lesson42" />
@@ -178,7 +179,8 @@
         <activity android:name=".Lesson125" />
         <activity android:name=".Lesson125_1" />
         <activity android:name=".Lesson139" />
-        <activity android:name=".Lesson140"></activity>
+        <activity android:name=".Lesson140" />
+
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ public class Lesson33 extends AppCompatActivity implements View.OnClickListener 
 
     SharedPreferences sPref;
 
-    final String SAVED_TEXT = "saved_text";
+    public static final String SAVED_TEXT = "saved_text";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,9 @@ public class Lesson33 extends AppCompatActivity implements View.OnClickListener 
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onPause(){
         saveText();
-        super.onDestroy(); 
+        super.onPause();
     }
 
     @Override
