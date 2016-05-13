@@ -115,7 +115,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Lesson33" />
-        <activity android:name=".Lesson34_35"></activity>
+        <activity android:name=".Lesson34_35" />
         <activity android:name=".Lesson40" />
         <activity android:name=".Lesson41" />
         <activity android:name=".Lesson42" />
@@ -180,7 +180,7 @@
         <activity android:name=".Lesson125_1" />
         <activity android:name=".Lesson139" />
         <activity android:name=".Lesson140" />
-
+        <activity android:name=".Lesson36"></activity>
     </application>
 
 </manifest>

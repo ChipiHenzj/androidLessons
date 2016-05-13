@@ -64,7 +64,6 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
 
         switch (v.getId()) {
             case R.id.btnAdd:
-                Toast.makeText(this, "--- Insert in mytable: ---", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "--- Insert in mytable: ---");
 
                 // подготовим данные для вставки в виде пар: наименование столбца - значение
@@ -75,11 +74,9 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
                 long rowID = database.insert("mytable", null, contentValues);
 
                 Log.d(LOG_TAG, "row inserted, ID = " + rowID);
-                Toast.makeText(this, "row inserted, ID = " + rowID, Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.btnRead:
-                Toast.makeText(this, "--- Rows in mytable: ---", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "--- Rows in mytable: ---");
 
                 // делаем запрос всех данных из таблицы mytable, получаем Cursor
@@ -96,12 +93,6 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
 
                     do {
                         // получаем значения по номерам столбцов и пишем все в лог
-                        Toast.makeText(this,
-                                "ID = " + cursor.getInt(idColIndex) +
-                                        ", name = " + cursor.getString(nameColIndex) +
-                                        ", email = " + cursor.getString(emailColIndex),
-                                Toast.LENGTH_SHORT).show();
-
                         Log.d(LOG_TAG,"ID = " + cursor.getInt(idColIndex) +
                                         ", name = " + cursor.getString(nameColIndex) +
                                         ", email = " + cursor.getString(emailColIndex));
@@ -111,17 +102,14 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
                     } while (cursor.moveToNext());
                 } else
                     Log.d(LOG_TAG, "0 rows");
-                    Toast.makeText(this, "0 rows", Toast.LENGTH_SHORT).show();
                 cursor.close();
                 break;
             case R.id.btnClear:
                 Log.d(LOG_TAG, "--- Clear mytable: ---");
-                Toast.makeText(this, "--- Clear mytable: ---", Toast.LENGTH_SHORT).show();
 
                 // удаляем все записи
                 int clearCount = database.delete("mytable", null, null);
                 Log.d(LOG_TAG, "deleted rows count = " + clearCount);
-                Toast.makeText(this, "deleted rows count = " + clearCount, Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.btnUpd:
@@ -129,7 +117,6 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
                     break;
                 }
                 Log.d(LOG_TAG, "--- Update mytabe: ---");
-                Toast.makeText(this, "--- Update mytabe: ---", Toast.LENGTH_SHORT).show();
 
                 // подготовим значения для обновления
                 contentValues.put("name", name);
@@ -140,7 +127,6 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
                         new String[] { id });
 
                 Log.d(LOG_TAG, "updated rows count = " + updCount);
-                Toast.makeText(this, "updated rows count = " + updCount, Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.btnDel:
@@ -148,13 +134,11 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
                     break;
                 }
                 Log.d(LOG_TAG, "--- Delete from mytabe: ---");
-                Toast.makeText(this, "--- Delete from mytabe: ---", Toast.LENGTH_SHORT).show();
 
                 // удаляем по id
                 int delCount = database.delete("mytable", "id = " + id, null);
 
                 Log.d(LOG_TAG, "deleted rows count = " + delCount);
-                Toast.makeText(this, "deleted rows count = " + delCount, Toast.LENGTH_SHORT).show();
                 break;
         }
         // закрываем подключение к БД
@@ -184,7 +168,6 @@ public class Lesson34_35 extends AppCompatActivity implements OnClickListener{
 
         }
     }
-
 
 
 
