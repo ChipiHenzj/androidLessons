@@ -145,10 +145,10 @@ public class MainActiv extends AppCompatActivity {
                         Intent lesson36 = new Intent(MainActiv.this, Lesson36.class);
                         startActivity(lesson36);
                         break;
-//                    case 25:
-//                        Intent lesson37 = new Intent(MainActiv.this, Lesson37.class);
-//                        startActivity(lesson37);
-//                        break;
+                    case 25:
+                        Intent lesson37 = new Intent(MainActiv.this, Lesson37.class);
+                        startActivity(lesson37);
+                        break;
 //                    case 26:
 //                        Intent lesson38 = new Intent(MainActiv.this, Lesson38.class);
 //                        startActivity(lesson38);
