@@ -12,7 +12,7 @@ public class Lesson86 extends AppCompatActivity {
 
     TextView tvInfo;
 
-    MyTask mt;
+    MyTask myTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +23,8 @@ public class Lesson86 extends AppCompatActivity {
     }
 
     public void onclick(View v) {
-        mt = new MyTask();
-        mt.execute();
+        myTask = new MyTask();
+        myTask.execute();
     }
 
 

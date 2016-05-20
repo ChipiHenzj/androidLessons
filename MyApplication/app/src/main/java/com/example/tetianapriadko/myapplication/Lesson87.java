@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Lesson87 extends AppCompatActivity {
 
-    MyTask mt;
+    MyTask myTask;
     TextView tvInfo;
 
     @Override
@@ -22,8 +22,8 @@ public class Lesson87 extends AppCompatActivity {
     }
 
     public void onclick(View v) {
-        mt = new MyTask();
-        mt.execute("file_path_1", "file_path_2", "file_path_3", "file_path_4");
+        myTask = new MyTask();
+        myTask.execute("file_1", "file_2", "file_3", "file_4");
     }
 
 

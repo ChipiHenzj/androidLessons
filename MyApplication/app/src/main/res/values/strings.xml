@@ -6,6 +6,7 @@
     <string name="header_title">Header</string>
     <string name="footer_title">Footer</string>
     <string name="button_text">Test</string>
+    <string name="get">Result</string>
 
     <string-array name="names">
         <item>Maris</item>
