@@ -48,12 +48,12 @@ public class Lesson88 extends AppCompatActivity {
         int result = -1;
         try {
             Log.d(LOG_TAG, "Try to get result");
-            Toast.makeText(this, "Try to get result", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Try to get result", Toast.LENGTH_SHORT).show();
 
             result = myTask.get();
 
             Log.d(LOG_TAG, "get returns " + result);
-            Toast.makeText(this, "get returns " + result, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "get returns " + result, Toast.LENGTH_SHORT).show();
 
         } catch (InterruptedException e) {
             e.printStackTrace();

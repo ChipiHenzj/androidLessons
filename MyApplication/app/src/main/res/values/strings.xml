@@ -87,6 +87,6 @@
     <string name="dialog_2">Dialog 2</string>
     <string name="message_text">Text of your message</string>
     <string name="maybe">Maybe</string>
-
+    <string name="status">Status</string>
 
 </resources>

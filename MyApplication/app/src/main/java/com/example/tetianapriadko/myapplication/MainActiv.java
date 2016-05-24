@@ -16,17 +16,18 @@ public class MainActiv extends AppCompatActivity {
                       "Lesson 19", "Lesson 20", "Lesson 21", "Lesson 23", "Lesson 24",
                       "Lesson 26", "Lesson 27", "Lesson 28", "Lesson 29", "Lesson 30",
                       "Lesson 31", "Lesson 32", "Lesson 33", "Lesson 34-35", "Lesson 36",
-                      "Lesson 37", "Lesson 40",  "Lesson 41",
-                      "Lesson 42", "Lesson 43", "Lesson 44", "Lesson 45", "Lesson 46",
-                      "Lesson 48", "Lesson 49", "Lesson 50", "Lesson 51", "Lesson 54",
-                      "Lesson 55", "Lesson 56", "Lesson 57", "Lesson 58", "Lesson 59",
-                      "Lesson 60", "Lesson 61", "Lesson 62", "Lesson 66", "Lesson 67",
-                      "Lesson 68", "Lesson 69", "Lesson 70", "Lesson 71", "Lesson 72",
-                      "Lesson 73", "Lesson 74", "Lesson 75", "Lesson 76", "Lesson 77",
-                      "Lesson 78", "Lesson 80", "Lesson 81", "Lesson 82", "Lesson 86",
-                      "Lesson 87", "Lesson 88", "Lesson 92", "Lesson 93", "Lesson 99", "Lesson 100",
-                      "Lesson 102", "Lesson 102_1", "Lesson 104", "Lesson 105", "Lesson 106",
-                      "Lesson 110", "Lesson 125", "Lesson 139", "Lesson 140"};
+                      "Lesson 37", "Lesson 40", "Lesson 41", "Lesson 42", "Lesson 43",
+                      "Lesson 44", "Lesson 45", "Lesson 46", "Lesson 48", "Lesson 49",
+                      "Lesson 50", "Lesson 51", "Lesson 54", "Lesson 55", "Lesson 56",
+                      "Lesson 57", "Lesson 58", "Lesson 59", "Lesson 60", "Lesson 61",
+                      "Lesson 62", "Lesson 66", "Lesson 67", "Lesson 68", "Lesson 69",
+                      "Lesson 70", "Lesson 71", "Lesson 72", "Lesson 73", "Lesson 74",
+                      "Lesson 75", "Lesson 76", "Lesson 77", "Lesson 78", "Lesson 80",
+                      "Lesson 81", "Lesson 82", "Lesson 86", "Lesson 87", "Lesson 88",
+                      "Lesson 89", "Lesson 90", "Lesson 91", "Lesson 92", "Lesson 93",
+                      "Lesson 99", "Lesson 100", "Lesson 102", "Lesson 102_1", "Lesson 104",
+                      "Lesson 105", "Lesson 106", "Lesson 110", "Lesson 125", "Lesson 139",
+                      "Lesson 140"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,54 +307,66 @@ public class MainActiv extends AppCompatActivity {
                         startActivity(lesson88);
                         break;
                     case 65:
+                        Intent lesson89 = new Intent(MainActiv.this, Lesson89.class);
+                        startActivity(lesson89);
+                        break;
+                    case 66:
+                        Intent lesson90 = new Intent(MainActiv.this, Lesson90.class);
+                        startActivity(lesson90);
+                        break;
+                    case 67:
+                        Intent lesson91 = new Intent(MainActiv.this, Lesson91.class);
+                        startActivity(lesson91);
+                        break;
+                    case 68:
                         Intent lesson92 = new Intent(MainActiv.this, Lesson92_1.class);
                         startActivity(lesson92);
                         break;
-                    case 66:
+                    case 69:
                         Intent lesson93 = new Intent(MainActiv.this, Lesson93_1.class);
                         startActivity(lesson93);
                         break;
-                    case 67:
+                    case 70:
                         Intent lesson99 = new Intent(MainActiv.this, Lesson99_1.class);
                         startActivity(lesson99);
                         break;
-                    case 68:
+                    case 71:
                         Intent lesson100 = new Intent(MainActiv.this, Lesson100_1.class);
                         startActivity(lesson100);
                         break;
-                    case 69:
+                    case 72:
                         Intent lesson102 = new Intent(MainActiv.this, Lesson102.class);
                         startActivity(lesson102);
                         break;
-                    case 70:
+                    case 73:
                         Intent lesson102_1 = new Intent(MainActiv.this, Lesson102_1.class);
                         startActivity(lesson102_1);
                         break;
-                    case 71:
+                    case 74:
                         Intent lesson104 = new Intent(MainActiv.this, Lesson104.class);
                         startActivity(lesson104);
                         break;
-                    case 72:
+                    case 75:
                         Intent lesson105 = new Intent(MainActiv.this, Lesson105.class);
                         startActivity(lesson105);
                         break;
-                    case 73:
+                    case 76:
                         Intent lesson106 = new Intent(MainActiv.this, Lesson106.class);
                         startActivity(lesson106);
                         break;
-                    case 74:
+                    case 77:
                         Intent lesson110 = new Intent(MainActiv.this, Lesson110.class);
                         startActivity(lesson110);
                         break;
-                    case 75:
+                    case 78:
                         Intent lesson125 = new Intent(MainActiv.this, Lesson125.class);
                         startActivity(lesson125);
                         break;
-                    case 76:
+                    case 79:
                         Intent lesson139 = new Intent(MainActiv.this, Lesson139.class);
                         startActivity(lesson139);
                         break;
-                    case 77:
+                    case 80:
                         Intent lesson140 = new Intent(MainActiv.this, Lesson140.class);
                         startActivity(lesson140);
                         break;
