@@ -26,8 +26,8 @@ public class MainActiv extends AppCompatActivity {
                       "Lesson 81", "Lesson 82", "Lesson 86", "Lesson 87", "Lesson 88",
                       "Lesson 89", "Lesson 90", "Lesson 91", "Lesson 92", "Lesson 93",
                       "Lesson 99", "Lesson 100", "Lesson 102", "Lesson 102_1", "Lesson 104",
-                      "Lesson 105", "Lesson 106", "Lesson 110", "Lesson 125", "Lesson 139",
-                      "Lesson 140"};
+                      "Lesson 105", "Lesson 106", "Lesson 110", "Lesson 115", "Lesson 125",
+                      "Lesson 139", "Lesson 140"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

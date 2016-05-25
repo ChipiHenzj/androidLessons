@@ -14,6 +14,7 @@ import android.widget.Button;
 public class Lesson106_2 extends Fragment {
 
     Context context;
+    final String LOG_TAG = "myLogs";
 
     public interface onSomeEventListener {
         public void someEvent(String s);
@@ -30,10 +31,6 @@ public class Lesson106_2 extends Fragment {
             throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
         }
     }
-
-
-
-    final String LOG_TAG = "myLogs";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
