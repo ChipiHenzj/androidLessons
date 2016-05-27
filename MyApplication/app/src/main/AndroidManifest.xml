@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -186,9 +187,8 @@
         <activity android:name=".Lesson89" />
         <activity android:name=".Lesson90" />
         <activity android:name=".Lesson91" />
-        <activity android:name=".Lesson115_1" />
-        <activity android:name=".Lesson115_2" />
-        <activity android:name=".Lesson115_3"></activity>
+        <activity android:name=".Lesson131" />
+        <activity android:name=".Lesson141"></activity>
     </application>
 
 </manifest>

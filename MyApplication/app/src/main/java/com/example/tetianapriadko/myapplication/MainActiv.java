@@ -26,8 +26,8 @@ public class MainActiv extends AppCompatActivity {
                       "Lesson 81", "Lesson 82", "Lesson 86", "Lesson 87", "Lesson 88",
                       "Lesson 89", "Lesson 90", "Lesson 91", "Lesson 92", "Lesson 93",
                       "Lesson 99", "Lesson 100", "Lesson 102", "Lesson 102_1", "Lesson 104",
-                      "Lesson 105", "Lesson 106", "Lesson 110", "Lesson 115", "Lesson 125",
-                      "Lesson 139", "Lesson 140"};
+                      "Lesson 105", "Lesson 106", "Lesson 110", "Lesson 125", "Lesson 131",
+                        "Lesson 139", "Lesson 140", "Lesson 141"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -363,12 +363,20 @@ public class MainActiv extends AppCompatActivity {
                         startActivity(lesson125);
                         break;
                     case 79:
+                        Intent lesson131 = new Intent(MainActiv.this, Lesson131.class);
+                        startActivity(lesson131);
+                        break;
+                    case 80:
                         Intent lesson139 = new Intent(MainActiv.this, Lesson139.class);
                         startActivity(lesson139);
                         break;
-                    case 80:
+                    case 81:
                         Intent lesson140 = new Intent(MainActiv.this, Lesson140.class);
                         startActivity(lesson140);
+                        break;
+                    case 82:
+                        Intent lesson141 = new Intent(MainActiv.this, Lesson141.class);
+                        startActivity(lesson141);
                         break;
                 }
 
