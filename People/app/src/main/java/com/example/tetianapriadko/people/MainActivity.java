@@ -115,7 +115,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_all) {
             replaceFragmentBackStack(new FragListAll());
         } else if (id == R.id.nav_map) {
-            replaceFragmentBackStack(new FragMap());
+//            replaceFragmentBackStack(new FragMap());
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {

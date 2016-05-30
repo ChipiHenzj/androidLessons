@@ -188,7 +188,8 @@
         <activity android:name=".Lesson90" />
         <activity android:name=".Lesson91" />
         <activity android:name=".Lesson131" />
-        <activity android:name=".Lesson141"></activity>
+        <activity android:name=".Lesson141" />
+        <activity android:name=".Lesson138"></activity>
     </application>
 
 </manifest>
