@@ -1,8 +1,14 @@
 package com.example.tetianapriadko.people;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +21,15 @@ import android.widget.TextView;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragExit;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+import java.text.BreakIterator;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +64,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void customActivityResult(int requestCode, int resultCode){
-        switch (requestCode){
+    public void customActivityResult(int requestCode, int resultCode) {
+        switch (requestCode) {
             case 2:
-                switch (resultCode){
+                switch (resultCode) {
                     case RESULT_OK:
                         finish();
                         break;
@@ -124,7 +136,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        } else if (id == R.id.nav_logout){
+        } else if (id == R.id.nav_logout) {
 
         }
 
@@ -132,4 +144,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
