@@ -8,8 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,7 +46,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-`````
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                mMap.clear();
+            }
+        });
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        for (int i = 0; i < 100; i++) {
 //            LatLng latLng = new LatLng(-34 + i, 151 - i);

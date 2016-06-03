@@ -15,7 +15,8 @@
         android:gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@+id/textView_teacher"
-        android:layout_alignTop="@+id/textView_name" />
+        android:layout_alignTop="@+id/textView_name"
+        android:background="@drawable/oval"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +42,7 @@
         android:text="Teacher"
         android:id="@+id/textView_teacher"
         android:textSize="10sp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="120dp"
         android:gravity="bottom"
         android:layout_below="@+id/textView_name"
         android:layout_marginTop="15dp"

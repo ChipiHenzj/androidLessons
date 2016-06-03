@@ -10,12 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@null"
-        android:src="@drawable/ic_person_outline_24dp"
         android:id="@+id/imageView_add_student"
+        android:src="@drawable/ic_person_outline_24dp"
         android:gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@+id/textView_student"
-        android:layout_alignTop="@+id/textView_st_name" />
+        android:layout_alignTop="@+id/textView_st_name"
+        android:background="@drawable/oval"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +42,7 @@
         android:text="Student"
         android:id="@+id/textView_student"
         android:textSize="10sp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="120dp"
         android:gravity="bottom"
         android:layout_alignParentBottom="false"
         android:layout_below="@+id/textView_st_name"

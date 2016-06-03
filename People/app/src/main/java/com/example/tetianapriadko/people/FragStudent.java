@@ -49,7 +49,7 @@ public class FragStudent extends Fragment {
         Bundle bundle = this.getArguments();
         String name = bundle.getString("studentName");
         String surname = bundle.getString("studentSurname");
-        toolbar.setTitle(name + " " + surname);
+        toolbar.setTitle("Student. " + name + " " + surname);
 
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
 

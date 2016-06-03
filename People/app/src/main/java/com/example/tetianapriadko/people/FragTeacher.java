@@ -49,9 +49,9 @@ public class FragTeacher extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         Bundle bundle = this.getArguments();
-        String one = bundle.getString("teacherName");
-        String two = bundle.getString("teacherSurname");
-        toolbar.setTitle(one + " " + two);
+        String name = bundle.getString("teacherName");
+        String surname = bundle.getString("teacherSurname");
+        toolbar.setTitle("Teacher. "  + name + " " + surname);
 
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
 
