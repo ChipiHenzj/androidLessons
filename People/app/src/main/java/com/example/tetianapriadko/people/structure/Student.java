@@ -16,6 +16,7 @@ public class Student {
     private java.util.Date created;
     private String phoneNumber;
     private String ownerId;
+    private String avatarUrl;
 
 
     public String getSurname() {
@@ -76,6 +77,14 @@ public class Student {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getOwnerId() {

@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tetianapriadko.people">
 
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!--
@@ -28,6 +27,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -65,12 +65,12 @@
             android:value="@string/google_maps_key" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version">
-        </meta-data>
+            android:value="@integer/google_play_services_version"></meta-data>
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".ActCrop"></activity>
     </application>
 
 </manifest>

@@ -2,13 +2,17 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.structure.Student;
 
@@ -31,6 +36,7 @@ public class FragStudent extends Fragment {
     private String selectedStudentId;
     private Student selectedStudent;
     private FrameLayout layoutProgress;
+    private ImageView avatar;
 
     @Nullable
     @Override
@@ -102,15 +108,18 @@ public class FragStudent extends Fragment {
                         .setText(response.getSpeciality());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_place))
                         .setText(response.getPlaceOfStudy());
+
+
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
-                // an error has occurred, the error code can be retrieved with fault.getCode()
+                Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     protected void replaceFragmentBackStack(Fragment fragment) {
         getFragmentManager()
