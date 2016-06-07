@@ -2,17 +2,13 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,9 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.structure.Student;
 
@@ -37,6 +35,7 @@ public class FragStudent extends Fragment {
     private Student selectedStudent;
     private FrameLayout layoutProgress;
     private ImageView avatar;
+    public AQuery aQuery;
 
     @Nullable
     @Override
@@ -55,7 +54,7 @@ public class FragStudent extends Fragment {
         Bundle bundle = this.getArguments();
         String name = bundle.getString("studentName");
         String surname = bundle.getString("studentSurname");
-        toolbar.setTitle("Student. " + name + " " + surname);
+        toolbar.setTitle(name + " " + surname);
 
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -70,7 +69,7 @@ public class FragStudent extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
+        layoutProgress = (FrameLayout) rootView.findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -108,16 +107,29 @@ public class FragStudent extends Fragment {
                         .setText(response.getSpeciality());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_place))
                         .setText(response.getPlaceOfStudy());
-
-
+                avatar = ((ImageView) rootView.findViewById(R.id.imageView_avatar_student));
+                setImage(response.getAvatarUrl());
             }
-
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setImage(String avatarUrl) {
+        aQuery = new AQuery(getActivity());
+        aQuery.id(avatar).image(
+                String.format("%s%s%s%s",
+                        BACK_SETTINGS.SERVER_URL,
+                        BACK_SETTINGS.FILES,
+                        BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
+                        avatarUrl),
+                false,
+                true,
+                0,
+                R.drawable.icon);
     }
 
 
@@ -155,7 +167,7 @@ public class FragStudent extends Fragment {
                     case 1:
                         layoutProgress.setVisibility(View.VISIBLE);
                         selectedStudent.removeAsync(new AsyncCallback<Long>() {
-                                                    @Override
+                            @Override
                             public void handleResponse(Long response) {
                                 layoutProgress.setVisibility(View.GONE);
                                 replaceFragmentBackStack(new FragListStudent());

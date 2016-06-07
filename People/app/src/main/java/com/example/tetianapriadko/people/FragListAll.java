@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -35,15 +36,15 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
     private FrameLayout layoutProgress;
     private View rootView;
     private AdapterAll adapterAll;
+    private SwipeRefreshLayout refreshAll;
+    private Boolean showProgressLayout = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.frag_list_all, container, false);
         return rootView;
-
     }
 
     @Override
@@ -78,48 +79,70 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
         layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
         layoutProgress.setVisibility(View.GONE);
 
+        initSwipeRefresh(rootView);
         initRecyclerView();
+    }
 
+    private void initSwipeRefresh(View rootView){
+        refreshAll = ((SwipeRefreshLayout) rootView.findViewById(R.id.refresh_all));
+        refreshAll.setOnRefreshListener(refreshListenerAll);
+        refreshAll.setRefreshing(false);
     }
 
     private void initRecyclerView() {
         adapterAll = new AdapterAll(null);
         adapterAll.setItemClickListener(this);
         adapterAll.setItemLongClickListener(this);
-
         RecyclerView recyclerViewAll = ((RecyclerView) rootView.findViewById(R.id.recView_all_list));
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerViewAll.setLayoutManager(linearLayoutManager);
         recyclerViewAll.setHasFixedSize(true);
         recyclerViewAll.setAdapter(adapterAll);
-        getStudentList();
+        getStudentList(true);
     }
 
-    private void getStudentList() {
-        layoutProgress.setVisibility(View.VISIBLE);
+    private void getStudentList(final Boolean showProgressLayout) {
+        if(showProgressLayout){
+            layoutProgress.setVisibility(View.VISIBLE);
+        } else {
+            refreshAll.setRefreshing(true);
+        }
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
         Backendless.Data.of(Student.class).find(query, new AsyncCallback<BackendlessCollection<Student>>() {
             @Override
             public void handleResponse(BackendlessCollection<Student> response) {
-                layoutProgress.setVisibility(View.GONE);
+//                layoutProgress.setVisibility(View.GONE);
+//                refreshAll.setRefreshing(false);
                 adapterAll.setData(response.getCurrentPage());
                 adapterAll.notifyDataSetChanged();
-                getTeacherList();
+                if(showProgressLayout){
+                    getTeacherList(true);
+                } else{
+                    getTeacherList(false);
+                }
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
                 Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
-                getTeacherList();
+                if(showProgressLayout){
+                    getTeacherList(true);
+                } else{
+                    getTeacherList(false);
+                }
             }
         });
     }
 
-    private void getTeacherList() {
-        layoutProgress.setVisibility(View.VISIBLE);
+    private void getTeacherList(Boolean showProgressLayout) {
+//        if(showProgressLayout){
+//            layoutProgress.setVisibility(View.VISIBLE);
+//        } else {
+//            refreshAll.setRefreshing(true);
+//        }
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
@@ -127,6 +150,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
             @Override
             public void handleResponse(BackendlessCollection<Teacher> response) {
                 layoutProgress.setVisibility(View.GONE);
+                refreshAll.setRefreshing(false);
                 adapterAll.setData(response.getCurrentPage());
                 adapterAll.notifyDataSetChanged();
             }
@@ -185,7 +209,11 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
                 break;
             case 2:
                 if (resultCode == Activity.RESULT_OK) {
-                    layoutProgress.setVisibility(View.VISIBLE);
+                    if(showProgressLayout){
+                        layoutProgress.setVisibility(View.VISIBLE);
+                    } else {
+                        refreshAll.setRefreshing(true);
+                    }
                     if(adapterAll.getAllList().get(data.getIntExtra("position",0)) instanceof Student){
                         Student student
                                 = (Student) adapterAll.getAllList().get(data.getIntExtra("position", -1));
@@ -193,8 +221,9 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
                             @Override
                             public void handleResponse(Long response) {
                                 layoutProgress.setVisibility(View.GONE);
+                                refreshAll.setRefreshing(false);
                                 adapterAll.clearAll();
-                                getStudentList();
+                                getStudentList(true);
                             }
 
                             @Override
@@ -210,18 +239,14 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
                             public void handleResponse(Long response) {
                                 layoutProgress.setVisibility(View.GONE);
                                 adapterAll.clearAll();
-                                getStudentList();
+                                getStudentList(true);
                             }
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-
                             }
                         });
                     }
-
-
-
                 }
                 break;
         }
@@ -231,25 +256,21 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
 
     @Override
     public void itemLongClicked(View view, int position) {
-//        if (adapterAll.getAllList().get(position) instanceof Student) {
             DlgFragDeleteFromAll fragDeleteFromAll = new DlgFragDeleteFromAll();
             Bundle bundle = new Bundle();
             bundle.putInt("position", position);
             fragDeleteFromAll.setArguments(bundle);
             fragDeleteFromAll.setTargetFragment(FragListAll.this, 2);
             fragDeleteFromAll.show(getFragmentManager(), fragDeleteFromAll.getDialogTag());
-//
-//        } else if (adapterAll.getAllList().get(position) instanceof Teacher) {
-//            DlgFragDeleteFromAll teacherDeleteList = new DlgFragDeleteFromAll();
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("position", position);
-//            teacherDeleteList.setArguments(bundle);
-//            teacherDeleteList.setTargetFragment(FragListAll.this, 2);
-//            teacherDeleteList.show(getFragmentManager(), teacherDeleteList.getDialogTag());
-//        }
     }
 
 
+    private SwipeRefreshLayout.OnRefreshListener refreshListenerAll = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getStudentList(false);
+        }
+    };
 
 }
 

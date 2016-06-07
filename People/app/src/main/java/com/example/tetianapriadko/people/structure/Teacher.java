@@ -16,6 +16,17 @@ public class Teacher {
     private String speciality;
     private String objectId;
     private String name;
+    private String avatarUrl;
+
+
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public String getPlaceofWork() {
         return placeofWork;

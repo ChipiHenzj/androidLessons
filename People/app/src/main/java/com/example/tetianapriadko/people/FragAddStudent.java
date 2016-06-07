@@ -196,7 +196,7 @@ public class FragAddStudent extends Fragment {
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

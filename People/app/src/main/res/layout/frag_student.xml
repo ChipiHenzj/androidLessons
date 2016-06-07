@@ -21,16 +21,25 @@
             app:titleEnabled="false">
 
             <ImageView
-                android:id="@+id/imageView_avatar"
+                android:id="@+id/imageView_avatar_student"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerInside"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
                 android:layout_gravity="center"
                 android:src="@drawable/icon"
+                android:alpha="0.8"
                 android:contentDescription="@null"
-                android:alpha="0.5"/>
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="10dp"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

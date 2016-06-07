@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,8 @@ public class FragListStudent extends Fragment {
     private View rootView;
     private AdapterStudents adapterStudents;
     private RecyclerView recViewStudentList;
+    private SwipeRefreshLayout refreshStudent;
+    private Boolean showProgressLayout = true;
 
     @Nullable
     @Override
@@ -70,7 +73,15 @@ public class FragListStudent extends Fragment {
 
         initRecyclerView();
 
-        getStudentList();
+        initRefreshLayout(rootView);
+
+        getStudentList(true);
+    }
+
+    private void initRefreshLayout(View rootView) {
+        refreshStudent = ((SwipeRefreshLayout) rootView.findViewById(R.id.refresh_student));
+        refreshStudent.setOnRefreshListener(refreshListener);
+        refreshStudent.setRefreshing(false);
     }
 
     private void initRecyclerView() {
@@ -85,8 +96,12 @@ public class FragListStudent extends Fragment {
         recViewStudentList.setAdapter(adapterStudents);
     }
 
-    private void getStudentList() {
-        layoutProgress.setVisibility(View.VISIBLE);
+    private void getStudentList(Boolean showProgressLayout) {
+        if (showProgressLayout){
+            layoutProgress.setVisibility(View.VISIBLE);
+        } else {
+            refreshStudent.setRefreshing(true);
+        }
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
@@ -94,6 +109,7 @@ public class FragListStudent extends Fragment {
             @Override
             public void handleResponse(BackendlessCollection<Student> response) {
                 layoutProgress.setVisibility(View.GONE);
+                refreshStudent.setRefreshing(false);
                 adapterStudents.setData(response.getCurrentPage());
                 adapterStudents.notifyDataSetChanged();
             }
@@ -162,14 +178,19 @@ public class FragListStudent extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
-                        layoutProgress.setVisibility(View.VISIBLE);
+                        if (showProgressLayout){
+                            layoutProgress.setVisibility(View.VISIBLE);
+                        } else {
+                            refreshStudent.setRefreshing(true);
+                        }
                         Student student
                                 = adapterStudents.getStudents().get(data.getIntExtra("positionStudent", -1));
                         student.removeAsync(new AsyncCallback<Long>() {
                             @Override
                             public void handleResponse(Long response) {
                                 layoutProgress.setVisibility(View.GONE);
-                                getStudentList();
+                                refreshStudent.setRefreshing(false);
+                                getStudentList(true);
                             }
 
                             @Override
@@ -192,5 +213,13 @@ public class FragListStudent extends Fragment {
                 break;
         }
     }
+
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getStudentList(false);
+        }
+    };
 
 }

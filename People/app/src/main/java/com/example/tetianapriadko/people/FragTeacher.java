@@ -4,6 +4,7 @@ package com.example.tetianapriadko.people;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,11 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
 import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
@@ -33,6 +37,8 @@ public class FragTeacher extends Fragment {
     private String selectedTeacherId;
     private Teacher selectedTeacher;
     private FrameLayout layoutProgress;
+    private ImageView avatar;
+    public AQuery aQuery;
 
     @Nullable
     @Override
@@ -51,7 +57,7 @@ public class FragTeacher extends Fragment {
         Bundle bundle = this.getArguments();
         String name = bundle.getString("teacherName");
         String surname = bundle.getString("teacherSurname");
-        toolbar.setTitle("Teacher. "  + name + " " + surname);
+        toolbar.setTitle(name + " " + surname);
 
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -107,6 +113,8 @@ public class FragTeacher extends Fragment {
                         .setText(response.getSpeciality());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_place))
                         .setText(response.getPlaceofWork());
+                avatar = ((ImageView) rootView.findViewById(R.id.imageView_avatar_teacher));
+                setImage(response.getAvatarUrl());
             }
 
             @Override
@@ -115,6 +123,21 @@ public class FragTeacher extends Fragment {
                 // an error has occurred, the error code can be retrieved with fault.getCode()
             }
         });
+
+    }
+
+    public void setImage (String avatarUrl){
+        aQuery = new AQuery(getActivity());
+        aQuery.id(avatar).image(
+                String.format("%s%s%s%s",
+                        BACK_SETTINGS.SERVER_URL,
+                        BACK_SETTINGS.FILES,
+                        BACK_SETTINGS.TEACHER_AVATAR_STORE_URL,
+                        avatarUrl),
+                false,
+                true,
+                0,
+                R.drawable.icon);
 
     }
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.example.tetianapriadko.people.adapter.AdapterStudents;
 import com.example.tetianapriadko.people.adapter.AdapterTeachers;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeachList;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
@@ -38,7 +40,9 @@ public class FragListTeacher extends Fragment {
     private FrameLayout layoutProgress;
     private View rootView;
     private RecyclerView recViewTeacherList;
-    AdapterTeachers adapterTeachers;
+    private AdapterTeachers adapterTeachers;
+    private SwipeRefreshLayout refreshTeacher;
+    private Boolean showProgressLayout;
 
     @Nullable
     @Override
@@ -75,8 +79,16 @@ public class FragListTeacher extends Fragment {
 
         initRecyclerView();
 
-        getTeacherList();
+        iniSwipeRefresh(rootView);
 
+        getTeacherList(true);
+
+    }
+
+    public void iniSwipeRefresh(View rootView){
+        refreshTeacher = ((SwipeRefreshLayout) rootView.findViewById(R.id.refresh_teacher));
+        refreshTeacher.setOnRefreshListener(refreshListener);
+        refreshTeacher.setRefreshing(false);
     }
 
     private void initRecyclerView() {
@@ -91,8 +103,13 @@ public class FragListTeacher extends Fragment {
         recViewTeacherList.setAdapter(adapterTeachers);
     }
 
-    private void getTeacherList() {
-        layoutProgress.setVisibility(View.VISIBLE);
+    private void getTeacherList(Boolean showProgressLayout) {
+        if(showProgressLayout){
+            layoutProgress.setVisibility(View.VISIBLE);
+        } else {
+            refreshTeacher.setRefreshing(true);
+        }
+
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
@@ -101,6 +118,7 @@ public class FragListTeacher extends Fragment {
                     @Override
                     public void handleResponse(BackendlessCollection<Teacher> response) {
                         layoutProgress.setVisibility(View.GONE);
+                        refreshTeacher.setRefreshing(false);
                         adapterTeachers.setData(response.getCurrentPage());
                         adapterTeachers.notifyDataSetChanged();
                     }
@@ -171,14 +189,19 @@ public class FragListTeacher extends Fragment {
             case MainActivity.RESULT_OK:
                 switch (requestCode) {
                     case 1:
-                        layoutProgress.setVisibility(View.VISIBLE);
+                        if(showProgressLayout){
+                            layoutProgress.setVisibility(View.VISIBLE);
+                        } else {
+                            refreshTeacher.setRefreshing(true);
+                        }
                         Teacher teacher
                                 = adapterTeachers.getTeachers().get(data.getIntExtra("positionTeacher", -1));
                         teacher.removeAsync(new AsyncCallback<Long>() {
                             @Override
                             public void handleResponse(Long response) {
                                 layoutProgress.setVisibility(View.GONE);
-                                getTeacherList();
+                                refreshTeacher.setRefreshing(false);
+                                getTeacherList(false);
                             }
 
                             @Override
@@ -201,5 +224,12 @@ public class FragListTeacher extends Fragment {
                 break;
         }
     }
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getTeacherList(false);
+        }
+    };
 
 }
