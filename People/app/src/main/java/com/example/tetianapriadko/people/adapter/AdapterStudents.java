@@ -6,14 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.tetianapriadko.people.R;
 import com.example.tetianapriadko.people.structure.Student;
 
 import java.util.List;
 
 public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHolder> {
-
 
     private List<Student> students;
     private OnItemClickListener itemClickListener;
@@ -52,7 +50,9 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
                 return false;
             }
         });
+
     }
+
 
     @Override
     public int getItemCount() {

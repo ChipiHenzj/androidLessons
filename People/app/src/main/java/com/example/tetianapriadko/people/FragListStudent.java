@@ -2,6 +2,8 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
@@ -27,6 +31,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterStudents;
+import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
 import com.example.tetianapriadko.people.structure.Student;
 
@@ -72,7 +77,6 @@ public class FragListStudent extends Fragment {
         layoutProgress.setVisibility(View.GONE);
 
         initRecyclerView();
-
         initRefreshLayout(rootView);
 
         getStudentList(true);
@@ -213,7 +217,6 @@ public class FragListStudent extends Fragment {
                 break;
         }
     }
-
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override

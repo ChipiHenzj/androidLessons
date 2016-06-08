@@ -17,7 +17,7 @@
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_place_24dp"
-            android:title="All on Map" />
+            android:title="Map" />
 
     </group>
 

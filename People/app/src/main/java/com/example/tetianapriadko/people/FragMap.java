@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 public class FragMap extends Fragment {
 
-    private static final String TITLE = "All on Map";
+    private static final String TITLE = "Map";
 
     View rootView;
 

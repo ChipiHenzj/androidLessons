@@ -38,7 +38,6 @@
         android:background="#8fffffff"
         android:id="@+id/layout_progress"
         android:layout_below="@+id/app_bar">
-
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"

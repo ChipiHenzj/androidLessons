@@ -1,14 +1,9 @@
 package com.example.tetianapriadko.people;
 
-import android.Manifest;
+
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +16,12 @@ import android.widget.TextView;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragExit;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 
-import java.text.BreakIterator;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
+    public static final String NAME = "name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
         ((TextView) navigationView.getHeaderView(0)
                 .findViewById(R.id.email)).setText(user.getEmail());
+
     }
 
     @Override

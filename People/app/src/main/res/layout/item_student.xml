@@ -10,13 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@null"
-        android:id="@+id/imageView_add_student"
+        android:id="@+id/imageView_student"
         android:src="@drawable/ic_person_outline_24dp"
         android:gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@+id/textView_student"
         android:layout_alignTop="@+id/textView_st_name"
         android:background="@drawable/oval"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,8 +25,9 @@
         android:id="@+id/textView_st_name"
         android:textSize="20sp"
         android:layout_toRightOf="@+id/imageView_add_student"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

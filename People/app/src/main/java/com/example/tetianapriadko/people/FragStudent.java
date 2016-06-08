@@ -132,7 +132,6 @@ public class FragStudent extends Fragment {
                 R.drawable.icon);
     }
 
-
     protected void replaceFragmentBackStack(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
