@@ -59,8 +59,10 @@ public class LoginActivity extends Activity {
     private void initUI() {
         registerLink = (TextView) findViewById(R.id.registerLink);
         restoreLink = (TextView) findViewById(R.id.restoreLink);
+
         identityField = (EditText) findViewById(R.id.identityField);
         passwordField = (EditText) findViewById(R.id.passwordField);
+
         loginButton = (Button) findViewById(R.id.loginButton);
         rememberLoginBox = (CheckBox) findViewById(R.id.rememberLoginBox);
 
@@ -98,9 +100,11 @@ public class LoginActivity extends Activity {
     public void onLoginButtonClicked() {
         String identity = identityField.getText().toString();
         String password = passwordField.getText().toString();
+
         boolean rememberLogin = rememberLoginBox.isChecked();
 
-        Backendless.UserService.login(identity, password, new DefaultCallback<BackendlessUser>(LoginActivity.this) {
+        Backendless.UserService.login( identity, password,
+                new DefaultCallback<BackendlessUser>(LoginActivity.this) {
             public void handleResponse(BackendlessUser backendlessUser) {
                 super.handleResponse(backendlessUser);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));

@@ -6,20 +6,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.tetianapriadko.people.R;
-import com.example.tetianapriadko.people.structure.Student;
 
+import com.androidquery.AQuery;
+import com.example.tetianapriadko.people.R;
+import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
+import com.example.tetianapriadko.people.structure.Student;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHolder> {
 
     private List<Student> students;
     private OnItemClickListener itemClickListener;
     private OnItemLongClickListener itemLongClickListener;
+    private AQuery aQuery;
+    public CircleImageView studentImageView;
+    public Context context;
 
     public AdapterStudents(List<Student> students) {
         this.students = students;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,6 +41,18 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
 
         holder.studentName.setText(students.get(position).getName());
         holder.studentSurname.setText(students.get(position).getSurname());
+
+        aQuery = new AQuery(context);
+        aQuery.id(studentImageView).image(
+                String.format("%s%s%s%s",
+                        BACK_SETTINGS.SERVER_URL,
+                        BACK_SETTINGS.FILES,
+                        BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
+                        students.get(position).getAvatarUrl()),
+                false,
+                true,
+                0,
+                R.drawable.icon);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,9 +70,7 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
                 return false;
             }
         });
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -75,6 +93,7 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
         this.itemLongClickListener = itemLongClickListener;
     }
 
+
     protected class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentName;
         public TextView studentSurname;
@@ -82,6 +101,7 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
             super(itemView);
             studentName = ((TextView) itemView.findViewById(R.id.textView_st_name));
             studentSurname = ((TextView) itemView.findViewById(R.id.textView_st_surname));
+            studentImageView = (CircleImageView) itemView.findViewById(R.id.imageView_student);
         }
     }
 
@@ -92,4 +112,8 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
     public interface OnItemLongClickListener {
         void itemLongClicked(View view, int position, Student student);
     }
+
+
+
+
 }

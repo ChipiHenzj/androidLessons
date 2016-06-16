@@ -3,6 +3,7 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -31,6 +32,8 @@ import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
 import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
+import org.w3c.dom.Text;
+
 public class FragTeacher extends Fragment {
 
     private View rootView;
@@ -38,7 +41,9 @@ public class FragTeacher extends Fragment {
     private Teacher selectedTeacher;
     private FrameLayout layoutProgress;
     private ImageView avatar;
-    public AQuery aQuery;
+    private AQuery aQuery;
+    private TextView fromBE_teacher_phone;
+    private TextView fromBE_teacher_email;
 
     @Nullable
     @Override
@@ -72,6 +77,11 @@ public class FragTeacher extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        fromBE_teacher_phone = ((TextView) rootView.findViewById(R.id.fromBE_teacher_phone));
+        callPhone();
+
+        fromBE_teacher_email = ((TextView) rootView.findViewById(R.id.fromBE_teacher_email));
+        sendEmail();
 
         layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);
@@ -91,6 +101,28 @@ public class FragTeacher extends Fragment {
 
 
         getTeacherFromBE(bundle.getString("teacherId"));
+    }
+
+    private void callPhone(){
+        fromBE_teacher_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + fromBE_teacher_phone.getText().toString()));
+                startActivity(callIntent);
+            }
+        });
+    }
+
+    private void sendEmail(){
+        fromBE_teacher_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                sendIntent.setData(Uri.parse("mailto:" + fromBE_teacher_email.getText().toString()));
+                startActivity(sendIntent);
+            }
+        });
     }
 
     private void getTeacherFromBE(String objectID) {

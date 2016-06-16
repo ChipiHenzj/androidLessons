@@ -8,16 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
 import com.example.tetianapriadko.people.R;
+import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.structure.Teacher;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterTeachers extends RecyclerView.Adapter<AdapterTeachers.ViewHolder> {
 
     private List<Teacher> teachers;
     private OnItemClickListener itemClickListener;
     private OnItemLongClickListener itemLongClickListener;
+    public AQuery aQuery;
+    public Context context;
+    public CircleImageView teacherImageView;
 
     public AdapterTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
@@ -34,6 +41,20 @@ public class AdapterTeachers extends RecyclerView.Adapter<AdapterTeachers.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.teacherName.setText(teachers.get(position).getName());
         holder.teacherSurname.setText(teachers.get(position).getSurname());
+
+        aQuery = new AQuery(context);
+        aQuery.id(teacherImageView).image(
+                String.format("%s%s%s%s",
+                        BACK_SETTINGS.SERVER_URL,
+                        BACK_SETTINGS.FILES,
+                        BACK_SETTINGS.TEACHER_AVATAR_STORE_URL,
+                        teachers.get(position).getAvatarUrl()),
+                false,
+                true,
+                0,
+                R.drawable.icon);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,12 +97,11 @@ public class AdapterTeachers extends RecyclerView.Adapter<AdapterTeachers.ViewHo
     protected class ViewHolder extends RecyclerView.ViewHolder {
         public TextView teacherName;
         public TextView teacherSurname;
-
-
         ViewHolder(View itemView) {
             super(itemView);
             teacherName = ((TextView) itemView.findViewById(R.id.textView_name));
             teacherSurname = ((TextView) itemView.findViewById(R.id.textView_surname));
+            teacherImageView = (CircleImageView) itemView.findViewById(R.id.imageView_teacher);
         }
     }
 

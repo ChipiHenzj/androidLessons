@@ -2,8 +2,6 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -73,13 +71,14 @@ public class FragListStudent extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
+        layoutProgress = ((FrameLayout)rootView.findViewById(R.id.layout_progress));
         layoutProgress.setVisibility(View.GONE);
 
         initRecyclerView();
         initRefreshLayout(rootView);
 
         getStudentList(true);
+
     }
 
     private void initRefreshLayout(View rootView) {
@@ -87,6 +86,7 @@ public class FragListStudent extends Fragment {
         refreshStudent.setOnRefreshListener(refreshListener);
         refreshStudent.setRefreshing(false);
     }
+
 
     private void initRecyclerView() {
         LinearLayoutManager studentLayoutManager = new LinearLayoutManager(getActivity(),
@@ -189,6 +189,7 @@ public class FragListStudent extends Fragment {
                         }
                         Student student
                                 = adapterStudents.getStudents().get(data.getIntExtra("positionStudent", -1));
+
                         student.removeAsync(new AsyncCallback<Long>() {
                             @Override
                             public void handleResponse(Long response) {

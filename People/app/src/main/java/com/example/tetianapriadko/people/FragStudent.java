@@ -2,6 +2,7 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -35,7 +36,9 @@ public class FragStudent extends Fragment {
     private Student selectedStudent;
     private FrameLayout layoutProgress;
     private ImageView avatar;
-    public AQuery aQuery;
+    private AQuery aQuery;
+    private TextView fromBE_student_phone;
+    private TextView fromBE_student_email;
 
     @Nullable
     @Override
@@ -69,6 +72,12 @@ public class FragStudent extends Fragment {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        fromBE_student_phone = ((TextView) rootView.findViewById(R.id.fromBE_student_phone));
+        callPhone();
+        fromBE_student_email = ((TextView) rootView.findViewById(R.id.fromBE_student_email));
+        sendEmail();
+
+
         layoutProgress = (FrameLayout) rootView.findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);
 
@@ -85,6 +94,28 @@ public class FragStudent extends Fragment {
         });
 
         getStudentFromBE(bundle.getString("studentId"));
+    }
+
+    private void callPhone (){
+        fromBE_student_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + fromBE_student_phone.getText().toString()));
+                startActivity(callIntent);
+            }
+        });
+    }
+
+    private void sendEmail(){
+        fromBE_student_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                sendIntent.setData(Uri.parse("mailto:" + fromBE_student_email.getText().toString()));
+                startActivity(sendIntent);
+            }
+        });
     }
 
     private void getStudentFromBE(String objectID) {
@@ -191,4 +222,5 @@ public class FragStudent extends Fragment {
                 break;
         }
     }
+
 }
