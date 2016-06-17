@@ -1,15 +1,20 @@
 package com.example.tetianapriadko.people;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -211,7 +216,6 @@ public class FragAddStudent extends Fragment {
                 avatarUrl,
                 BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
                 studentAvatarCallback);
-
     }
 
     @Override
@@ -255,13 +259,36 @@ public class FragAddStudent extends Fragment {
                 .commit();
     }
 
-
     private View.OnClickListener avatarClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            pickImage();
+//            pickImage();
+
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+               pickImage();
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        0);
+            }
         }
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (/*permissions.length == 1 &&
+                permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&*/
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            pickImage();
+        } else {
+            // Permission was denied. Display an error message.
+        }
+    }
 
     private AsyncCallback<BackendlessFile> studentAvatarCallback = new AsyncCallback<BackendlessFile>() {
         @Override
