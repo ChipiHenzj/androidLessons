@@ -102,7 +102,7 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
                             BACK_SETTINGS.TEACHER_AVATAR_STORE_URL,
                             ((Teacher) allList.get(position)).getAvatarUrl()),
                     false,
-                    true,
+                    false,
                     0,
                     R.drawable.icon);
 

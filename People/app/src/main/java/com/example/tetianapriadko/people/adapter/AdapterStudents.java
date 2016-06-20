@@ -50,7 +50,7 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
                         BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
                         students.get(position).getAvatarUrl()),
                 false,
-                true,
+                false,
                 0,
                 R.drawable.icon);
 

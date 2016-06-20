@@ -167,7 +167,7 @@ public class FragTeacher extends Fragment {
                         BACK_SETTINGS.TEACHER_AVATAR_STORE_URL,
                         avatarUrl),
                 false,
-                true,
+                false,
                 0,
                 R.drawable.icon);
 

@@ -147,7 +147,7 @@ public class FragEditStudent extends Fragment {
                         BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
                         avatarUrl),
                 false,
-                true,
+                false,
                 0,
                 R.drawable.icon);
     }
@@ -207,7 +207,6 @@ public class FragEditStudent extends Fragment {
             selectedStudent.setPlaceOfStudy((placeOfStudy.getText().toString()));
             selectedStudent.setAvatarUrl(avatarUrl);
 
-
             selectedStudent.saveAsync(new AsyncCallback<Student>() {
                 @Override
                 public void handleResponse(Student response) {
@@ -240,6 +239,7 @@ public class FragEditStudent extends Fragment {
                 quality,
                 avatarUrl,
                 BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
+                true,
                 studentAvatarCallback);
     }
 
@@ -299,6 +299,7 @@ public class FragEditStudent extends Fragment {
     private AsyncCallback<BackendlessFile> studentAvatarCallback = new AsyncCallback<BackendlessFile>() {
         @Override
         public void handleResponse(BackendlessFile response) {
+            avatar.setImageBitmap(App.getCroppedBitmap());
             uploadStudent(getLastPartOfUrl(response.getFileURL()));
         }
 

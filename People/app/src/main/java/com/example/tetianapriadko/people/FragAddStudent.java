@@ -41,6 +41,7 @@ import com.example.tetianapriadko.people.structure.Student;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
 public class FragAddStudent extends Fragment {
 
     private static final String TITLE = "Add Student";
@@ -259,13 +260,16 @@ public class FragAddStudent extends Fragment {
                 .commit();
     }
 
+
     private View.OnClickListener avatarClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 //            pickImage();
 
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
                pickImage();
             } else {
                 ActivityCompat.requestPermissions(getActivity(),
@@ -273,7 +277,9 @@ public class FragAddStudent extends Fragment {
                         0);
             }
         }
+
     };
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -284,6 +290,7 @@ public class FragAddStudent extends Fragment {
                     != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
+
             pickImage();
         } else {
             // Permission was denied. Display an error message.

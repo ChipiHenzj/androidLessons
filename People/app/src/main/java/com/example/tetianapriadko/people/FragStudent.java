@@ -158,7 +158,7 @@ public class FragStudent extends Fragment {
                         BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
                         avatarUrl),
                 false,
-                true,
+                false,
                 0,
                 R.drawable.icon);
     }
