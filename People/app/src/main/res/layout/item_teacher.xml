@@ -6,19 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_below="@+id/app_bar">
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:contentDescription="@null"-->
-        <!--android:src="@drawable/ic_person_24dp"-->
-        <!--android:id="@+id/imageView_teacher"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:layout_alignBottom="@+id/textView_teacher"-->
-        <!--android:layout_alignTop="@+id/textView_name"-->
-        <!--android:background="@drawable/oval"/>-->
-
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="96dp"
         android:layout_height="96dp"

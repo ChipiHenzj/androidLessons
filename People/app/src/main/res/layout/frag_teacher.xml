@@ -29,7 +29,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/icon"
                 android:contentDescription="@null"
-                android:alpha="0.8"
+                android:alpha="1"
                 android:scaleType="centerCrop"/>
 
             <TextView
