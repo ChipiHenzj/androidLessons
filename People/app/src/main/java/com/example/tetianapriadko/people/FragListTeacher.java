@@ -88,6 +88,7 @@ public class FragListTeacher extends Fragment {
     public void iniSwipeRefresh(View rootView){
         refreshTeacher = ((SwipeRefreshLayout) rootView.findViewById(R.id.refresh_teacher));
         refreshTeacher.setOnRefreshListener(refreshListener);
+        refreshTeacher.setColorSchemeResources(R.color.colorPrimary);
         refreshTeacher.setRefreshing(false);
     }
 

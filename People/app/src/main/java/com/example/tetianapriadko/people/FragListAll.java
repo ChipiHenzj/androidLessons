@@ -2,6 +2,8 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -79,6 +81,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
         layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
         layoutProgress.setVisibility(View.GONE);
 
+
         initSwipeRefresh(rootView);
         initRecyclerView();
     }
@@ -86,6 +89,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
     private void initSwipeRefresh(View rootView){
         refreshAll = ((SwipeRefreshLayout) rootView.findViewById(R.id.refresh_all));
         refreshAll.setOnRefreshListener(refreshListenerAll);
+        refreshAll.setColorSchemeResources(R.color.colorPrimary);
         refreshAll.setRefreshing(false);
     }
 

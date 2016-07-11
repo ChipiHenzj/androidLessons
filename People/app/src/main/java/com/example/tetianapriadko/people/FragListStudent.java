@@ -81,6 +81,7 @@ public class FragListStudent extends Fragment {
     private void initRefreshLayout(View rootView) {
         refreshStudent = ((SwipeRefreshLayout) rootView.findViewById(R.id.refresh_student));
         refreshStudent.setOnRefreshListener(refreshListener);
+        refreshStudent.setColorSchemeResources(R.color.colorPrimary);
         refreshStudent.setRefreshing(false);
     }
 
