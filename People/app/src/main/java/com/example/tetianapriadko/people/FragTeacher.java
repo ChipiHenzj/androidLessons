@@ -44,6 +44,7 @@ public class FragTeacher extends Fragment {
     private AQuery aQuery;
     private TextView fromBE_teacher_phone;
     private TextView fromBE_teacher_email;
+    private TextView fromBE_teacher_place;
 
     @Nullable
     @Override
@@ -82,6 +83,16 @@ public class FragTeacher extends Fragment {
 
         fromBE_teacher_email = ((TextView) rootView.findViewById(R.id.fromBE_teacher_email));
         sendEmail();
+
+        fromBE_teacher_place = (TextView)rootView.findViewById(R.id.fromBE_teacher_place);
+        fromBE_teacher_place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);

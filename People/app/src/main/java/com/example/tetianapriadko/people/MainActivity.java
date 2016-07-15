@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity
         ((TextView) navigationView.getHeaderView(0)
                 .findViewById(R.id.email)).setText(user.getEmail());
 
+        ((TextView) navigationView.getHeaderView(0)
+                .findViewById(R.id.name)).setText((String) user.getProperty(NAME));
+
     }
 
     @Override
@@ -127,7 +130,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_logout) {
 
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
 }
