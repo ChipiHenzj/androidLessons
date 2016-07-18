@@ -1,13 +1,16 @@
 package com.example.tetianapriadko.people;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +35,7 @@ import com.example.tetianapriadko.people.application.App;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddTeacherDone;
 import com.example.tetianapriadko.people.structure.Teacher;
+import com.example.tetianapriadko.people.utils.PermissionUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -258,9 +262,33 @@ public class FragAddTeacher extends Fragment {
     private View.OnClickListener teacherAvatarClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            pickImage();
+            procStoragePermiss();
         }
     };
+
+    private void procStoragePermiss() {
+        if (!PermissionUtil.checkPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                || !PermissionUtil.checkPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            requestPermission(1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        } else {
+            pickImage();
+        }
+    }
+
+    private void requestPermission(int requestCode, String[] permission) {
+        ActivityCompat.requestPermissions(getActivity(), permission, requestCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (PermissionUtil.verifyPermissions(grantResults)) {
+            pickImage();
+        } else {
+            requestPermission(1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        }
+    }
 
 
     private AsyncCallback<BackendlessFile> teacherAvatarCallback = new AsyncCallback<BackendlessFile>() {

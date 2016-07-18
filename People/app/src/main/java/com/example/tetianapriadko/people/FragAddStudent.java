@@ -4,7 +4,6 @@ package com.example.tetianapriadko.people;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -14,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -27,16 +25,19 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
+import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.application.App;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddStudentDone;
 import com.example.tetianapriadko.people.structure.Student;
+import com.example.tetianapriadko.people.utils.PermissionUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,6 +48,7 @@ public class FragAddStudent extends Fragment {
     private static final String TITLE = "Add Student";
     private static final int PICK_IMAGE = 2;
     private static final int CROP_IMAGE = 3;
+    private static final int SET_LOCATION = 4;
 
     private View rootView;
     private EditText name;
@@ -55,9 +57,13 @@ public class FragAddStudent extends Fragment {
     private EditText phone;
     private EditText speciality;
     private EditText place;
+    private TextView setLocation;
     private FrameLayout layoutProgress;
     private ImageView avatar;
     private Bitmap selectedBitmap;
+
+    private double latitude;
+    private double longitude;
 
     private static final String DEFAULT_AVATAR_URL = "ic_dish_default.jpg";
     private static final int BITMAP_QUALITY_40 = 40;
@@ -97,7 +103,9 @@ public class FragAddStudent extends Fragment {
         layoutProgress.setVisibility(View.GONE);
 
         initEditText();
+        initTextView();
         initImageView();
+
     }
 
     private void initEditText() {
@@ -112,6 +120,16 @@ public class FragAddStudent extends Fragment {
     private void initImageView() {
         avatar = ((ImageView) rootView.findViewById(R.id.imageView_add_student));
         avatar.setOnClickListener(avatarClickListener);
+    }
+
+    private void initTextView() {
+        setLocation = (TextView) rootView.findViewById(R.id.set_location);
+        setLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getActivity(), MapsActivityDone.class), SET_LOCATION);
+            }
+        });
     }
 
     @Override
@@ -190,6 +208,13 @@ public class FragAddStudent extends Fragment {
         student.setPlaceOfStudy((place.getText().toString()));
         student.setAvatarUrl(getLastPartOfUrl(avatarUrl));
 
+        GeoPoint geoPoint = new GeoPoint();
+        geoPoint.setLatitude(40.7148);
+        geoPoint.setLongitude(-74.0059);
+        geoPoint.addMetadata("geopoint", "Place");
+
+        student.setGeoPoint(geoPoint);
+
         student.saveAsync(new AsyncCallback<Student>() {
             @Override
             public void handleResponse(Student response) {
@@ -237,6 +262,16 @@ public class FragAddStudent extends Fragment {
                         selectedBitmap = App.getCroppedBitmap();
                         avatar.setImageBitmap(selectedBitmap);
                         break;
+                    case SET_LOCATION:
+                        double latitude = data.getDoubleExtra("latitude", -1);
+                        double longitude = data.getDoubleExtra("longitude", -1);
+                        this.latitude = latitude;
+                        this.longitude = longitude;
+                        setLocation.setText(
+                                "Latitude: " + this.latitude
+                                        + "\n"
+                                        + "Longitude: " + this.longitude);
+                        break;
                 }
                 break;
             case Activity.RESULT_CANCELED:
@@ -264,36 +299,32 @@ public class FragAddStudent extends Fragment {
     private View.OnClickListener avatarClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            pickImage();
-
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-               pickImage();
-            } else {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        0);
-            }
+            procStoragePermiss();
         }
-
     };
 
+    private void procStoragePermiss() {
+        if (!PermissionUtil.checkPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                || !PermissionUtil.checkPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            requestPermission(1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            pickImage();
+        } else {
+            pickImage();
+        }
+    }
+
+    private void requestPermission(int requestCode, String[] permission) {
+        ActivityCompat.requestPermissions(getActivity(), permission, requestCode);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (/*permissions.length == 1 &&
-                permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&*/
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-
+        if (PermissionUtil.verifyPermissions(grantResults)) {
             pickImage();
         } else {
-            // Permission was denied. Display an error message.
+            requestPermission(1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
         }
     }
 

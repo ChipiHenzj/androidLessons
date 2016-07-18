@@ -98,5 +98,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_maps">Map</string>
     <string name="action_done">Done</string>
+    <string name="title_activity_maps_activity_done">Map</string>
+    <string name="location">Set up location</string>
 
 </resources>

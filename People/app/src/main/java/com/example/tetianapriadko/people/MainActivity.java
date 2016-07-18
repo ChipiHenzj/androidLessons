@@ -123,13 +123,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_all) {
             replaceFragmentBackStack(new FragListAll());
         } else if (id == R.id.nav_map) {
-//            replaceFragmentBackStack(new FragMap());
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {
-
 
         } else if (id == R.id.nav_logout) {
 
