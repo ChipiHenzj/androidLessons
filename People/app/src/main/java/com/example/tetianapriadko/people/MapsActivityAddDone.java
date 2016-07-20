@@ -1,20 +1,16 @@
 package com.example.tetianapriadko.people;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -24,6 +20,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.geo.GeoPoint;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragLocationAddDone;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,18 +29,21 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivityAddDone extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private LatLng latLng1;
     private GoogleApiClient client;
+
+    private LatLng latLng1;
     private FrameLayout layoutProgress;
+    private Marker marker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,35 +62,38 @@ public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCal
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        layoutProgress = (FrameLayout)findViewById(R.id.layout_progress);
+        layoutProgress = (FrameLayout) findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);
-
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                latLng1 = latLng;
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng1)
-                        .draggable(true));
-            }
-        });
-
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                mMap.clear();
-            }
-        });
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         } else {
-            ActivityCompat.requestPermissions(MapsActivityDone.this,
+            ActivityCompat.requestPermissions(MapsActivityAddDone.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     0);
         }
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                latLng1 = latLng;
+                if(marker == null){
+                    marker = mMap.addMarker(new MarkerOptions()
+                            .position(latLng1)
+                            .draggable(true));
+                } else {
+                    marker.setPosition(latLng1);
+                }
+            }
+        });
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                mMap.clear();
+            }
+        });
     }
 
     @Override
@@ -102,8 +105,6 @@ public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCal
             }
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationChangeListener(myLocationChangeListener);
-        } else {
-
         }
     }
 
@@ -126,15 +127,29 @@ public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.action_done){
+        switch(item.getItemId()){
+            case R.id.action_done:
+                if (latLng1 == null) {
+                    Toast.makeText(this, "Please long press for set up Location", Toast.LENGTH_SHORT).show();
+                } else {
+                    DlgFragLocationAddDone dlgFragLocationDone = new DlgFragLocationAddDone();
+                    dlgFragLocationDone.setTargetActivity(MapsActivityAddDone.this, 1);
+                    dlgFragLocationDone.show(getSupportFragmentManager(), "");
+                }
+
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void customActivityResult(int requestCode, int resultCode) {
+        if (resultCode == RESULT_OK) {
             layoutProgress.setVisibility(View.VISIBLE);
             Map<String, Object> meta = new HashMap<>();
             meta.put("geopoint", "Place");
 
-            if (latLng1 == null){
-                Toast.makeText(this, "Please long press for set up location", Toast.LENGTH_LONG).show();
-            } else {
                 Backendless.Geo.savePoint(latLng1.latitude, latLng1.longitude, meta, new AsyncCallback<GeoPoint>() {
                     @Override
                     public void handleResponse(GeoPoint geoPoint) {
@@ -149,27 +164,22 @@ public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCal
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
                         layoutProgress.setVisibility(View.GONE);
-                        Toast.makeText(MapsActivityDone.this, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivityAddDone.this, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }
+        } else {
+            mMap.clear();
         }
-        return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onStart() {
         super.onStart();
         client.connect();
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Maps Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Maps Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://com.example.tetianapriadko.people/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
@@ -179,13 +189,9 @@ public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCal
     public void onStop() {
         super.onStop();
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Maps Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Maps Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://com.example.tetianapriadko.people/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);
@@ -193,5 +199,3 @@ public class MapsActivityDone extends AppCompatActivity implements OnMapReadyCal
     }
 }
 
-
-//    setResult(RESULT_OK, intent);

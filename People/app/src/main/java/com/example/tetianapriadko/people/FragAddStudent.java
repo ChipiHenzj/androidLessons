@@ -127,7 +127,7 @@ public class FragAddStudent extends Fragment {
         setLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(), MapsActivityDone.class), SET_LOCATION);
+                startActivityForResult(new Intent(getActivity(), MapsActivityAddDone.class), SET_LOCATION);
             }
         });
     }
@@ -209,10 +209,9 @@ public class FragAddStudent extends Fragment {
         student.setAvatarUrl(getLastPartOfUrl(avatarUrl));
 
         GeoPoint geoPoint = new GeoPoint();
-        geoPoint.setLatitude(40.7148);
-        geoPoint.setLongitude(-74.0059);
         geoPoint.addMetadata("geopoint", "Place");
-
+        geoPoint.setLatitude(latitude);
+        geoPoint.setLongitude(longitude);
         student.setGeoPoint(geoPoint);
 
         student.saveAsync(new AsyncCallback<Student>() {
@@ -294,7 +293,6 @@ public class FragAddStudent extends Fragment {
                 .addToBackStack("frag")
                 .commit();
     }
-
 
     private View.OnClickListener avatarClickListener = new View.OnClickListener() {
         @Override

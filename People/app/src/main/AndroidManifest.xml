@@ -64,6 +64,23 @@
         <activity
             android:name=".login.LoginSuccessActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ActCrop" />
+        <activity
+            android:name=".MapsActivityAddDone"
+            android:label="@string/title_activity_maps_activity_done"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapsActivityShow"
+            android:label="@string/title_activity_maps_activity_show"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapsActivityEditDone"
+            android:label="@string/title_activity_maps_activity_edit_done"
+            android:screenOrientation="portrait" />
 
         <service android:name="com.backendless.AndroidService" />
         <!--
@@ -72,7 +89,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -80,16 +97,5 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".ActCrop" />
-        <activity
-            android:name=".MapsActivityDone"
-            android:label="@string/title_activity_maps_activity_done"
-            android:screenOrientation="portrait" />
     </application>
-
 </manifest>

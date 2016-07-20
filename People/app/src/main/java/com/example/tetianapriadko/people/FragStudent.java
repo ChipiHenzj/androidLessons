@@ -25,9 +25,11 @@ import com.androidquery.AQuery;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.structure.Student;
+import com.google.android.gms.maps.model.LatLng;
 
 public class FragStudent extends Fragment {
 
@@ -40,6 +42,9 @@ public class FragStudent extends Fragment {
     private TextView fromBE_student_phone;
     private TextView fromBE_student_email;
     private TextView fromBE_student_place;
+    private double from_BE_latitude;
+    private double from_BE_longitude;
+    private GeoPoint geoPoint;
 
     @Nullable
     @Override
@@ -77,16 +82,19 @@ public class FragStudent extends Fragment {
         callPhone();
         fromBE_student_email = ((TextView) rootView.findViewById(R.id.fromBE_student_email));
         sendEmail();
+
         fromBE_student_place = (TextView)rootView.findViewById(R.id.fromBE_student_place);
         fromBE_student_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                Intent intent = new Intent(getActivity(), MapsActivityShow.class);
+                intent.putExtra("latitude", from_BE_latitude);
+                intent.putExtra("longitude", from_BE_longitude);
+                intent.putExtra("place", fromBE_student_place.getText().toString());
                 startActivity(intent);
 
             }
         });
-
 
         layoutProgress = (FrameLayout) rootView.findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);
@@ -140,21 +148,23 @@ public class FragStudent extends Fragment {
                         .setText(response.getName());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_surname))
                         .setText(response.getSurname());
-                ((TextView) rootView.findViewById(R.id.fromBE_student_email))
-                        .setText(response.getEmail());
-                ((TextView) rootView.findViewById(R.id.fromBE_student_phone))
-                        .setText(response.getPhoneNumber());
+                fromBE_student_email.setText(response.getEmail());
+                fromBE_student_phone.setText(response.getPhoneNumber());
                 ((TextView) rootView.findViewById(R.id.fromBE_student_speciality))
                         .setText(response.getSpeciality());
-                ((TextView) rootView.findViewById(R.id.fromBE_student_place))
-                        .setText(response.getPlaceOfStudy());
+                fromBE_student_place.setText(response.getPlaceOfStudy());
                 avatar = ((ImageView) rootView.findViewById(R.id.imageView_avatar_student));
                 setImage(response.getAvatarUrl());
+
+                geoPoint = response.getGeoPoint();
+                from_BE_latitude = geoPoint.getLatitude();
+                from_BE_longitude = geoPoint.getLongitude();
+
             }
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

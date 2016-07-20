@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -31,6 +32,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
+import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.application.App;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragEditSelect;
@@ -44,6 +46,7 @@ public class FragEditStudent extends Fragment {
     private static final String TITLE = "Edit Student";
     private static final int PICK_IMAGE = 2 ;
     private static final int CROP_IMAGE = 3;
+    private static final int SHOW_LOCATION = 4;
 
     private View rootView;
     private EditText name;
@@ -57,6 +60,10 @@ public class FragEditStudent extends Fragment {
     private Bitmap selectedBitmap = null;
     private AQuery aQuery;
     private ImageView avatar;
+    private TextView showLocation;
+
+    private double latitude;
+    private double longitude;
 
     private static final String DEFAULT_AVATAR_URL = "ic_dish_default.jpg";
     private static final int BITMAP_QUALITY_40 = 40;
@@ -102,6 +109,8 @@ public class FragEditStudent extends Fragment {
             String studentId = getArguments().getString("studentObjectId");
             getStudentFromBE(studentId);
         }
+
+        initTextView();
     }
 
     private void initEditText() {
@@ -111,6 +120,20 @@ public class FragEditStudent extends Fragment {
         phone = ((EditText) rootView.findViewById(R.id.edit_phone));
         speciality = ((EditText) rootView.findViewById(R.id.edit_speciality));
         placeOfStudy = ((EditText) rootView.findViewById(R.id.edit_place));
+    }
+
+    private void initTextView(){
+        showLocation = (TextView) rootView.findViewById(R.id.show_location);
+        showLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapsActivityEditDone.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                intent.putExtra("place", placeOfStudy.getText().toString());
+                startActivityForResult(intent, SHOW_LOCATION);
+            }
+        });
     }
 
     private void initImageView() {
@@ -132,12 +155,16 @@ public class FragEditStudent extends Fragment {
                 speciality.setText(response.getSpeciality());
                 placeOfStudy.setText(response.getPlaceOfStudy());
                 setImage(response.getAvatarUrl());
+
+                latitude = response.getGeoPoint().getLatitude();
+                longitude = response.getGeoPoint().getLongitude();
+                showLocation.setText("Location: " + latitude + ", " + longitude);
+
             }
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
-                // an error has occurred, the error code can be retrieved with fault.getCode()
             }
         });
     }
@@ -211,6 +238,12 @@ public class FragEditStudent extends Fragment {
             selectedStudent.setPlaceOfStudy((placeOfStudy.getText().toString()));
             selectedStudent.setAvatarUrl(avatarUrl);
 
+            GeoPoint geoPoint = new GeoPoint();
+            geoPoint.addMetadata("geopoint", "Place");
+            geoPoint.setLatitude(latitude);
+            geoPoint.setLongitude(longitude);
+            selectedStudent.setGeoPoint(geoPoint);
+
             selectedStudent.saveAsync(new AsyncCallback<Student>() {
                 @Override
                 public void handleResponse(Student response) {
@@ -269,6 +302,16 @@ public class FragEditStudent extends Fragment {
                     case CROP_IMAGE:
                         selectedBitmap = App.getCroppedBitmap();
                         avatar.setImageBitmap(selectedBitmap);
+                        break;
+                    case SHOW_LOCATION:
+                        double latitude = data.getDoubleExtra("latitude", -1);
+                        double longitude = data.getDoubleExtra("longitude", -1);
+                        this.latitude = latitude;
+                        this.longitude = longitude;
+                        showLocation.setText(
+                                "Latitude: " + this.latitude
+                                        + "\n"
+                                        + "Longitude: " + this.longitude);
                         break;
                 }
                 break;

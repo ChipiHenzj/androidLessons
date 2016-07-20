@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity
                 DlgFragExit dlgFragExit = new DlgFragExit();
                 dlgFragExit.setTargetActivity(this, 2);
                 dlgFragExit.show(getSupportFragmentManager(), dlgFragExit.getDialogTag());
-//                finish();
             } else {
                 super.onBackPressed();
             }
