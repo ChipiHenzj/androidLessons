@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -45,6 +46,7 @@ public class FragAddTeacher extends Fragment {
     private static final String TITLE = "Add Teacher";
     private static final int PICK_IMAGE_TEACHER = 2 ;
     private static final int CROP_IMAGE_TEACHER = 3;
+    private static final int SET_LOCATION = 4;
 
     private View rootView;
     private EditText name;
@@ -53,6 +55,7 @@ public class FragAddTeacher extends Fragment {
     private EditText phone;
     private EditText speciality;
     private EditText place;
+    private TextView setLocation;
     private FrameLayout layoutProgress;
     private ImageView avatar;
     private Bitmap selectedBitmap;
@@ -61,6 +64,9 @@ public class FragAddTeacher extends Fragment {
     private static final int BITMAP_QUALITY_40 = 40;
     private static final int BITMAP_QUALITY_10 = 10;
     private static final int MAX_BITMAP_SIZE_MB = 10000000;
+
+    private double latitude;
+    private double longitude;
 
     @Nullable
     @Override
@@ -95,6 +101,7 @@ public class FragAddTeacher extends Fragment {
         layoutProgress.setVisibility(View.GONE);
         initEditText();
         initImageView();
+        initTextView();
     }
 
     private void initImageView() {
@@ -109,6 +116,16 @@ public class FragAddTeacher extends Fragment {
         phone = ((EditText) rootView.findViewById(R.id.edit_phone));
         speciality = ((EditText) rootView.findViewById(R.id.edit_speciality));
         place = ((EditText) rootView.findViewById(R.id.edit_place));
+    }
+
+    private void initTextView(){
+        setLocation = ((TextView) rootView.findViewById(R.id.set_location));
+        setLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getActivity(), MapsActivityAddDone.class), SET_LOCATION);
+            }
+        });
     }
 
     public void pickImage(){
