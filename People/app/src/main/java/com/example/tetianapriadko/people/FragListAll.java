@@ -2,8 +2,6 @@ package com.example.tetianapriadko.people;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -32,7 +30,8 @@ import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteFromAll;
 import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
-public class FragListAll extends Fragment implements AdapterAll.OnItemClickListener, AdapterAll.OnItemLongClickListener {
+public class FragListAll extends Fragment implements AdapterAll.OnItemClickListener,
+        AdapterAll.OnItemLongClickListener {
 
     private static final String TITLE = "List of All";
     private FrameLayout layoutProgress;
@@ -81,7 +80,6 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
         layoutProgress = ((FrameLayout) rootView.findViewById(R.id.layout_progress));
         layoutProgress.setVisibility(View.GONE);
 
-
         initSwipeRefresh(rootView);
         initRecyclerView();
     }
@@ -128,7 +126,6 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
                     getTeacherList(false);
                 }
             }
-
             @Override
             public void handleFault(BackendlessFault fault) {
                 Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
@@ -161,6 +158,7 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
 
             @Override
             public void handleFault(BackendlessFault fault) {
+                layoutProgress.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -168,7 +166,6 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
 
     @Override
     public void itemClicked(View view, int position) {
-
         Bundle bundle = new Bundle();
         if (adapterAll.getAllList().get(position) instanceof Student) {
             bundle.putString("studentName", ((Student) adapterAll.getAllList().get(position)).getName());
@@ -186,7 +183,6 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
             fragTeacher.setArguments(bundle);
             replaceFragmentBackStack(fragTeacher);
         }
-
     }
 
     protected void replaceFragmentBackStack(Fragment fragment) {
@@ -232,7 +228,8 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-
+                                layoutProgress.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else if (adapterAll.getAllList().get(data.getIntExtra("position", 0)) instanceof Teacher){
@@ -257,7 +254,6 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
     @Override
     public void itemLongClicked(View view, int position) {
             DlgFragDeleteFromAll fragDeleteFromAll = new DlgFragDeleteFromAll();
@@ -268,13 +264,11 @@ public class FragListAll extends Fragment implements AdapterAll.OnItemClickListe
             fragDeleteFromAll.show(getFragmentManager(), fragDeleteFromAll.getDialogTag());
     }
 
-
     private SwipeRefreshLayout.OnRefreshListener refreshListenerAll = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
             getStudentList(false);
         }
     };
-
 }
 

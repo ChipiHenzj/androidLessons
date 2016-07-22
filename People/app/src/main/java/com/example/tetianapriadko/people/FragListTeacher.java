@@ -26,11 +26,8 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
-import com.example.tetianapriadko.people.adapter.AdapterStudents;
 import com.example.tetianapriadko.people.adapter.AdapterTeachers;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeachList;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
-import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
 
 public class FragListTeacher extends Fragment {
@@ -48,7 +45,6 @@ public class FragListTeacher extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.frag_list_teacher, container, false);
         return rootView;
     }
@@ -78,11 +74,8 @@ public class FragListTeacher extends Fragment {
         layoutProgress.setVisibility(View.GONE);
 
         initRecyclerView();
-
         iniSwipeRefresh(rootView);
-
         getTeacherList(true);
-
     }
 
     public void iniSwipeRefresh(View rootView){
@@ -110,7 +103,6 @@ public class FragListTeacher extends Fragment {
         } else {
             refreshTeacher.setRefreshing(true);
         }
-
         QueryOptions queryOptions = new QueryOptions();
         BackendlessDataQuery query = new BackendlessDataQuery(queryOptions);
         query.setPageSize(100);
@@ -123,10 +115,10 @@ public class FragListTeacher extends Fragment {
                         adapterTeachers.setData(response.getCurrentPage());
                         adapterTeachers.notifyDataSetChanged();
                     }
-
                     @Override
                     public void handleFault(BackendlessFault fault) {
-                        Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                        layoutProgress.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -183,7 +175,6 @@ public class FragListTeacher extends Fragment {
 
     };
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
@@ -204,10 +195,10 @@ public class FragListTeacher extends Fragment {
                                 refreshTeacher.setRefreshing(false);
                                 getTeacherList(false);
                             }
-
                             @Override
                             public void handleFault(BackendlessFault fault) {
-
+                                layoutProgress.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;
@@ -232,5 +223,4 @@ public class FragListTeacher extends Fragment {
             getTeacherList(false);
         }
     };
-
 }

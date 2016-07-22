@@ -35,7 +35,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class MapsActivityAddDone extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -136,7 +135,6 @@ public class MapsActivityAddDone extends AppCompatActivity implements OnMapReady
                     dlgFragLocationDone.setTargetActivity(MapsActivityAddDone.this, 1);
                     dlgFragLocationDone.show(getSupportFragmentManager(), "");
                 }
-
                 break;
             default:
                 break;
@@ -160,11 +158,10 @@ public class MapsActivityAddDone extends AppCompatActivity implements OnMapReady
                         setResult(RESULT_OK, returnIntent);
                         finish();
                     }
-
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
                         layoutProgress.setVisibility(View.GONE);
-                        Toast.makeText(MapsActivityAddDone.this, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivityAddDone.this, backendlessFault.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         } else {

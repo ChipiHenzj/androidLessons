@@ -1,6 +1,5 @@
 package com.example.tetianapriadko.people;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -41,7 +40,6 @@ import com.example.tetianapriadko.people.utils.PermissionUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 
 public class FragAddStudent extends Fragment {
 
@@ -105,7 +103,6 @@ public class FragAddStudent extends Fragment {
         initEditText();
         initTextView();
         initImageView();
-
     }
 
     private void initEditText() {
@@ -209,7 +206,6 @@ public class FragAddStudent extends Fragment {
         student.setAvatarUrl(getLastPartOfUrl(avatarUrl));
 
         GeoPoint geoPoint = new GeoPoint();
-        geoPoint.addMetadata("geopoint", "Place");
         geoPoint.setLatitude(latitude);
         geoPoint.setLongitude(longitude);
         student.setGeoPoint(geoPoint);
@@ -226,14 +222,15 @@ public class FragAddStudent extends Fragment {
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void uploadStudentAvatar(Bitmap bitmap) {
         layoutProgress.setVisibility(View.VISIBLE);
-        String avatarUrl = name.getText().toString().replaceAll("\\s+", "") + ".png";
+        String avatarUrl = name.getText().toString().replaceAll("\\s+", "")
+                + surname.getText().toString().replaceAll("\\s+", "") + ".png";
         int quality = byteSizeOf(bitmap) > MAX_BITMAP_SIZE_MB ? BITMAP_QUALITY_10 : BITMAP_QUALITY_40;
         Backendless.Files.Android.upload(bitmap,
                 Bitmap.CompressFormat.PNG,
@@ -335,7 +332,7 @@ public class FragAddStudent extends Fragment {
         @Override
         public void handleFault(BackendlessFault fault) {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 }

@@ -5,10 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -22,17 +20,16 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
-import com.example.tetianapriadko.people.structure.Student;
 import com.example.tetianapriadko.people.structure.Teacher;
-
-import org.w3c.dom.Text;
 
 public class FragTeacher extends Fragment {
 
@@ -45,6 +42,9 @@ public class FragTeacher extends Fragment {
     private TextView fromBE_teacher_phone;
     private TextView fromBE_teacher_email;
     private TextView fromBE_teacher_place;
+    private double from_BE_latitude;
+    private double from_BE_longitude;
+    private GeoPoint geoPoint;
 
     @Nullable
     @Override
@@ -88,15 +88,16 @@ public class FragTeacher extends Fragment {
         fromBE_teacher_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                Intent intent = new Intent(getActivity(), MapsActivityShow.class);
+                intent.putExtra("latitude", from_BE_latitude);
+                intent.putExtra("longitude", from_BE_longitude);
+                intent.putExtra("place", fromBE_teacher_place.getText().toString());
                 startActivity(intent);
-
             }
         });
 
         layoutProgress = (FrameLayout)rootView.findViewById(R.id.layout_progress);
         layoutProgress.setVisibility(View.GONE);
-
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +110,6 @@ public class FragTeacher extends Fragment {
                 replaceFragmentBackStack(editTeacher);
             }
         });
-
 
         getTeacherFromBE(bundle.getString("teacherId"));
     }
@@ -158,15 +158,18 @@ public class FragTeacher extends Fragment {
                         .setText(response.getPlaceofWork());
                 avatar = ((ImageView) rootView.findViewById(R.id.imageView_avatar_teacher));
                 setImage(response.getAvatarUrl());
+
+                geoPoint = response.getGeoPoint();
+                from_BE_latitude = geoPoint.getLatitude();
+                from_BE_longitude = geoPoint.getLongitude();
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
-                // an error has occurred, the error code can be retrieved with fault.getCode()
+                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void setImage (String avatarUrl){
@@ -223,10 +226,10 @@ public class FragTeacher extends Fragment {
                                 layoutProgress.setVisibility(View.GONE);
                                 replaceFragmentBackStack(new FragListTeacher());
                             }
-
                             @Override
                             public void handleFault(BackendlessFault fault) {
                                 layoutProgress.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;
@@ -243,5 +246,4 @@ public class FragTeacher extends Fragment {
                 break;
         }
     }
-
 }

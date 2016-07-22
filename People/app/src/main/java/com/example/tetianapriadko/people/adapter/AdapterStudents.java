@@ -28,7 +28,6 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
         this.students = students;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater
@@ -38,7 +37,6 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
         holder.studentName.setText(students.get(position).getName());
         holder.studentSurname.setText(students.get(position).getSurname());
 
@@ -93,7 +91,6 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
         this.itemLongClickListener = itemLongClickListener;
     }
 
-
     protected class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentName;
         public TextView studentSurname;
@@ -112,8 +109,4 @@ public class AdapterStudents extends RecyclerView.Adapter<AdapterStudents.ViewHo
     public interface OnItemLongClickListener {
         void itemLongClicked(View view, int position, Student student);
     }
-
-
-
-
 }

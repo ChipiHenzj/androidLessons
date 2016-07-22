@@ -122,7 +122,6 @@ public class AdapterAll extends RecyclerView.Adapter<AdapterAll.ViewHolder> {
                     return false;
                 }
             });
-
         }
     }
 

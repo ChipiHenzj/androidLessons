@@ -187,7 +187,6 @@ public class MapsActivityEditDone extends AppCompatActivity implements OnMapRead
         AppIndex.AppIndexApi.start(client, viewAction);
     }
 
-
     @Override
     public void onStop() {
         super.onStop();

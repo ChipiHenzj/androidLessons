@@ -120,7 +120,6 @@ public class Student {
         return Backendless.Data.of(Student.class).findById(id);
     }
 
-
     public static void findByIdAsync(String id, AsyncCallback<Student> callback) {
         Backendless.Data.of(Student.class).findById(id, callback);
     }

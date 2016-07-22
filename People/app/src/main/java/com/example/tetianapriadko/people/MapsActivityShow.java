@@ -10,7 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.widget.FrameLayout;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -20,7 +19,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivityShow extends FragmentActivity implements OnMapReadyCallback {
@@ -62,6 +60,17 @@ public class MapsActivityShow extends FragmentActivity implements OnMapReadyCall
         }
     }
 
+    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+            if (mMap != null) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+                mMap.setOnMyLocationChangeListener(null);
+            }
+        }
+    };
+
     public void getGeoPoint(){
         intent = getIntent();
         latitude = intent.getDoubleExtra("latitude", -2);
@@ -69,7 +78,7 @@ public class MapsActivityShow extends FragmentActivity implements OnMapReadyCall
         place = intent.getStringExtra("place");
         show = new LatLng(latitude, longitude);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(show, 16.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(show, 8.f));
 
         mMap.addMarker(new MarkerOptions()
                 .position(show)

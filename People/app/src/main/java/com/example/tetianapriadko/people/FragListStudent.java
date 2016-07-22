@@ -24,11 +24,15 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.geo.GeoPoint;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.example.tetianapriadko.people.adapter.AdapterStudents;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudList;
 import com.example.tetianapriadko.people.structure.Student;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragListStudent extends Fragment {
 
@@ -75,7 +79,6 @@ public class FragListStudent extends Fragment {
         initRefreshLayout(rootView);
 
         getStudentList(true);
-
     }
 
     private void initRefreshLayout(View rootView) {
@@ -84,7 +87,6 @@ public class FragListStudent extends Fragment {
         refreshStudent.setColorSchemeResources(R.color.colorPrimary);
         refreshStudent.setRefreshing(false);
     }
-
 
     private void initRecyclerView() {
         LinearLayoutManager studentLayoutManager = new LinearLayoutManager(getActivity(),
@@ -118,7 +120,8 @@ public class FragListStudent extends Fragment {
 
             @Override
             public void handleFault(BackendlessFault fault) {
-                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                layoutProgress.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -173,7 +176,6 @@ public class FragListStudent extends Fragment {
         }
     };
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
@@ -198,7 +200,8 @@ public class FragListStudent extends Fragment {
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-                                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                                layoutProgress.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;

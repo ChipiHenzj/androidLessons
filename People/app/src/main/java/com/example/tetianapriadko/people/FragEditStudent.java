@@ -1,6 +1,5 @@
 package com.example.tetianapriadko.people;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -244,6 +243,7 @@ public class FragEditStudent extends Fragment {
             geoPoint.setLongitude(longitude);
             selectedStudent.setGeoPoint(geoPoint);
 
+
             selectedStudent.saveAsync(new AsyncCallback<Student>() {
                 @Override
                 public void handleResponse(Student response) {
@@ -260,7 +260,7 @@ public class FragEditStudent extends Fragment {
                 @Override
                 public void handleFault(BackendlessFault fault) {
                     layoutProgress.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "Student failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -269,7 +269,8 @@ public class FragEditStudent extends Fragment {
 
     public void uploadStudentAvatar(Bitmap bitmap) {
         layoutProgress.setVisibility(View.VISIBLE);
-        String avatarUrl = name.getText().toString().replaceAll("\\s+", "") + ".png";
+        String avatarUrl = name.getText().toString().replaceAll("\\s+", "")
+                + surname.getText().toString().replaceAll("\\s+", "") + ".png";
         int quality = byteSizeOf(bitmap) > MAX_BITMAP_SIZE_MB ? BITMAP_QUALITY_10 : BITMAP_QUALITY_40;
         Backendless.Files.Android.upload(bitmap,
                 Bitmap.CompressFormat.PNG,
@@ -348,6 +349,7 @@ public class FragEditStudent extends Fragment {
                 || !PermissionUtil.checkPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             requestPermission(1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            pickImage();
         } else {
             pickImage();
         }
@@ -377,7 +379,7 @@ public class FragEditStudent extends Fragment {
         @Override
         public void handleFault(BackendlessFault fault) {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 

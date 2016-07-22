@@ -1,6 +1,5 @@
 package com.example.tetianapriadko.people;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -32,6 +32,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
+import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.application.App;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragAddTeacherDone;
@@ -48,6 +49,7 @@ public class FragEditTeacher extends Fragment {
     private static final String TITLE = "Edit Teacher";
     private static final int PICK_IMAGE = 2 ;
     private static final int CROP_IMAGE = 3;
+    private static final int SHOW_LOCATION = 4;
 
     private View rootView;
     private FrameLayout layoutProgress;
@@ -62,6 +64,10 @@ public class FragEditTeacher extends Fragment {
     private Bitmap selectedBitmap = null;
     private ImageView avatar;
     private AQuery aQuery;
+    private TextView showLocation;
+
+    private double latitude;
+    private double longitude;
 
     private static final String DEFAULT_AVATAR_URL = "ic_dish_default.jpg";
     private static final int BITMAP_QUALITY_40 = 40;
@@ -108,6 +114,7 @@ public class FragEditTeacher extends Fragment {
             getTeacherFromBE(teacherId);
         }
 
+        initTextView();
     }
 
     private void initEditText() {
@@ -124,6 +131,20 @@ public class FragEditTeacher extends Fragment {
         avatar.setOnClickListener(avatarClickListener);
     }
 
+    private void initTextView(){
+        showLocation = (TextView) rootView.findViewById(R.id.show_location);
+        showLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapsActivityEditDone.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                intent.putExtra("place", place.getText().toString());
+                startActivityForResult(intent, SHOW_LOCATION);
+            }
+        });
+    }
+
     private void getTeacherFromBE(String objectID) {
         layoutProgress.setVisibility(View.VISIBLE);
         Backendless.Persistence.of(Teacher.class).findById(objectID, new AsyncCallback<Teacher>() {
@@ -138,13 +159,16 @@ public class FragEditTeacher extends Fragment {
                 speciality.setText(response.getSpeciality());
                 place.setText(response.getPlaceofWork());
                 setImage(response.getAvatarUrl());
+
+                latitude = response.getGeoPoint().getLatitude();
+                longitude = response.getGeoPoint().getLongitude();
+                showLocation.setText("Location: " + latitude + ", " + longitude);
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
                 layoutProgress.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
-                // an error has occurred, the error code can be retrieved with fault.getCode()
+                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -219,6 +243,12 @@ public class FragEditTeacher extends Fragment {
             selectedTeacher.setPlaceofWork((place.getText().toString()));
             selectedTeacher.setAvatarUrl(avatarUrl);
 
+            GeoPoint geoPoint = new GeoPoint();
+            geoPoint.addMetadata("geopoint", "Place");
+            geoPoint.setLatitude(latitude);
+            geoPoint.setLongitude(longitude);
+            selectedTeacher.setGeoPoint(geoPoint);
+
             selectedTeacher.saveAsync(new AsyncCallback<Teacher>() {
                 @Override
                 public void handleResponse(Teacher response) {
@@ -234,7 +264,7 @@ public class FragEditTeacher extends Fragment {
                 @Override
                 public void handleFault(BackendlessFault fault) {
                     layoutProgress.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), fault.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -242,7 +272,8 @@ public class FragEditTeacher extends Fragment {
 
     private void uploadAvatarTeacher(Bitmap bitmap){
         layoutProgress.setVisibility(View.VISIBLE);
-        String avatarUrl = name.getText().toString().replaceAll("\\s+", "") + ".png";
+        String avatarUrl = name.getText().toString().replaceAll("\\s+", "")
+                + surname.getText().toString().replaceAll("\\s+", "") +".png";
         int quality = byteSizeOf(bitmap) > MAX_BITMAP_SIZE_MB ? BITMAP_QUALITY_10 : BITMAP_QUALITY_40;
         Backendless.Files.Android.upload(bitmap,
                 Bitmap.CompressFormat.PNG,
@@ -273,6 +304,16 @@ public class FragEditTeacher extends Fragment {
                     case CROP_IMAGE:
                         selectedBitmap = App.getCroppedBitmap();
                         avatar.setImageBitmap(selectedBitmap);
+                        break;
+                    case SHOW_LOCATION:
+                        double latitude = data.getDoubleExtra("latitude", -1);
+                        double longitude = data.getDoubleExtra("longitude", -1);
+                        this.latitude = latitude;
+                        this.longitude = longitude;
+                        showLocation.setText(
+                                "Latitude: " + this.latitude
+                                        + "\n"
+                                        + "Longitude: " + this.longitude);
                         break;
                 }
                 break;
@@ -309,6 +350,7 @@ public class FragEditTeacher extends Fragment {
                 || !PermissionUtil.checkPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             requestPermission(1, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            pickImage();
         } else {
             pickImage();
         }
@@ -337,7 +379,7 @@ public class FragEditTeacher extends Fragment {
         @Override
         public void handleFault(BackendlessFault fault) {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), fault.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 

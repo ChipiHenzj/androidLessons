@@ -3,6 +3,7 @@ package com.example.tetianapriadko.people.structure;
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.geo.GeoPoint;
 import com.backendless.persistence.BackendlessDataQuery;
 
 public class Teacher {
@@ -17,6 +18,7 @@ public class Teacher {
     private String objectId;
     private String name;
     private String avatarUrl;
+    private GeoPoint GeoPoint;
 
 
 
@@ -54,6 +56,14 @@ public class Teacher {
 
     public String getOwnerId() {
         return ownerId;
+    }
+
+    public GeoPoint getGeoPoint() {
+        return GeoPoint;
+    }
+
+    public void setGeoPoint(GeoPoint GeoPoint) {
+        this.GeoPoint = GeoPoint;
     }
 
     public String getSurname() {

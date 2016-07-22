@@ -29,7 +29,6 @@ import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.structure.Student;
-import com.google.android.gms.maps.model.LatLng;
 
 public class FragStudent extends Fragment {
 
@@ -226,6 +225,7 @@ public class FragStudent extends Fragment {
                             @Override
                             public void handleFault(BackendlessFault fault) {
                                 layoutProgress.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;
@@ -242,6 +242,4 @@ public class FragStudent extends Fragment {
                 break;
         }
     }
-
-
 }
