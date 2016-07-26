@@ -1,6 +1,5 @@
 package com.example.tetianapriadko.people;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -126,6 +126,16 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {
+
+//            Campaign campaign = adapterCampaigns.getCampaignList().get(position);
+//            Intent intent = new Intent(Intent.ACTION_SEND);
+//            intent.putExtra(Intent.EXTRA_SUBJECT,
+//                    String.format("%s%s", "Hi. I'd like to recommend you: ",
+//                            campaign.getName()));
+//            intent.putExtra(Intent.EXTRA_TEXT,
+//                    campaign.getImages().getBanner().getUrl());
+//            intent.setType("text/plain");
+//            startActivity(Intent.createChooser(intent, "Share the dish"));
 
         } else if (id == R.id.nav_logout) {
 
