@@ -28,6 +28,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
+import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
 import com.example.tetianapriadko.people.structure.Teacher;
 
@@ -204,15 +205,38 @@ public class FragTeacher extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_delete) {
-            DlgFragDeleteTeacher teacherDelete = new DlgFragDeleteTeacher();
-            teacherDelete.setTargetFragment(FragTeacher.this, 1);
-            teacherDelete.show(getFragmentManager(), teacherDelete.getDialogTag());
+        switch (item.getItemId()){
+            case R.id.action_delete:
+                DlgFragDeleteTeacher teacherDelete = new DlgFragDeleteTeacher();
+                teacherDelete.setTargetFragment(FragTeacher.this, 1);
+                teacherDelete.show(getFragmentManager(), teacherDelete.getDialogTag());
+                break;
+            case R.id.action_share:
+                shareTeacher();
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void shareTeacher() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT,
+                String.format("%s%s%s%s",
+                        "Hi. I'd like to show you Teacher: ",
+                        selectedTeacher.getName(),
+                        " ",
+                        selectedTeacher.getSurname()));
+        intent.putExtra(Intent.EXTRA_TEXT,
+                String.format("%s%s%s%s",
+                        BACK_SETTINGS.SERVER_URL,
+                        BACK_SETTINGS.FILES,
+                        BACK_SETTINGS.TEACHER_AVATAR_STORE_URL,
+                        selectedTeacher.getAvatarUrl()));
+        intent.setType("text/plain");
+        startActivity(Intent.createChooser(intent, "Share via"));
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {

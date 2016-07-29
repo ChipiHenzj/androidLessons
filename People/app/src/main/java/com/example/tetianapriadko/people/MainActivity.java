@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.exceptions.BackendlessException;
+import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragExit;
+import com.example.tetianapriadko.people.login.LoginActivity;
+import com.example.tetianapriadko.people.login.PeopleUser;
+import com.example.tetianapriadko.people.login.RegisterActivity;
 
 
 public class MainActivity extends AppCompatActivity
@@ -125,24 +130,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, MapsActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
-        } else if (id == R.id.nav_share) {
-
-//            Campaign campaign = adapterCampaigns.getCampaignList().get(position);
-//            Intent intent = new Intent(Intent.ACTION_SEND);
-//            intent.putExtra(Intent.EXTRA_SUBJECT,
-//                    String.format("%s%s", "Hi. I'd like to recommend you: ",
-//                            campaign.getName()));
-//            intent.putExtra(Intent.EXTRA_TEXT,
-//                    campaign.getImages().getBanner().getUrl());
-//            intent.setType("text/plain");
-//            startActivity(Intent.createChooser(intent, "Share the dish"));
-
-        } else if (id == R.id.nav_logout) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

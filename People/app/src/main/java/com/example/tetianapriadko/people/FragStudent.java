@@ -199,13 +199,37 @@ public class FragStudent extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_delete) {
-            DlgFragDeleteStudent studentDelete = new DlgFragDeleteStudent();
-            studentDelete.setTargetFragment(FragStudent.this, 1);
-            studentDelete.show(getFragmentManager(), studentDelete.getDialogTag());
+        switch (item.getItemId()){
+            case R.id.action_delete:
+                DlgFragDeleteStudent studentDelete = new DlgFragDeleteStudent();
+                studentDelete.setTargetFragment(FragStudent.this, 1);
+                studentDelete.show(getFragmentManager(), studentDelete.getDialogTag());
+                break;
+            case R.id.action_share:
+                shareStudent();
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareStudent() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT,
+                String.format("%s%s%s%s",
+                        "Hi. I'd like to show you Student: ",
+                        selectedStudent.getName(),
+                        " ",
+                        selectedStudent.getSurname()));
+        intent.putExtra(Intent.EXTRA_TEXT,
+                String.format("%s%s%s%s",
+                        BACK_SETTINGS.SERVER_URL,
+                        BACK_SETTINGS.FILES,
+                        BACK_SETTINGS.STUDENT_AVATAR_STORE_URL,
+                        selectedStudent.getAvatarUrl()));
+        intent.setType("text/plain");
+        startActivity(Intent.createChooser(intent, "Share via"));
     }
 
     @Override
