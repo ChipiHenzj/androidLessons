@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView_add_student"
                 card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="1dp"
+                card_view:cardElevation="4dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
                 <RelativeLayout
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_view0"
                 card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="1dp"
+                card_view:cardElevation="4dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
                 <RelativeLayout
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_view1"
                 card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="1dp"
+                card_view:cardElevation="4dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
                 <RelativeLayout
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_view2"
                 card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="1dp"
+                card_view:cardElevation="4dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
                 <RelativeLayout

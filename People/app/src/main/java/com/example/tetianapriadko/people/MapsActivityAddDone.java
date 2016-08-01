@@ -87,12 +87,13 @@ public class MapsActivityAddDone extends AppCompatActivity implements OnMapReady
                 }
             }
         });
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                mMap.clear();
-            }
-        });
+
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                mMap.clear();
+//            }
+//        });
     }
 
     @Override
