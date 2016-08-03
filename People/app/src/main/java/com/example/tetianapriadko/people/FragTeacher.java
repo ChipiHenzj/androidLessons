@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -46,6 +47,10 @@ public class FragTeacher extends Fragment {
     private double from_BE_latitude;
     private double from_BE_longitude;
     private GeoPoint geoPoint;
+    private String lat;
+    private String lng;
+    private String url;
+    private ImageView staticMap;
 
     @Nullable
     @Override
@@ -86,7 +91,8 @@ public class FragTeacher extends Fragment {
         sendEmail();
 
         fromBE_teacher_place = (TextView)rootView.findViewById(R.id.fromBE_teacher_place);
-        fromBE_teacher_place.setOnClickListener(new View.OnClickListener() {
+        staticMap = (ImageView)rootView.findViewById(R.id.static_map);
+        staticMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MapsActivityShow.class);
@@ -155,12 +161,21 @@ public class FragTeacher extends Fragment {
                         .setText(response.getPhoneNumber());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_speciality))
                         .setText(response.getSpeciality());
-                ((TextView) rootView.findViewById(R.id.fromBE_teacher_place))
-                        .setText(response.getPlaceofWork());
+
+                fromBE_teacher_place.setText(response.getPlaceofWork());
+                geoPoint = response.getGeoPoint();
+
                 avatar = ((ImageView) rootView.findViewById(R.id.imageView_avatar_teacher));
                 setImage(response.getAvatarUrl());
 
-                geoPoint = response.getGeoPoint();
+                lat = geoPoint.getLatitude().toString();
+                lng = geoPoint.getLongitude().toString();
+                url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng +
+                        "&zoom=15&size=640x200&sensor=false&markers=color:red%7Clabel%7C" + lat + "," + lng +
+                        "&key=AIzaSyBu6hLVBRiORrQlJlCURFDt3aoCQTBTO98";
+
+                setMapStatic(url);
+
                 from_BE_latitude = geoPoint.getLatitude();
                 from_BE_longitude = geoPoint.getLongitude();
             }
@@ -171,6 +186,16 @@ public class FragTeacher extends Fragment {
                 Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setMapStatic(String url) {
+        aQuery = new AQuery(getActivity());
+        aQuery.id(staticMap).image(
+                url,
+                false,
+                false,
+                0,
+                R.drawable.icon);
     }
 
     public void setImage (String avatarUrl){

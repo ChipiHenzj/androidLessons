@@ -78,7 +78,7 @@ public class MapsActivityShow extends FragmentActivity implements OnMapReadyCall
         place = intent.getStringExtra("place");
         show = new LatLng(latitude, longitude);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(show, 8.f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(show, 15.f));
 
         mMap.addMarker(new MarkerOptions()
                 .position(show)
