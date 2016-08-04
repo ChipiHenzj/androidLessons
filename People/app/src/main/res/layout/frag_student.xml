@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="#f0f0f0">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -12,7 +13,6 @@
         android:layout_height="200dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
@@ -52,28 +52,31 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_below="@+id/app_bar"
-            android:background="#FFF"
+            android:background="#f0f0f0"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="2dp"
+                card_view:cardElevation="1dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
 
@@ -169,14 +172,17 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card_view1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="2dp"
+                card_view:cardElevation="1dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
 
@@ -273,13 +279,17 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_below="@id/card_view2"
-                card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="4dp"
+                card_view:cardCornerRadius="2dp"
+                card_view:cardElevation="1dp"
                 card_view:cardUseCompatPadding="true"
                 card_view:contentPadding="10dp">
 
@@ -333,51 +343,38 @@
                         android:layout_marginTop="15dp"
                         android:text="Speciality" />
 
-                    <View
-                        android:id="@+id/divide2"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_below="@id/speciality"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@android:color/darker_gray" />
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/divide2"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/ic_map" />
+                        android:layout_marginBottom="3dp"
+                        android:layout_below="@id/speciality">
 
-                    <TextView
-                        android:id="@+id/fromBE_student_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/fromBE_student_speciality"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="50dp" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/static_map"
+                            android:layout_below="@id/fromBE_student_speciality"
+                            android:adjustViewBounds="true" />
 
-                    <ImageView
-                        android:id="@+id/static_map"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@id/fromBE_student_place"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:scaleType="centerCrop"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/icon"
-                        android:contentDescription="@null" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/colorTransparent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp"
+                            android:text="New Text"
+                            android:id="@+id/fromBE_student_place" />
+                    </RelativeLayout>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

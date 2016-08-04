@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
@@ -59,6 +60,9 @@ public class FragAddStudent extends Fragment {
     private FrameLayout layoutProgress;
     private ImageView avatar;
     private Bitmap selectedBitmap;
+    private ImageView staticMap;
+    private String url;
+    private AQuery aQuery;
 
     private double latitude;
     private double longitude;
@@ -169,6 +173,16 @@ public class FragAddStudent extends Fragment {
         }
     }
 
+    public void setMapStatic(String url) {
+        aQuery = new AQuery(getActivity());
+        aQuery.id(staticMap).image(
+                url,
+                false,
+                false,
+                0,
+                R.drawable.icon);
+    }
+
     private void pickImage() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
@@ -263,10 +277,14 @@ public class FragAddStudent extends Fragment {
                         double longitude = data.getDoubleExtra("longitude", -1);
                         this.latitude = latitude;
                         this.longitude = longitude;
-                        setLocation.setText(
-                                "Latitude: " + this.latitude
-                                        + "\n"
-                                        + "Longitude: " + this.longitude);
+                        setLocation.setText("");
+                        staticMap = (ImageView)rootView.findViewById(R.id.static_map);
+                        url = "http://maps.google.com/maps/api/staticmap?center="
+                                + this.latitude + "," + this.longitude
+                                + "&zoom=15&size=640x200&sensor=false&markers=color:red%7Clabel%7C"
+                                + this.latitude + "," + this.longitude
+                                + "&key=AIzaSyBu6hLVBRiORrQlJlCURFDt3aoCQTBTO98";
+                        setMapStatic(url);
                         break;
                 }
                 break;

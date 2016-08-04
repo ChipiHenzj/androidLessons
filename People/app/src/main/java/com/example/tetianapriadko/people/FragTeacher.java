@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -29,7 +28,6 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.geo.GeoPoint;
 import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
-import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteStudent;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragDeleteTeacher;
 import com.example.tetianapriadko.people.structure.Teacher;
 
@@ -44,13 +42,13 @@ public class FragTeacher extends Fragment {
     private TextView fromBE_teacher_phone;
     private TextView fromBE_teacher_email;
     private TextView fromBE_teacher_place;
-    private double from_BE_latitude;
-    private double from_BE_longitude;
     private GeoPoint geoPoint;
     private String lat;
     private String lng;
     private String url;
     private ImageView staticMap;
+    private double from_BE_latitude;
+    private double from_BE_longitude;
 
     @Nullable
     @Override
@@ -90,8 +88,8 @@ public class FragTeacher extends Fragment {
         fromBE_teacher_email = ((TextView) rootView.findViewById(R.id.fromBE_teacher_email));
         sendEmail();
 
-        fromBE_teacher_place = (TextView)rootView.findViewById(R.id.fromBE_teacher_place);
         staticMap = (ImageView)rootView.findViewById(R.id.static_map);
+        fromBE_teacher_place = (TextView)rootView.findViewById(R.id.fromBE_teacher_place);
         staticMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,19 +159,18 @@ public class FragTeacher extends Fragment {
                         .setText(response.getPhoneNumber());
                 ((TextView) rootView.findViewById(R.id.fromBE_teacher_speciality))
                         .setText(response.getSpeciality());
-
                 fromBE_teacher_place.setText(response.getPlaceofWork());
-                geoPoint = response.getGeoPoint();
-
                 avatar = ((ImageView) rootView.findViewById(R.id.imageView_avatar_teacher));
                 setImage(response.getAvatarUrl());
 
+                geoPoint = response.getGeoPoint();
                 lat = geoPoint.getLatitude().toString();
                 lng = geoPoint.getLongitude().toString();
-                url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng +
-                        "&zoom=15&size=640x200&sensor=false&markers=color:red%7Clabel%7C" + lat + "," + lng +
-                        "&key=AIzaSyBu6hLVBRiORrQlJlCURFDt3aoCQTBTO98";
-
+                url = "http://maps.google.com/maps/api/staticmap?center="
+                        + lat + "," + lng
+                        + "&zoom=15&size=640x200&sensor=false&markers=color:red%7Clabel%7C"
+                        + lat + "," + lng
+                        + "&key=AIzaSyBu6hLVBRiORrQlJlCURFDt3aoCQTBTO98";
                 setMapStatic(url);
 
                 from_BE_latitude = geoPoint.getLatitude();
@@ -262,6 +259,7 @@ public class FragTeacher extends Fragment {
         intent.setType("text/plain");
         startActivity(Intent.createChooser(intent, "Share via"));
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {

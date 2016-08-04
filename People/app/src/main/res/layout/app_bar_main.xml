@@ -8,5 +8,4 @@
     tools:context="com.example.tetianapriadko.people.MainActivity">
 
     <include layout="@layout/content_main" />
-
 </android.support.design.widget.CoordinatorLayout>

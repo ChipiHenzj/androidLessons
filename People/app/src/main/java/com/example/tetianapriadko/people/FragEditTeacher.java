@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -64,7 +66,11 @@ public class FragEditTeacher extends Fragment {
     private Bitmap selectedBitmap = null;
     private ImageView avatar;
     private AQuery aQuery;
-    private TextView showLocation;
+    private ImageView staticMap;
+    private String lat;
+    private String lng;
+    private String url;
+    private GeoPoint geoPoint;
 
     private double latitude;
     private double longitude;
@@ -114,7 +120,7 @@ public class FragEditTeacher extends Fragment {
             getTeacherFromBE(teacherId);
         }
 
-        initTextView();
+        initStaticMap();
     }
 
     private void initEditText() {
@@ -131,9 +137,9 @@ public class FragEditTeacher extends Fragment {
         avatar.setOnClickListener(avatarClickListener);
     }
 
-    private void initTextView(){
-        showLocation = (TextView) rootView.findViewById(R.id.show_location);
-        showLocation.setOnClickListener(new View.OnClickListener() {
+    private void initStaticMap(){
+        staticMap = (ImageView)rootView.findViewById(R.id.static_map);
+        staticMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MapsActivityEditDone.class);
@@ -158,11 +164,22 @@ public class FragEditTeacher extends Fragment {
                 phone.setText(response.getPhoneNumber());
                 speciality.setText(response.getSpeciality());
                 place.setText(response.getPlaceofWork());
+
+                geoPoint = response.getGeoPoint();
+                setImage(response.getAvatarUrl());
+
+                lat = geoPoint.getLatitude().toString();
+                lng = geoPoint.getLongitude().toString();
+                url = "http://maps.google.com/maps/api/staticmap?center="
+                        + lat + "," + lng
+                        + "&zoom=15&size=640x200&sensor=false&markers=color:red%7Clabel%7C"
+                        + lat + "," + lng
+                        + "&key=AIzaSyBu6hLVBRiORrQlJlCURFDt3aoCQTBTO98";
+                setMapStatic(url);
                 setImage(response.getAvatarUrl());
 
                 latitude = response.getGeoPoint().getLatitude();
                 longitude = response.getGeoPoint().getLongitude();
-                showLocation.setText("Location: " + latitude + ", " + longitude);
             }
 
             @Override
@@ -171,6 +188,16 @@ public class FragEditTeacher extends Fragment {
                 Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setMapStatic(String url) {
+        aQuery = new AQuery(getActivity());
+        aQuery.id(staticMap).image(
+                url,
+                false,
+                false,
+                0,
+                R.drawable.icon);
     }
 
     public void setImage(String avatarUrl) {
@@ -310,10 +337,12 @@ public class FragEditTeacher extends Fragment {
                         double longitude = data.getDoubleExtra("longitude", -1);
                         this.latitude = latitude;
                         this.longitude = longitude;
-                        showLocation.setText(
-                                "Latitude: " + this.latitude
-                                        + "\n"
-                                        + "Longitude: " + this.longitude);
+                        url = "http://maps.google.com/maps/api/staticmap?center="
+                                + this.latitude + "," + this.longitude
+                                + "&zoom=15&size=640x200&sensor=false&markers=color:red%7Clabel%7C"
+                                + this.longitude + "," + this.latitude
+                                + "&key=AIzaSyBu6hLVBRiORrQlJlCURFDt3aoCQTBTO98";
+                        setMapStatic(url);
                         break;
                 }
                 break;
@@ -382,5 +411,4 @@ public class FragEditTeacher extends Fragment {
             Toast.makeText(getActivity(), fault.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
-
 }
