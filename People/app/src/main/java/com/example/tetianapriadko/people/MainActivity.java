@@ -8,20 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
-import com.backendless.exceptions.BackendlessException;
-import com.example.tetianapriadko.people.constants.BACK_SETTINGS;
 import com.example.tetianapriadko.people.dialog_fragments.DlgFragExit;
-import com.example.tetianapriadko.people.login.LoginActivity;
-import com.example.tetianapriadko.people.login.PeopleUser;
-import com.example.tetianapriadko.people.login.RegisterActivity;
-
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -42,7 +35,6 @@ public class MainActivity extends AppCompatActivity
 
         ((TextView) navigationView.getHeaderView(0)
                 .findViewById(R.id.email)).setText(user.getEmail());
-
         ((TextView) navigationView.getHeaderView(0)
                 .findViewById(R.id.name)).setText((String) user.getProperty(NAME));
 
@@ -117,19 +109,23 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_student) {
-            replaceFragmentBackStack(new FragListStudent());
-        } else if (id == R.id.nav_teacher) {
-            replaceFragmentBackStack(new FragListTeacher());
-        } else if (id == R.id.nav_all) {
-            replaceFragmentBackStack(new FragListAll());
-        } else if (id == R.id.nav_map) {
-            startActivity(new Intent(this, MapsActivity.class));
-        } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+        switch (item.getItemId()){
+            case R.id.nav_student:
+                replaceFragmentBackStack(new FragListStudent());
+                break;
+            case R.id.nav_teacher:
+                replaceFragmentBackStack(new FragListTeacher());
+                break;
+            case R.id.nav_all:
+                replaceFragmentBackStack(new FragListAll());
+            case R.id.nav_map:
+                startActivity(new Intent(this, MapsActivity.class));
+                break;
+            case R.id.nav_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            default:
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
