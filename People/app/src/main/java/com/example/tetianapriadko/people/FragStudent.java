@@ -78,13 +78,14 @@ public class FragStudent extends Fragment {
                 toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         fromBE_student_phone = ((TextView) rootView.findViewById(R.id.fromBE_student_phone));
-        callPhone();
+
+        initPhoneView();
         fromBE_student_email = ((TextView) rootView.findViewById(R.id.fromBE_student_email));
-        sendEmail();
+        initSendEmail();
 
         staticMap = (ImageView)rootView.findViewById(R.id.static_map);
         staticMap.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +101,6 @@ public class FragStudent extends Fragment {
         });
 
         layoutProgress = (FrameLayout) rootView.findViewById(R.id.layout_progress);
-        layoutProgress.setVisibility(View.GONE);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +117,7 @@ public class FragStudent extends Fragment {
         getStudentFromBE(bundle.getString("studentId"));
     }
 
-    private void callPhone (){
+    private void initPhoneView(){
         fromBE_student_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +128,7 @@ public class FragStudent extends Fragment {
         });
     }
 
-    private void sendEmail(){
+    private void initSendEmail(){
         fromBE_student_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

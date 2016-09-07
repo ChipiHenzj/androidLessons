@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_all:
                 replaceFragmentBackStack(new FragListAll());
+                break;
             case R.id.nav_map:
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
